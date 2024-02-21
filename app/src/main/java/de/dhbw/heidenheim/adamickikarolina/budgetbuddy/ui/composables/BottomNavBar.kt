@@ -1,6 +1,7 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
@@ -16,7 +17,9 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.listOfNavItems
 
 @Composable
 fun BottomNavBar(navController: NavController) {
-    NavigationBar {
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.primaryContainer
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
