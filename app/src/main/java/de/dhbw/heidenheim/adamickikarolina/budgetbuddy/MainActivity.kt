@@ -6,6 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
@@ -16,6 +20,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.HomeScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.ProfileScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.Screens
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.BottomNavBar
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.SavingTipsDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.Topbar
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
 
@@ -32,10 +37,15 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun BudgetBuddyApp() {
     val navController = rememberNavController()
+    var showDialog by remember{ mutableStateOf(false) }
 
     BudgetBuddyTheme {
+        if (showDialog) {
+            SavingTipsDialog(onDismissRequest = { showDialog = false })
+        }
+
         Scaffold(
-            topBar = { Topbar() },
+            topBar = { Topbar(onDialogButtonClick = {showDialog=true}) },
             bottomBar = { BottomNavBar(navController = navController)}
         ) {paddingValues ->
             NavHost(

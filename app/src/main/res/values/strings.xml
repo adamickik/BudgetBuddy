@@ -6,6 +6,9 @@
     <string name="navigation_analytics">Analytics</string>
     <string name="navigation_profile">Profile</string>
 
+    <string name="analytics_expenses_name">DEINE AUSGABEN</string>
+    <string name="analytics_savingsHistory_name">SPARVERLAUF %s</string>
+
     <string name="savings_account">DEIN SPARDEPOT</string>
     <string name="savings_currency"> €</string>
 

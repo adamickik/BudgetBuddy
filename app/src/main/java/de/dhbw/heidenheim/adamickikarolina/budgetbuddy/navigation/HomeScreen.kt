@@ -1,11 +1,9 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.PaymentCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.SavingsCard
@@ -14,8 +12,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.TextIconBu
 @Preview
 @Composable
 fun HomeScreen(){
-    Column(
-    ) {
+    Column{
         SavingsCard()
         TextIconButton(
             stringResource(R.string.payments_name),

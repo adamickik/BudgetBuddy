@@ -1,10 +1,10 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -18,15 +18,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.shapes.WavyShape
 
-@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Topbar() {
+fun Topbar(onDialogButtonClick: () -> Unit) {
     TopAppBar(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,12 +44,19 @@ fun Topbar() {
             }
         },
         navigationIcon = {
-            Icon(
-                painter = painterResource(id = R.mipmap.ic_logo_foreground),
-                contentDescription = "Main Menu",
-                modifier = Modifier.padding(horizontal = 5.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .clickable(onClick = onDialogButtonClick), // Optional: Anpassen des Paddings für das Icon
+                contentAlignment = Alignment.Center // Zentriert das Icon im Box-Container
+            ) {
+                Icon(
+                    painter = painterResource(id = R.mipmap.ic_logo_foreground),
+                    contentDescription = "Spartipps anzeigen"
+                )
+            }
         },
+
         // Change color of TopBar, otherwise surface -> same as Cards
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
