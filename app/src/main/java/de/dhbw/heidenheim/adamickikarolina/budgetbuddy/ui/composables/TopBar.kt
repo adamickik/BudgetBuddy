@@ -40,7 +40,7 @@ fun Topbar(onDialogButtonClick: () -> Unit) {
                 modifier = Modifier.fillMaxHeight(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = stringResource(R.string.topBar_name))
+                Text(text = stringResource(id=R.string.topBar_name))
             }
         },
         navigationIcon = {

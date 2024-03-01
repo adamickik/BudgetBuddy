@@ -18,6 +18,10 @@
     <string name="payments_name">ZAHLUNGEN</string>
     <string name="paymentsButton_description">Zahlung hinzufügen</string>
 
+    <string name="addPaymentsDialog_name">ZAHLUNG HINZUFÜGEN</string>
+    <string name="addPaymentsDialog_addButton">HINZUFÜGEN</string>
+    <string name="addPaymentsDialog_dismissButton">ABBRECHEN</string>
+
     <string name="assign_button">ZUWEISEN</string>
 
     <string name="savingTips_name">SCHWABENTIPP</string>
