@@ -63,17 +63,17 @@ val AppTypography = Typography(
     bodyLarge = TextStyle(
         fontFamily = latoFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 18.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = latoFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp
+        fontSize = 16.sp
     ),
     bodySmall = TextStyle(
         fontFamily = latoFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 12.sp
+        fontSize = 14.sp
     ),
     labelLarge = TextStyle(
         fontFamily = latoFontFamily,

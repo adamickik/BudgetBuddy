@@ -5,6 +5,8 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 
 data class NavItem(
     val label: String,
@@ -14,7 +16,7 @@ data class NavItem(
 
 val listOfNavItems=listOf(
     NavItem(
-        label = "Home",
+        label = "Analytics",
         icon = Icons.Filled.Home,
         route = Screens.HomeScreen.name
     ),
