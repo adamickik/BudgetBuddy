@@ -19,9 +19,9 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.AnalyticsScree
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.HomeScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.ProfileScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.Screens
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.BottomNavBar
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.SavingTipsDialog
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.Topbar
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.BottomNavBar
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.SavingTipsDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.Topbar
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
 
 class MainActivity : AppCompatActivity() {
@@ -46,7 +46,7 @@ fun BudgetBuddyApp() {
 
         Scaffold(
             topBar = { Topbar(onDialogButtonClick = {showDialog=true}) },
-            bottomBar = { BottomNavBar(navController = navController)}
+            bottomBar = { BottomNavBar(navController = navController) }
         ) {paddingValues ->
             NavHost(
                 navController= navController,

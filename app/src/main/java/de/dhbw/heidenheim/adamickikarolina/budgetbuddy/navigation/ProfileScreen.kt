@@ -9,11 +9,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.AddPaymentDialog
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.PaymentCard
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.ProfileCard
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.SavingsGoalCard
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.TextIconButton
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.AddPaymentDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.PaymentCard
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile.ProfileCard
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.SavingsGoalCard
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.TextIconButton
 
 @Preview
 @Composable

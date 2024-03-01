@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.charts
 
 import android.graphics.Color
 import android.graphics.Paint

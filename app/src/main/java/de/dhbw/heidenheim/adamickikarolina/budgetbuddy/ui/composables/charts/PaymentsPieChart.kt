@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.charts
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
