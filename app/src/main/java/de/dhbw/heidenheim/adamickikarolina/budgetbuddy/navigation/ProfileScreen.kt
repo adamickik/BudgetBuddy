@@ -12,34 +12,47 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.AddPaymentDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.PaymentCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile.ProfileCard
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.SavingsGoalCard
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingsGoalCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.TextIconButton
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.AddSavingGoalDialog
 
 @Preview
 @Composable
 fun ProfileScreen(){
-    var showDialog by remember{ mutableStateOf(false) }
+    var showPaymentDialog by remember{ mutableStateOf(false) }
+    var showSavingGoalDialog by remember{ mutableStateOf(false) }
 
     Column {
         ProfileCard()
         TextIconButton(
             stringResource(R.string.savingsGoals_name),
             stringResource(R.string.savingsGoalsButton_description),
-            {})
+            onIconClick = {showSavingGoalDialog=true})
         SavingsGoalCard()
         TextIconButton(
             stringResource(R.string.fixedPayments_name),
             stringResource(R.string.fixedPaymentsButton_description),
-            onIconClick = {showDialog=true})
+            onIconClick = {showPaymentDialog=true})
         PaymentCard()
     }
 
-    if(showDialog){
+    if(showPaymentDialog){
         AddPaymentDialog(
-            showDialog = showDialog,
-            onDismiss = { showDialog = false },
+            showDialog = showPaymentDialog,
+            onDismiss = { showPaymentDialog = false },
             onConfirmAction = { payment ->
-                showDialog = false
+                showPaymentDialog = false
+                // TODO: Process fixed payment
+            }
+        )
+    }
+
+    if(showSavingGoalDialog){
+        AddSavingGoalDialog(
+            showDialog = showSavingGoalDialog,
+            onDismiss = { showSavingGoalDialog = false },
+            onConfirmAction = { payment ->
+                showSavingGoalDialog = false
                 // TODO: Process fixed payment
             }
         )

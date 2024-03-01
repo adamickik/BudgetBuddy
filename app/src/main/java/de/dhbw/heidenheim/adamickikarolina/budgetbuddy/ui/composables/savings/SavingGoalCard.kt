@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

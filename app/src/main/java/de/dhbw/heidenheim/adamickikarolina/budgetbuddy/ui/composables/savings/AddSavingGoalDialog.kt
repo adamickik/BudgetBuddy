@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings
 
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.layout.Box
@@ -9,11 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,44 +27,48 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import java.util.Date
 import java.util.Locale
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.ui.Alignment
+import androidx.fragment.app.FragmentActivity
 
 @Composable
-fun AddPaymentDialog(
+fun AddSavingGoalDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
     onConfirmAction: (String) -> Unit
 ) {
-    var paymentTitle by remember { mutableStateOf("") }
-    var paymentValue by remember { mutableStateOf("") }
-    var paymentDate by remember { mutableStateOf("") }
+    var savingGoalTitle by remember { mutableStateOf("") }
+    var savingGoalValue by remember { mutableStateOf("") }
+    var savingGoalDueDate by remember { mutableStateOf("") }
     val context = LocalContext.current
 
     if (showDialog) {
         AlertDialog(
             modifier = Modifier.fillMaxWidth(),
             onDismissRequest = { onDismiss() },
-            title = { Text(stringResource(id = R.string.addPaymentDialog_name))},
+            title = { Text(stringResource(id = R.string.addSavingGoalDialog_name))},
             text = {
                 Column {
                     OutlinedTextField(
-                        value = paymentTitle,
+                        value = savingGoalTitle,
                         modifier=Modifier.padding(bottom=8.dp),
-                        onValueChange = { paymentTitle = it },
-                        label = { Text(stringResource(id = R.string.addPaymentDialog_title)) },
+                        onValueChange = { savingGoalTitle = it },
+                        label = { Text(stringResource(id = R.string.addSavingGoalDialog_title)) },
                         singleLine = true
                     )
                     OutlinedTextField(
-                        value = paymentValue,
+                        value = savingGoalValue,
                         modifier=Modifier.padding(bottom=8.dp),
                         onValueChange = { newValue ->
                             // Validation for Money
                             if (newValue.matches(Regex("^\\d*,?\\d{0,2}$"))) {
-                                paymentValue = newValue
+                                savingGoalValue = newValue
                             }},
-                        label = { Text(stringResource(id = R.string.addPaymentDialog_value))},
+                        label = { Text(stringResource(id = R.string.addSavingGoalDialog_value))},
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                     )
@@ -76,9 +77,9 @@ fun AddPaymentDialog(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         OutlinedTextField(
-                            value = paymentDate,
+                            value = savingGoalDueDate,
                             onValueChange = { /* Read-Only Text Field */ },
-                            label = { Text(stringResource(id = R.string.addPaymentDialog_date)) },
+                            label = { Text(stringResource(id = R.string.addSavingGoalDialog_duedate)) },
                             readOnly = true,
                             singleLine = true,
                             modifier = Modifier.weight(1f)
@@ -91,16 +92,16 @@ fun AddPaymentDialog(
                         {
                             IconButton(
                                 onClick = {
-                                val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Zahlungsdatum").build()
-                                datePicker.show((context as androidx.fragment.app.FragmentActivity).supportFragmentManager, "DATE_PICKER")
-                                datePicker.addOnPositiveButtonClickListener { selection ->
-                                    paymentDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(selection))
-                                }
-                            }) {
+                                    val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Fälligkeitsdatum").build()
+                                    datePicker.show((context as FragmentActivity).supportFragmentManager, "DATE_PICKER")
+                                    datePicker.addOnPositiveButtonClickListener { selection ->
+                                        savingGoalDueDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(selection))
+                                    }
+                                }) {
                                 Icon(
                                     Icons.Filled.DateRange,
                                     modifier = Modifier.fillMaxSize(),
-                                    contentDescription = stringResource(id = R.string.addPaymentDialog_dateButton)
+                                    contentDescription = stringResource(id = R.string.addSavingGoalDialog_dueDateButton)
                                 )
                             }
                         }
@@ -108,13 +109,13 @@ fun AddPaymentDialog(
                 }
             },
             confirmButton = {
-                Button(onClick = { onConfirmAction("Beispiel-Zahlung") }) {
-                    Text(stringResource(id = R.string.addPaymentDialog_addButton))
+                Button(onClick = { onConfirmAction("Beispiel-Sparziel") }) {
+                    Text(stringResource(id = R.string.addSavingGoalDialog_addButton))
                 }
             },
             dismissButton = {
                 Button(onClick = { onDismiss() }) {
-                    Text(stringResource(id = R.string.addPaymentDialog_dismissButton))
+                    Text(stringResource(id = R.string.addSavingGoalDialog_dismissButton))
                 }
             }
         )

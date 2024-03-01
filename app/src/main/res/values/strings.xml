@@ -18,9 +18,24 @@
     <string name="payments_name">ZAHLUNGEN</string>
     <string name="paymentsButton_description">Zahlung hinzufügen</string>
 
-    <string name="addPaymentsDialog_name">ZAHLUNG HINZUFÜGEN</string>
-    <string name="addPaymentsDialog_addButton">HINZUFÜGEN</string>
-    <string name="addPaymentsDialog_dismissButton">ABBRECHEN</string>
+    <string name="addPaymentDialog_name">ZAHLUNG HINZUFÜGEN</string>
+    <string name="addPaymentDialog_addButton">HINZUFÜGEN</string>
+    <string name="addPaymentDialog_dismissButton">ABBRECHEN</string>
+
+    <string name="addSavingGoalDialog_name">SPARZIEL HINZUFÜGEN</string>
+    <string name="addSavingGoalDialog_addButton">HINZUFÜGEN</string>
+    <string name="addSavingGoalDialog_dismissButton">ABBRECHEN</string>
+
+    <string name="addSavingGoalDialog_title">Titel</string>
+    <string name="addSavingGoalDialog_value">Wert in €</string>
+    <string name="addSavingGoalDialog_duedate">Fälligkeitsdatum</string>
+    <string name="addSavingGoalDialog_dueDateButton">Datum auswählen</string>
+
+
+    <string name="addPaymentDialog_title">Titel</string>
+    <string name="addPaymentDialog_value">Wert in €</string>
+    <string name="addPaymentDialog_date">Zahlungsdatum</string>
+    <string name="addPaymentDialog_dateButton">Zahlungsdatum auswählen</string>
 
     <string name="assign_button">ZUWEISEN</string>
 
