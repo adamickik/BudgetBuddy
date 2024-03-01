@@ -40,19 +40,19 @@ fun Topbar(onDialogButtonClick: () -> Unit) {
                 modifier = Modifier.fillMaxHeight(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = stringResource(R.string.app_name_topbar))
+                Text(text = stringResource(R.string.topBar_name))
             }
         },
         navigationIcon = {
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .clickable(onClick = onDialogButtonClick), // Optional: Anpassen des Paddings für das Icon
-                contentAlignment = Alignment.Center // Zentriert das Icon im Box-Container
+                    .clickable(onClick = onDialogButtonClick),
+                contentAlignment = Alignment.Center
             ) {
                 Icon(
                     painter = painterResource(id = R.mipmap.ic_logo_foreground),
-                    contentDescription = "Spartipps anzeigen"
+                    contentDescription = stringResource(id = R.string.topBar_description)
                 )
             }
         },

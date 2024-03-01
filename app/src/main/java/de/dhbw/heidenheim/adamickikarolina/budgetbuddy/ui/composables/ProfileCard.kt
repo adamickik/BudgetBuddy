@@ -37,7 +37,7 @@ fun ProfileCard(){
         )
         Image(
             painter = painterResource(R.mipmap.ic_logo_foreground),
-            contentDescription = "Profilbild"
+            contentDescription = stringResource(R.string.profileImage_description)
         )
     }
 }
