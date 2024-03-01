@@ -23,7 +23,7 @@ fun AnalyticsScreen() {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = "Analytics Screen", fontSize = 20.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(20.dp))
-            LineChart(targetValue = 70f, currentValue = 10f, goalName = "BENZ")
+            LineChart(targetValue = 70f, currentValue = 90f, goalName = "BENZ")
             Spacer(modifier = Modifier.height(40.dp))
             PieChartWithLegend()
         }
@@ -33,8 +33,8 @@ fun AnalyticsScreen() {
 @Composable
 fun LineChart(targetValue: Float, currentValue: Float, goalName: String ) {
     // Beispielwerte
-    val points = listOf(0f, 50f, 20f, 80f, currentValue)
-    val maxValue = points.maxOrNull()?.coerceAtLeast(targetValue) ?: targetValue // Stellt sicher, dass die y-Achse beide, Ziel und aktuelle Werte, darstellen kann
+    val points = listOf(0f, 10f, 25f, 35f, currentValue)
+    val maxValue = points.maxOrNull()?.coerceAtLeast(targetValue) ?: targetValue
     val widthModifier = Modifier.fillMaxWidth().height(200.dp).padding(16.dp)
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -46,8 +46,8 @@ fun LineChart(targetValue: Float, currentValue: Float, goalName: String ) {
             val stepY = height / maxValue
 
             // Zeichne Achsen
-            drawLine(Color.Black, start = Offset(0f, height), end = Offset(width, height), strokeWidth = 4f) // X-Achse
-            drawLine(Color.Black, start = Offset(0f, 0f), end = Offset(0f, height), strokeWidth = 4f) // Y-Achse
+            drawLine(Color.Black, start = Offset(0f, height), end = Offset(width, height), strokeWidth = 4f)
+            drawLine(Color.Black, start = Offset(0f, 0f), end = Offset(0f, height), strokeWidth = 4f)
 
             // Zeichne Punkte und Linien
             points.forEachIndexed { index, value ->
@@ -57,12 +57,7 @@ fun LineChart(targetValue: Float, currentValue: Float, goalName: String ) {
                     val x2 = stepX * (index + 1)
                     val y2 = height - (points[index + 1] * stepY)
 
-                    drawLine(
-                        Color.Blue,
-                        start = Offset(x1, y1),
-                        end = Offset(x2, y2),
-                        strokeWidth = 4f
-                    )
+                    drawLine(Color.Blue, start = Offset(x1, y1), end = Offset(x2, y2), strokeWidth = 4f)
                 }
             }
 
@@ -97,11 +92,17 @@ fun LineChart(targetValue: Float, currentValue: Float, goalName: String ) {
                 }
             )
         }
-        // Text unter dem Graphen, wie viel noch zum Ziel fehlt
-        val amountLeft = targetValue - currentValue
-        Text(text = "Noch ${amountLeft}€ bis zum Ziel")
+        // Anpassung für Ziel erreicht
+        if (currentValue >= targetValue) {
+            Text(text = "Ziel erreicht, gönn dir!", fontWeight = FontWeight.Bold, color = Color.Green)
+        } else {
+            // Text unter dem Graphen, wie viel noch zum Ziel fehlt
+            val amountLeft = targetValue - currentValue
+            Text(text = "Noch ${amountLeft}€ bis zum Ziel", fontWeight = FontWeight.Bold)
+        }
     }
 }
+
 
 
 @Composable
