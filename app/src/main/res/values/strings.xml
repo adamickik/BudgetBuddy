@@ -24,7 +24,9 @@
     <string name="fixedPaymentsButton_description">Fixzahlung hinzufügen</string>
 
     <string name="title_activity_topbar">Topbar</string>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_text">0</string>
     <string name="add_widget">Add widget</string>
+    <string name="click_me">Drücke mich</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="widget_icon_description">Icon</string>
 </resources>
