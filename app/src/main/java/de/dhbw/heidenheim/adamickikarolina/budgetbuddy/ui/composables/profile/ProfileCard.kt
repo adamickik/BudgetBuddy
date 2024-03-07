@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
@@ -37,7 +37,7 @@ fun ProfileCard(){
         )
         Image(
             painter = painterResource(R.mipmap.ic_logo_foreground),
-            contentDescription = "Profilbild"
+            contentDescription = stringResource(R.string.profileImage_description)
         )
     }
 }

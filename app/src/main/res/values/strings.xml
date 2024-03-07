@@ -1,10 +1,16 @@
 <resources>
     <string name="app_name">BudgetBuddy</string>
-    <string name="app_name_topbar">BUDGET BUDDY</string>
+
+
+    <string name="topBar_name">BUDGET BUDDY</string>
+    <string name="topBar_description">Spartipps anzeigen</string>
 
     <string name="navigation_home">Home</string>
     <string name="navigation_analytics">Analytics</string>
     <string name="navigation_profile">Profile</string>
+
+    <string name="analytics_expenses_name">DEINE AUSGABEN</string>
+    <string name="analytics_savingsHistory_name">SPARVERLAUF %s</string>
 
     <string name="savings_account">DEIN SPARDEPOT</string>
     <string name="savings_currency"> €</string>
@@ -12,9 +18,32 @@
     <string name="payments_name">ZAHLUNGEN</string>
     <string name="paymentsButton_description">Zahlung hinzufügen</string>
 
+    <string name="addPaymentDialog_name">ZAHLUNG HINZUFÜGEN</string>
+    <string name="addPaymentDialog_addButton">HINZUFÜGEN</string>
+    <string name="addPaymentDialog_dismissButton">ABBRECHEN</string>
+
+    <string name="addSavingGoalDialog_name">SPARZIEL HINZUFÜGEN</string>
+    <string name="addSavingGoalDialog_addButton">HINZUFÜGEN</string>
+    <string name="addSavingGoalDialog_dismissButton">ABBRECHEN</string>
+
+    <string name="addSavingGoalDialog_title">Titel</string>
+    <string name="addSavingGoalDialog_value">Wert in €</string>
+    <string name="addSavingGoalDialog_duedate">Fälligkeitsdatum</string>
+    <string name="addSavingGoalDialog_dueDateButton">Datum auswählen</string>
+
+
+    <string name="addPaymentDialog_title">Titel</string>
+    <string name="addPaymentDialog_value">Wert in €</string>
+    <string name="addPaymentDialog_date">Zahlungsdatum</string>
+    <string name="addPaymentDialog_dateButton">Zahlungsdatum auswählen</string>
+
     <string name="assign_button">ZUWEISEN</string>
 
+    <string name="savingTips_name">SCHWABENTIPP</string>
+    <string name="savingTips_button">OK</string>
+
     <string name="profile_greeting">HALLO KAROLINA!</string>
+    <string name="profileImage_description">Profilbild</string>
 
     <string name="savingsGoals_name">SPARZIELE</string>
     <string name="savingsGoalsButton_description">Sparziel hinzufügen</string>
@@ -22,6 +51,7 @@
 
     <string name="fixedPayments_name">FIXZAHLUNGEN</string>
     <string name="fixedPaymentsButton_description">Fixzahlung hinzufügen</string>
+
 
     <string name="title_activity_topbar">Topbar</string>
     <string name="appwidget_text">0</string>

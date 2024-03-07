@@ -6,9 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 
-/**
- * Implementation of App Widget functionality.
- */
+
 class BudgetBuddyWidget : AppWidgetProvider() {
     override fun onUpdate(
         context: Context,
