@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.AddPaymentDialog
@@ -18,6 +19,8 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.Te
 @Composable
 fun HomeScreen(){
     var showDialog by remember{ mutableStateOf(false) }
+    val dbHandler = DBHandler(LocalContext.current)
+    dbHandler.insertInitialDataIfNeeded()
 
     Column{
         SavingsCard()
