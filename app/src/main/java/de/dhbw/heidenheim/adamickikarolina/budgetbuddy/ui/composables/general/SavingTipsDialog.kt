@@ -9,14 +9,15 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 
 @Composable
 fun SavingTipsDialog(
-    onDismissRequest:() -> Unit
+    onDismissRequest:() -> Unit,
+    tipp: String
 ) {
     AlertDialog(
         onDismissRequest = {onDismissRequest()},
         title = { Text(stringResource(R.string.savingTips_name)) },
         
         // TODO: Change with actual tips
-        text = { Text("Spartipp nr. 1") },
+        text = { Text(tipp) },
         confirmButton = {
             Button(onClick = { onDismissRequest() }) {
                 Text(stringResource(R.string.savingTips_button))

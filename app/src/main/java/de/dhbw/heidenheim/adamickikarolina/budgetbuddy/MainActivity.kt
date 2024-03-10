@@ -44,20 +44,19 @@ class MainActivity : AppCompatActivity() {
         expenseViewModel = ViewModelProvider(this, expenseFactory).get(ExpenseViewModel::class.java)
         savingsGoalViewModel = ViewModelProvider(this, savingsGoalFactory).get(SavingsGoalViewModel::class.java)
         setContent {
-            BudgetBuddyApp(expenseViewModel, savingsGoalViewModel)
+            BudgetBuddyApp(expenseViewModel, savingsGoalViewModel, dbHandler)
         }
     }
 }
 
-@Preview
 @Composable
-fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel) {
+fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel, dbHandler: DBHandler) {
     val navController = rememberNavController()
     var showDialog by remember{ mutableStateOf(false) }
 
     BudgetBuddyTheme {
         if (showDialog) {
-            SavingTipsDialog(onDismissRequest = { showDialog = false })
+            SavingTipsDialog(onDismissRequest = { showDialog = false }, dbHandler.readRandomTipp()[0])
         }
 
         Scaffold(

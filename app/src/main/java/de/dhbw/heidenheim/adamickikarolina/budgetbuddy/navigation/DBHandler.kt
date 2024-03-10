@@ -7,10 +7,12 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalModel
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class DBHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
+class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
         val createExpensesTableQuery = """
             CREATE TABLE $TABLE_NAME_EXPENSES (
@@ -29,13 +31,25 @@ class DBHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, DB
             )
         """.trimIndent()
 
+        val createTippsTableQuery = """
+    CREATE TABLE $TABLE_NAME_TIPPS (
+        $ID_COL INTEGER PRIMARY KEY AUTOINCREMENT,
+        $TIPP_COL TEXT
+    )
+""".trimIndent()
+
+
         db.execSQL(createExpensesTableQuery)
         db.execSQL(createSavingGoalsTableQuery)
+        db.execSQL(createTippsTableQuery)
+
+        executeSqlScript(db, "initial_data.sql")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME_EXPENSES")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME_SAVING_GOALS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME_TIPPS")
         onCreate(db)
     }
 
@@ -48,6 +62,7 @@ class DBHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, DB
 
         private const val TABLE_NAME_EXPENSES = "expenses"
         private const val TABLE_NAME_SAVING_GOALS = "savingGoals"
+        private const val TABLE_NAME_TIPPS = "tipps"
 
         // Common column names
         private const val ID_COL = "id"
@@ -57,6 +72,8 @@ class DBHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, DB
         private const val AMOUNT_COL = "amount"
         private const val DATETIME_COL = "datetime"
         private const val ASSIGNMENT_COL = "assignment"
+
+        private const val TIPP_COL = "tipp"
     }
 
     // Example method to add a new saving goal
@@ -159,8 +176,33 @@ class DBHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, DB
         // Return the filled ArrayList.
         return savingGoalModelArrayList
     }
+
+    fun readRandomTipp(): ArrayList<String> {
+        // on below line we are creating a database for reading our database.
+        val db = this.readableDatabase
+
+        // on below line we are creating a cursor with query to read data from database.
+        val cursorExpenses: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME_TIPPS ORDER BY RANDOM() LIMIT 1", null)
+
+        // on below line we are creating a new array list.
+        val courseModelArrayList: ArrayList<String> = ArrayList()
+
+        // moving our cursor to first position.
+        if (cursorExpenses.moveToFirst()) {
+            do {
+                // on below line we are adding the data from cursor to our array list.
+                courseModelArrayList.add(cursorExpenses.getString(1))
+            } while (cursorExpenses.moveToNext())
+            // moving our cursor to next.
+        }
+        // at last closing our cursor and returning our array list.
+        cursorExpenses.close()
+        return courseModelArrayList
+    }
+
     fun insertInitialDataIfNeeded() {
         val expenseList = this.readExpenses()
+        val tippsList = this.readRandomTipp()
         if (expenseList.isNullOrEmpty()) {
             // Insert initial data
             this.addNewExpense("Overwatch Skins", 150, 1)
@@ -171,6 +213,21 @@ class DBHandler(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, DB
         if (savingsGoalList.isNullOrEmpty()){
             this.addNewSavingGoal("Auto")
             this.addNewSavingGoal("Haus")
+        }
+    }
+
+    private fun executeSqlScript(db: SQLiteDatabase, fileName: String) {
+        val assetManager = context.assets
+        val inputStream = assetManager.open(fileName)
+        val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+        val sqlScript = bufferedReader.readText()
+        val sqlStatements = sqlScript.split(";")
+
+        for (statement in sqlStatements) {
+            val trimmedStatement = statement.trim()
+            if (trimmedStatement.isNotEmpty()) {
+                db.execSQL(trimmedStatement)
+            }
         }
     }
 }
