@@ -33,6 +33,7 @@ import java.util.Locale
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.ui.Alignment
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.DBHandler
 
 @Composable
 fun AddPaymentDialog(
@@ -40,6 +41,7 @@ fun AddPaymentDialog(
     onDismiss: () -> Unit,
     onConfirmAction: (String) -> Unit
 ) {
+    val dbHandler = DBHandler(LocalContext.current)
     var paymentTitle by remember { mutableStateOf("") }
     var paymentValue by remember { mutableStateOf("") }
     var paymentDate by remember { mutableStateOf("") }
@@ -108,7 +110,7 @@ fun AddPaymentDialog(
                 }
             },
             confirmButton = {
-                Button(onClick = { onConfirmAction("Beispiel-Zahlung") }) {
+                Button(onClick = {dbHandler.addNewExpense(paymentTitle, paymentValue.toInt(), 1) }) {
                     Text(stringResource(id = R.string.addPaymentDialog_addButton))
                 }
             },
