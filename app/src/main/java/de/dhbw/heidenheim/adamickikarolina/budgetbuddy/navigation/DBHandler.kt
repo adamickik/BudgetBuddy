@@ -109,11 +109,6 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
         values.put(NAME_COL, expenseName)
         values.put(AMOUNT_COL, expenseAmount)
 
-        // val currentDateTime = LocalDateTime.now()
-        // val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        //  formattedDateTime = currentDateTime.format(formatter)
-        // values.put(DATETIME_COL, formattedDateTime)
-
         values.put(ASSIGNMENT_COL, expenseAssignment)
 
         var result = db.insert(TABLE_NAME_EXPENSES, null, values)
@@ -215,24 +210,6 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
         // at last closing our cursor and returning our array list.
         cursorExpenses.close()
         return courseModelArrayList
-    }
-
-    fun insertInitialDataIfNeeded() {
-        /*val expenseList = this.readExpenses()
-        val tippsList = this.readRandomTipp()
-        if (expenseList.isNullOrEmpty()) {
-            // Insert initial data
-            this.addNewExpense("Overwatch Skins", 150, 1)
-            this.addNewExpense("Fortnite Skins", 90, 2)
-            // Add more as needed
-        }
-        val savingsGoalList = this.readSavingsGoals()
-        if (savingsGoalList.isNullOrEmpty()){
-            this.addNewSavingGoal("Auto")
-            this.addNewSavingGoal("Haus")
-        }
-        dead code
-        */
     }
 
     private fun executeSqlScript(db: SQLiteDatabase, fileName: String) {
