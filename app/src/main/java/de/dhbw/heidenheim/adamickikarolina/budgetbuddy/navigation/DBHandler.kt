@@ -20,7 +20,7 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
             CREATE TABLE $TABLE_NAME_EXPENSES (
                 $ID_COL INTEGER PRIMARY KEY AUTOINCREMENT,
                 $NAME_COL TEXT,
-                $AMOUNT_COL INTEGER,
+                $AMOUNT_COL REAL,
                 $DATETIME_COL DATETIME DEFAULT CURRENT_TIMESTAMP,
                 $ASSIGNMENT_COL INTEGER
             )
@@ -30,7 +30,7 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
             CREATE TABLE $TABLE_NAME_SAVING_GOALS (
                 $ID_COL INTEGER PRIMARY KEY AUTOINCREMENT,
                 $NAME_COL TEXT,
-                $GOAL_AMOUNT_COL INTEGER
+                $GOAL_AMOUNT_COL REAL
             )
         """.trimIndent()
 
@@ -155,7 +155,7 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
                 expenseModelArrayList.add(
                     ExpenseModel(
                         cursorExpenses.getString(1), // expenseName
-                        cursorExpenses.getInt(2),    // expenseAmount (This might be incorrect if it's actually expenseAssignment)
+                        cursorExpenses.getFloat(2),    // expenseAmount (This might be incorrect if it's actually expenseAssignment)
                         cursorExpenses.getString(3), // expenseDateTime
                         cursorExpenses.getInt(4)     // expenseAssignment (This might be incorrect if it's actually expenseAmount)
                     )
@@ -184,7 +184,7 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
                 // Extract id and name for each row in the cursor.
                 val id = cursorSavingGoals.getInt(0)
                 val name = cursorSavingGoals.getString(1)
-                val amount = cursorSavingGoals.getInt(2)
+                val amount = cursorSavingGoals.getFloat(2)
 
                 // Create a new SavingGoalModel instance and add it to the ArrayList.
                 savingGoalModelArrayList.add(SavingsGoalModel(id, name, amount))
@@ -195,6 +195,33 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
 
         // Return the filled ArrayList.
         return savingGoalModelArrayList
+    }
+
+    fun getSumOfExpenses(assignment: Int? = null): Float {
+        val db = this.readableDatabase
+        val queryBuilder = StringBuilder("SELECT SUM($AMOUNT_COL) FROM $TABLE_NAME_EXPENSES")
+
+        // If an assignment is provided, add a WHERE clause to the query
+        assignment?.let {
+            queryBuilder.append(" WHERE $ASSIGNMENT_COL = ?")
+        }
+
+        // Prepare the SQL query
+        val query = queryBuilder.toString()
+
+        // Execute the query. If an assignment is provided, use it as a selection argument.
+        val cursor: Cursor = if (assignment != null) {
+            db.rawQuery(query, arrayOf(assignment.toString()))
+        } else {
+            db.rawQuery(query, null)
+        }
+
+        var sum: Float = 0f
+        if (cursor.moveToFirst()) {
+            sum = cursor.getFloat(0) // Get the sum from the first column of the result
+        }
+        cursor.close()
+        return sum
     }
 
     fun readRandomTipp(): ArrayList<String> {

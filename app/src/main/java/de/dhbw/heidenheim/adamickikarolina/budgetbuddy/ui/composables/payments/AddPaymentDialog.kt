@@ -110,7 +110,7 @@ fun AddPaymentDialog(
                 }
             },
             confirmButton = {
-                Button(onClick = {dbHandler.addNewExpense(paymentTitle, paymentValue.toInt(), 1);onDismiss(); onConfirmAction("test")}) {
+                Button(onClick = {dbHandler.addNewExpense(paymentTitle, (paymentValue).toInt(), 1);onDismiss(); onConfirmAction("test")}) {
                     Text(stringResource(id = R.string.addPaymentDialog_addButton))
                 }
             },
