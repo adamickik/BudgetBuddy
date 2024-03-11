@@ -17,7 +17,8 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewMod
 
 @Composable
 fun ChartCard(
-    chartType: ChartType
+    chartType: ChartType,
+    chartViewModel : ChartViewModel
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
@@ -26,11 +27,10 @@ fun ChartCard(
             .padding(top = 15.dp, start = 15.dp, end = 15.dp, bottom = 10.dp),
     ) {
         Column {
-            val viewModel: ChartViewModel = viewModel()
 
             val text = when (chartType) {
                 ChartType.LineChart -> stringResource(R.string.analytics_savingsHistory_name,
-                    viewModel.savingsGoalName.value!!
+                    chartViewModel.savingsGoalName.value!!
                 )
                 ChartType.PieChart -> stringResource(R.string.analytics_expenses_name)
             }
@@ -42,8 +42,8 @@ fun ChartCard(
             )
 
             when (chartType) {
-                ChartType.LineChart -> LineChart(viewModel)
-                ChartType.PieChart -> PaymentsPieChart(viewModel)
+                ChartType.LineChart -> LineChart(chartViewModel)
+                ChartType.PieChart -> PaymentsPieChart(chartViewModel)
             }
         }
     }

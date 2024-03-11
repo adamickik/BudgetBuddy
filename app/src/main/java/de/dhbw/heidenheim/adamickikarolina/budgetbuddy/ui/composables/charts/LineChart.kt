@@ -39,7 +39,7 @@ fun LineChart(chartViewModel: ChartViewModel) {
         ) {
 
             val stepX = size.width / (points.size - 1)
-            val stepY = size.height / maxValue
+            val stepY = size.height / (maxValue * 1.1f)
 
             drawLine(
                 color = onSurfaceColor,

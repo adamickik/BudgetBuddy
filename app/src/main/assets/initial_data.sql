@@ -74,5 +74,8 @@ INSERT INTO tipps (tipp) VALUES ('Urlaubsfotos als Fensterdekoration Statt teure
 INSERT INTO savingGoals (name, goalamount) VALUES ('Auto',1000);
 INSERT INTO savingGoals (name, goalamount) VALUES ('Haus',500);
 
-INSERT INTO expenses (name, amount, assignment) VALUES ('Overwatch Skins', 150, 1);
+INSERT INTO expenses (name, amount, assignment) VALUES ('Overwatch Skins', 510, 1);
+INSERT INTO expenses (name, amount, assignment) VALUES ('Overwfgfgatch Skins', -400, 1);
+INSERT INTO expenses (name, amount, assignment) VALUES ('g Skins', -62, 1);
+INSERT INTO expenses (name, amount, assignment) VALUES ('fdg Skins', 50, 1);
 INSERT INTO expenses (name, amount, assignment) VALUES ('Fortnite Skins', 90, 2);

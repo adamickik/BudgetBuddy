@@ -25,6 +25,8 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.Bo
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.SavingTipsDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.Topbar
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModelFactory
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModelFactory
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
@@ -34,6 +36,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var expenseViewModel: ExpenseViewModel
     private lateinit var savingsGoalViewModel: SavingsGoalViewModel
+    private lateinit var chartViewModel: ChartViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,16 +45,18 @@ class MainActivity : AppCompatActivity() {
         val dbHandler = DBHandler(this)
         val expenseFactory = ExpenseViewModelFactory(dbHandler)
         val savingsGoalFactory = SavingsGoalViewModelFactory(dbHandler)
+        val chartFactory = ChartViewModelFactory(dbHandler)
         expenseViewModel = ViewModelProvider(this, expenseFactory).get(ExpenseViewModel::class.java)
         savingsGoalViewModel = ViewModelProvider(this, savingsGoalFactory).get(SavingsGoalViewModel::class.java)
+        chartViewModel = ViewModelProvider(this, chartFactory).get(ChartViewModel::class.java)
         setContent {
-            BudgetBuddyApp(expenseViewModel, savingsGoalViewModel, dbHandler)
+            BudgetBuddyApp(expenseViewModel, savingsGoalViewModel, chartViewModel, dbHandler)
         }
     }
 }
 
 @Composable
-fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel, dbHandler: DBHandler) {
+fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel, chartViewModel: ChartViewModel, dbHandler: DBHandler) {
     val navController = rememberNavController()
     var showDialog by remember{ mutableStateOf(false) }
 
@@ -72,7 +78,7 @@ fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: Sav
                     HomeScreen(expenseViewModel,savingsGoalViewModel)
                 }
                 composable(route=Screens.AnalyticsScreen.name){
-                    AnalyticsScreen()
+                    AnalyticsScreen(chartViewModel)
                 }
                 composable(route=Screens.ProfileScreen.name){
                     ProfileScreen()
