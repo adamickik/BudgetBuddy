@@ -33,7 +33,7 @@ fun SavingsCard(savingsGoal: SavingsGoalModel) {
             )
     ) {
         Text(
-            text = savingsGoal.savingGoalName,
+            text = savingsGoal.savingsGoalName,
             modifier = Modifier
                 .padding(
                     start = 10.dp,

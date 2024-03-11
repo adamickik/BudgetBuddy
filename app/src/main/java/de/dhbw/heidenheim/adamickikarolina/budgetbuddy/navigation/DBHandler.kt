@@ -27,7 +27,8 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
         val createSavingGoalsTableQuery = """
             CREATE TABLE $TABLE_NAME_SAVING_GOALS (
                 $ID_COL INTEGER PRIMARY KEY AUTOINCREMENT,
-                $NAME_COL TEXT
+                $NAME_COL TEXT,
+                $GOAL_AMOUNT_COL INTEGER
             )
         """.trimIndent()
 
@@ -58,7 +59,7 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
 
     companion object {
         private const val DB_NAME = "savingsdb"
-        private const val DB_VERSION = 2 // Make sure to increment this if you're adding the table after initial deployment
+        private const val DB_VERSION = 3 // Make sure to increment this if you're adding the table after initial deployment
 
         private const val TABLE_NAME_EXPENSES = "expenses"
         private const val TABLE_NAME_SAVING_GOALS = "savingGoals"
@@ -73,6 +74,10 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
         private const val DATETIME_COL = "datetime"
         private const val ASSIGNMENT_COL = "assignment"
 
+        //SavingsGoals table column names
+        private const val GOAL_AMOUNT_COL = "goalamount"
+
+        //Tips table column names
         private const val TIPP_COL = "tipp"
     }
 
@@ -176,9 +181,10 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
                 // Extract id and name for each row in the cursor.
                 val id = cursorSavingGoals.getInt(0)
                 val name = cursorSavingGoals.getString(1)
+                val amount = cursorSavingGoals.getInt(2)
 
                 // Create a new SavingGoalModel instance and add it to the ArrayList.
-                savingGoalModelArrayList.add(SavingsGoalModel(id, name))
+                savingGoalModelArrayList.add(SavingsGoalModel(id, name, amount))
             } while (cursorSavingGoals.moveToNext()) // Move to the next row.
         }
         // Close the cursor to release resources.

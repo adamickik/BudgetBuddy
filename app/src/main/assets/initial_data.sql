@@ -71,8 +71,8 @@ INSERT INTO tipps (tipp) VALUES ('Eierkartons als Schuhregal Alte Eierkartons bi
 INSERT INTO tipps (tipp) VALUES ('Alte CDs als Vogelscheuchen Die reflektierende Oberfläche alter CDs kann im Garten als Vogelscheuche dienen. Spart den Kauf einer Vogelscheuche und gibt den CDs eine neue Bestimmung.');
 INSERT INTO tipps (tipp) VALUES ('Urlaubsfotos als Fensterdekoration Statt teurer Gardinen oder Vorhänge, einfach Urlaubsfotos vergrößern und ans Fenster hängen. Spart Geld und hält die Erinnerungen lebendig.');
 
-INSERT INTO savingGoals (name) VALUES ('Auto');
-INSERT INTO savingGoals (name) VALUES ('Haus');
+INSERT INTO savingGoals (name, goalamount) VALUES ('Auto',1000);
+INSERT INTO savingGoals (name, goalamount) VALUES ('Haus',500);
 
 INSERT INTO expenses (name, amount, assignment) VALUES ('Overwatch Skins', 150, 1);
 INSERT INTO expenses (name, amount, assignment) VALUES ('Fortnite Skins', 90, 2);
