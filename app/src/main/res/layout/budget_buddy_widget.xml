@@ -7,61 +7,67 @@
 
     <ImageView
         android:id="@+id/widget_icon"
-        android:layout_height="match_parent"
-        android:src="@android:drawable/btn_star_big_on"
         android:layout_width="64dp"
-        android:contentDescription="@string/widget_icon_description" />
+        android:layout_height="match_parent"
+        android:contentDescription="@string/widget_icon_description"
+        android:src="@android:drawable/btn_star_big_on" />
 
     <FrameLayout
         android:id="@+id/widget_progress_bar_container"
-        android:layout_toRightOf="@id/widget_icon"
-        android:layout_marginStart="8dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_toRightOf="@id/widget_icon">
 
         <ProgressBar
             android:id="@+id/widget_progress_bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleY="8"
-            android:progress="50" />
+            android:progress="50"
+            android:scaleY="3"
+            android:progressTint="#FF47664A" />
 
         <TextView
             android:id="@+id/text_top_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|left"
-            android:text="SPARZIEL"
             android:fontFamily="@font/lato_regular"
-            android:textSize="24dp"/>
+            android:text="SPARZIEL"
+            android:textColor="#000000"
+            android:textSize="12dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_bottom_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
-            android:text="50€"
             android:fontFamily="@font/lato_regular"
-            android:textSize="24dp"/>
+            android:textColor="#000000"
+            android:text="50€"
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/text_top_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|right"
-            android:text="170€"
             android:fontFamily="@font/lato_regular"
-            android:textSize="24dp"/>
+            android:textColor="#000000"
+            android:text="170€"
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/text_bottom_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:text="120€"
             android:fontFamily="@font/lato_regular"
-            android:textSize="24dp"/>
+            android:textColor="#000000"
+            android:text="120€"
+            android:textSize="12dp" />
     </FrameLayout>
 
 </RelativeLayout>
