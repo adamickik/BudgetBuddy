@@ -19,7 +19,7 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
                 $ID_COL INTEGER PRIMARY KEY AUTOINCREMENT,
                 $NAME_COL TEXT,
                 $AMOUNT_COL INTEGER,
-                $DATETIME_COL TEXT,
+                $DATETIME_COL DATETIME DEFAULT CURRENT_TIMESTAMP,
                 $ASSIGNMENT_COL INTEGER
             )
         """.trimIndent()
@@ -104,10 +104,10 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
         values.put(NAME_COL, expenseName)
         values.put(AMOUNT_COL, expenseAmount)
 
-        val currentDateTime = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        val formattedDateTime = currentDateTime.format(formatter)
-        values.put(DATETIME_COL, formattedDateTime)
+        // val currentDateTime = LocalDateTime.now()
+        // val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        //  formattedDateTime = currentDateTime.format(formatter)
+        // values.put(DATETIME_COL, formattedDateTime)
 
         values.put(ASSIGNMENT_COL, expenseAssignment)
 
@@ -120,20 +120,30 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
 
 
     // we have created a new method for reading all the courses.
-    fun readExpenses(): ArrayList<ExpenseModel> {
-        // on below line we are creating a database for reading our database.
+    fun readExpenses(assignment: Int? = null): ArrayList<ExpenseModel> {
         val db = this.readableDatabase
 
-        // on below line we are creating a cursor with query to read data from database.
-        val cursorExpenses: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME_EXPENSES", null)
+        // Prepare the base query and selection arguments.
+        var query = "SELECT * FROM $TABLE_NAME_EXPENSES"
+        val selectionArgs = mutableListOf<String>()
 
-        // on below line we are creating a new array list.
+        // If an assignment is provided, modify the query to include a WHERE clause.
+        if (assignment != null) {
+            query += " WHERE $ASSIGNMENT_COL = ?"
+            selectionArgs.add(assignment.toString())
+        }
+
+        // Execute the query with possible selection arguments.
+        val cursorExpenses: Cursor = if (selectionArgs.isEmpty()) {
+            db.rawQuery(query, null)
+        } else {
+            db.rawQuery(query, selectionArgs.toTypedArray())
+        }
+
         val expenseModelArrayList: ArrayList<ExpenseModel> = ArrayList()
 
-        // moving our cursor to first position.
         if (cursorExpenses.moveToFirst()) {
             do {
-                // on below line we are adding the data from cursor to our array list.
                 expenseModelArrayList.add(
                     ExpenseModel(
                         cursorExpenses.getString(1), // expenseName
@@ -143,12 +153,13 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
                     )
                 )
             } while (cursorExpenses.moveToNext())
-            // moving our cursor to next.
         }
-        // at last closing our cursor and returning our array list.
+
         cursorExpenses.close()
         return expenseModelArrayList
     }
+
+
     fun readSavingsGoals(): ArrayList<SavingsGoalModel> {
         // Create a database instance for reading data.
         val db = this.readableDatabase
@@ -201,7 +212,7 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
     }
 
     fun insertInitialDataIfNeeded() {
-        val expenseList = this.readExpenses()
+        /*val expenseList = this.readExpenses()
         val tippsList = this.readRandomTipp()
         if (expenseList.isNullOrEmpty()) {
             // Insert initial data
@@ -214,6 +225,8 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
             this.addNewSavingGoal("Auto")
             this.addNewSavingGoal("Haus")
         }
+        dead code
+        */
     }
 
     private fun executeSqlScript(db: SQLiteDatabase, fileName: String) {
