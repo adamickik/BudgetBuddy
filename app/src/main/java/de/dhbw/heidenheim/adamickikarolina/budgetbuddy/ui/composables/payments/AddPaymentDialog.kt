@@ -41,6 +41,7 @@ fun AddPaymentDialog(
     onDismiss: () -> Unit,
     onConfirmAction: (String) -> Unit
 ) {
+    // TODO: Resource Management issues with new DBHandler
     val dbHandler = DBHandler(LocalContext.current)
     var paymentTitle by remember { mutableStateOf("") }
     var paymentValue by remember { mutableStateOf("") }
@@ -65,7 +66,7 @@ fun AddPaymentDialog(
                         value = paymentValue,
                         modifier=Modifier.padding(bottom=8.dp),
                         onValueChange = { newValue ->
-                            // Validation for Money
+                            // TODO: Proper Validation for Money in ViewModel
                             if (newValue.matches(Regex("^\\d*,?\\d{0,2}$"))) {
                                 paymentValue = newValue
                             }},
@@ -110,7 +111,12 @@ fun AddPaymentDialog(
                 }
             },
             confirmButton = {
-                Button(onClick = {dbHandler.addNewExpense(paymentTitle, (paymentValue).toInt(), 1);onDismiss(); onConfirmAction("test")}) {
+                Button(
+                    onClick = {
+                        // TODO: outsource to ViewModel
+                        dbHandler.addNewExpense(paymentTitle, (paymentValue).toInt(), 1);onDismiss(); onConfirmAction("test")
+                    }
+                ) {
                     Text(stringResource(id = R.string.addPaymentDialog_addButton))
                 }
             },

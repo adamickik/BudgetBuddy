@@ -22,7 +22,6 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.Te
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.ExpenseCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
-@Preview
 @Composable
 fun HomeScreen(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel) {
     var showDialog by remember { mutableStateOf(false) }
@@ -48,7 +47,7 @@ fun HomeScreen(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: Savings
                     onDismiss = { showDialog = false },
                     onConfirmAction = { payment ->
                         showDialog = false
-                        // TODO: Process payment
+                        // TODO: Process payment in ViewModel
                     }
                 )
             }

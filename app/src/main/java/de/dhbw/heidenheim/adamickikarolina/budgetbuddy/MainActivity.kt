@@ -22,6 +22,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.HomeScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.ProfileScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.Screens
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.BottomNavBar
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.BudgetBuddyApp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.SavingTipsDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.Topbar
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
@@ -54,38 +55,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-@Composable
-fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel, chartViewModel: ChartViewModel, dbHandler: DBHandler) {
-    val navController = rememberNavController()
-    var showDialog by remember{ mutableStateOf(false) }
-
-    BudgetBuddyTheme {
-        if (showDialog) {
-            SavingTipsDialog(onDismissRequest = { showDialog = false }, dbHandler.readRandomTipp()[0])
-        }
-
-        Scaffold(
-            topBar = { Topbar(onDialogButtonClick = {showDialog=true}) },
-            bottomBar = { BottomNavBar(navController = navController) }
-        ) {paddingValues ->
-            NavHost(
-                navController= navController,
-                startDestination= Screens.HomeScreen.name,
-                modifier = Modifier.padding(paddingValues)
-            ){
-                composable(route=Screens.HomeScreen.name){
-                    HomeScreen(expenseViewModel,savingsGoalViewModel)
-                }
-                composable(route=Screens.AnalyticsScreen.name){
-                    AnalyticsScreen(chartViewModel)
-                }
-                composable(route=Screens.ProfileScreen.name){
-                    ProfileScreen()
-                }
-            }
-        }
-    }
-}
-
-

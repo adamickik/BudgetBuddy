@@ -16,45 +16,48 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.Sa
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.TextIconButton
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.AddSavingGoalDialog
 
+enum class DialogType {
+    None, Payment, SavingGoal
+}
+
 @Preview
 @Composable
 fun ProfileScreen(){
-    var showPaymentDialog by remember{ mutableStateOf(false) }
-    var showSavingGoalDialog by remember{ mutableStateOf(false) }
+    var currentDialog by remember { mutableStateOf(DialogType.None) }
 
     Column {
         ProfileCard()
         TextIconButton(
             stringResource(R.string.savingsGoals_name),
             stringResource(R.string.savingsGoalsButton_description),
-            onIconClick = {showSavingGoalDialog=true})
+            onIconClick = {currentDialog = DialogType.SavingGoal}
+        )
         SavingsGoalCard()
         TextIconButton(
             stringResource(R.string.fixedPayments_name),
             stringResource(R.string.fixedPaymentsButton_description),
-            onIconClick = {showPaymentDialog=true})
+            onIconClick = {currentDialog = DialogType.Payment}
+        )
         PaymentCard()
     }
 
-    if(showPaymentDialog){
-        AddPaymentDialog(
-            showDialog = showPaymentDialog,
-            onDismiss = { showPaymentDialog = false },
+    when(currentDialog){
+        DialogType.Payment -> AddPaymentDialog(
+            showDialog = true,
+            onDismiss = { currentDialog = DialogType.None },
             onConfirmAction = { payment ->
-                showPaymentDialog = false
-                // TODO: Process fixed payment
+                currentDialog = DialogType.None
+                // TODO: Delegate to ViewModel
             }
         )
-    }
-
-    if(showSavingGoalDialog){
-        AddSavingGoalDialog(
-            showDialog = showSavingGoalDialog,
-            onDismiss = { showSavingGoalDialog = false },
-            onConfirmAction = { payment ->
-                showSavingGoalDialog = false
-                // TODO: Process fixed payment
+        DialogType.SavingGoal -> AddSavingGoalDialog(
+            showDialog = true,
+            onDismiss = { currentDialog = DialogType.None },
+            onConfirmAction = { savingGoal ->
+                currentDialog = DialogType.None
+                // TODO: Delegate to ViewModel
             }
         )
+        DialogType.None -> Unit
     }
 }

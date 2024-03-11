@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalModel
 
-@Preview
 @Composable
 fun SavingsCard(savingsGoal: SavingsGoalModel) {
     ElevatedCard(

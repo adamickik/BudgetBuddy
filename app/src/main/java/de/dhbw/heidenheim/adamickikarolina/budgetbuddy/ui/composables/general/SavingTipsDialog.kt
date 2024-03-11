@@ -13,10 +13,9 @@ fun SavingTipsDialog(
     tipp: String
 ) {
     AlertDialog(
-        onDismissRequest = {onDismissRequest()},
+        onDismissRequest = onDismissRequest,
         title = { Text(stringResource(R.string.savingTips_name)) },
-        
-        // TODO: Change with actual tips
+
         text = { Text(tipp) },
         confirmButton = {
             Button(onClick = { onDismissRequest() }) {
@@ -24,5 +23,4 @@ fun SavingTipsDialog(
             }
         }
     )
-
 }
