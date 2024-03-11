@@ -2,9 +2,11 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.BudgetBuddyWidget
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalModel
 import java.io.BufferedReader
@@ -116,6 +118,12 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
         // ERROR
 
         db.close()
+
+        val intent = Intent(context, BudgetBuddyWidget::class.java).apply {
+            action = "de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ACTION_UPDATE_WIDGET"
+        }
+        context.sendBroadcast(intent)
+
     }
 
 
