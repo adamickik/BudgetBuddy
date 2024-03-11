@@ -26,9 +26,6 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalV
 @Composable
 fun HomeScreen(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel) {
     var showDialog by remember { mutableStateOf(false) }
-    val dbHandler = DBHandler(LocalContext.current)
-    dbHandler.insertInitialDataIfNeeded()
-
     val expenses by expenseViewModel.expenses.observeAsState(emptyList())
     val savingsGoals by savingsGoalViewModel.savingsGoals.observeAsState(emptyList())
 
