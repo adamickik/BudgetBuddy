@@ -1,13 +1,19 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy
 
+import InitialExpenseData
+import InitialSavingGoalData
+import InitialTippData
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.AppDatabase
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.ExpenseDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoalDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Tipp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.TippDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.BudgetBuddyApp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
@@ -43,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         tippDao = db.getTippDao()
         savingGoalDao = db.getSavingGoalDao()
 
+        fillDatabaseInitially(InitialTippData.initialTipps, InitialExpenseData.initialExpenses, InitialSavingGoalData.initialSavingGoals)
+
         //val dbHandler = DBHandler(this)
         val expenseFactory = ExpenseViewModelFactory(expenseDao)
         val savingsGoalFactory = SavingsGoalViewModelFactory(savingGoalDao)
@@ -56,6 +64,16 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             BudgetBuddyApp(expenseViewModel, savingsGoalViewModel, chartViewModel, tippsViewModel)
+        }
+    }
+
+    private fun fillDatabaseInitially(tipps: List<Tipp>, expenses: List<Expense>, savingGoals: List<SavingGoal>) {
+        // Fill list initially if tables are empty
+        // TODO: better logic for initially filling db
+        if (tippDao.getCount()==0) {
+            tippDao.insertAsList(tipps)
+            expenseDao.insertAsList(expenses)
+            savingGoalDao.insertAsList(savingGoals)
         }
     }
 }

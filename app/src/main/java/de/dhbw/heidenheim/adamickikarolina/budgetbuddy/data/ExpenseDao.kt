@@ -20,6 +20,9 @@ interface ExpenseDao {
     @Insert
     fun insert(vararg expense: Expense)
 
+    @Insert
+    fun insertAsList(expenseList: List<Expense>)
+
     @Delete
     fun delete(expense: Expense)
 }

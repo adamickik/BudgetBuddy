@@ -21,7 +21,6 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewM
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
 
-
 @Composable
 fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel, chartViewModel: ChartViewModel, tippsViewModel: TippsViewModel) {
     val navController = rememberNavController()

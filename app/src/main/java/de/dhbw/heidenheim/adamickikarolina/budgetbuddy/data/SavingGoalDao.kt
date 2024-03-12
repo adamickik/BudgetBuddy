@@ -22,6 +22,9 @@ interface SavingGoalDao {
     @Insert
     fun insert(vararg savingGoal: SavingGoal)
 
+    @Insert
+    fun insertAsList(savingGoalList: List<SavingGoal>)
+
     @Delete
     fun delete(savingGoal: SavingGoal)
 }

@@ -19,12 +19,18 @@ interface TippDao {
     fun getByName(tippName: String): LiveData<Tipp>
 
     @Insert
-    fun insertAll(vararg tipp: Tipp)
+    fun insert(vararg tipp: Tipp)
+
+    @Insert
+    fun insertAsList(tippList: List<Tipp>)
 
     @Delete
     fun delete(tipp: Tipp)
 
     @Query("SELECT * FROM tipps ORDER BY RANDOM() LIMIT 1")
-    fun getRandomTipp(): LiveData<Tipp>
+    fun getRandomTipp(): Tipp?
+
+    @Query("SELECT COUNT(*) FROM tipps")
+    fun getCount(): Int
 
 }

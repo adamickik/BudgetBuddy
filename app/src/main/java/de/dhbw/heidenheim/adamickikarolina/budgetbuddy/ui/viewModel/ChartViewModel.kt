@@ -47,7 +47,7 @@ class ChartViewModel(
             }
 
             expenseDao.getAll().value?.let { expenses ->
-                points.value = expenses.map { it.eAmount.toFloat() }
+                points.value = expenses.map { it.eAmount }
                 transformPointsListAscending()
             }
         }
@@ -67,7 +67,9 @@ class ChartViewModel(
 
     //max. Value of LineChart
     val maxValue: LiveData<Float> = points.map { pointsList ->
-        pointsList.map { it.toFloat() }.maxOrNull()?.coerceAtLeast(targetValue.value ?: 0f) ?: targetValue.value ?: 0f
+
+        val maxPoint = pointsList.maxOrNull() ?: 0f
+        maxPoint.coerceAtLeast(targetValue.value ?: 0f)
     }
 }
 class ChartViewModelFactory(
