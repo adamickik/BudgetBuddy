@@ -2,14 +2,19 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation
 
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.SnappingLazyRow
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.AddPaymentDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingsCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.TextIconButton
@@ -23,14 +28,13 @@ fun HomeScreen(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: Savings
     val savingsGoals by savingsGoalViewModel.savingsGoals.observeAsState(emptyList())
 
     Column {
+        SnappingLazyRow(savingsGoals = savingsGoals)
 
-        savingsGoals.forEach { savingsGoal ->
-            SavingsCard(savingsGoal)
-        }
-            TextIconButton(
-                stringResource(R.string.payments_name),
-                stringResource(R.string.paymentsButton_description),
-                onIconClick = { showDialog = true })
+        TextIconButton(
+            stringResource(R.string.payments_name),
+            stringResource(R.string.paymentsButton_description),
+            onIconClick = { showDialog = true })
+
         expenses.forEach { expense ->
             ExpenseCard(expense)
         }
