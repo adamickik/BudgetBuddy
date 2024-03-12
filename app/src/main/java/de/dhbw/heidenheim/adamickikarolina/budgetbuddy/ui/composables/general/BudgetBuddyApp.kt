@@ -12,7 +12,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.AnalyticsScreen
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.DBHandler
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.HomeScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.ProfileScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.Screens

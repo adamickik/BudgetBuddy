@@ -8,7 +8,6 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.ExpenseDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoalDao
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.DBHandler
 import kotlinx.coroutines.launch
 
 

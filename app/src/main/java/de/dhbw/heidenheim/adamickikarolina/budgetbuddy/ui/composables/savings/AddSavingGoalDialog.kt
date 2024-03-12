@@ -34,7 +34,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.ui.Alignment
 import androidx.fragment.app.FragmentActivity
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
 @Composable
@@ -113,8 +112,8 @@ fun AddSavingGoalDialog(
             },
             confirmButton = {
                 Button(onClick = {
-                    savingGoalViewModel.addSavingsGoal(savingGoalTitle, (savingGoalValue).toString(), savingGoalDueDate);
-                    onDismiss();
+                    savingGoalViewModel.addSavingsGoal(savingGoalTitle, (savingGoalValue).toString(), savingGoalDueDate)
+                    onDismiss()
                     onConfirmAction("test") }) {
                     Text(stringResource(id = R.string.addSavingGoalDialog_addButton))
                 }

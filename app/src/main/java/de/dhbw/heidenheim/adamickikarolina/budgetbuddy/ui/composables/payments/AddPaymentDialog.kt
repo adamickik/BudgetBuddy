@@ -33,7 +33,6 @@ import java.util.Locale
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.ui.Alignment
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.DBHandler
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
 @Composable
@@ -114,8 +113,8 @@ fun AddPaymentDialog(
             confirmButton = {
                 Button(
                     onClick = {
-                        expenseViewModel.addExpense(paymentTitle, (paymentValue).toString(), paymentDate);
-                        onDismiss();
+                        expenseViewModel.addExpense(paymentTitle, (paymentValue).toString(), paymentDate)
+                        onDismiss()
                         onConfirmAction("test")
                     }
                 ) {
