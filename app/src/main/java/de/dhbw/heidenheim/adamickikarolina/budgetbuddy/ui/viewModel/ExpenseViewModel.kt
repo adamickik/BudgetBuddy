@@ -1,6 +1,5 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -14,19 +13,13 @@ class ExpenseViewModel(private val expenseDao: ExpenseDao) : ViewModel() {
 
     fun addExpense(title: String, value: String, date: String) {
         val expenseValue = value.toFloatOrNull() ?: return
-        if(expenseValue== null){
-            Log.e("ExpenseViewModel", "Fehler bei der Konvertierung von $value zu Float")
-            return
-        }
 
         //val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).parse(date) ?: return
 
         val newExpense = Expense(title, expenseValue, date, 0)
 
         viewModelScope.launch {
-            Log.d("ExpenseViewModel", "Füge neue Ausgabe hinzu: $title")
             expenseDao.insert(newExpense)
-            Log.d("ExpenseViewModel", "Neue Ausgabe hinzugefügt: $title")
         }
     }
 }

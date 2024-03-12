@@ -1,3 +1,5 @@
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData
+
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Tipp
 
 object InitialTippData {

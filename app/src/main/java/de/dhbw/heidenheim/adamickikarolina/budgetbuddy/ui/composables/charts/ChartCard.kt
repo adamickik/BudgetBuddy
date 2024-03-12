@@ -30,9 +30,7 @@ fun ChartCard(
         Column {
 
             val text = when (chartType) {
-                ChartType.LineChart -> stringResource(R.string.analytics_savingsHistory_name,
-                    savingsGoalName.value
-                )
+                ChartType.LineChart -> stringResource(R.string.analytics_savingsHistory_name, savingsGoalName.value)
                 ChartType.PieChart -> stringResource(R.string.analytics_expenses_name)
             }
 

@@ -18,11 +18,12 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.Screens
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingDepotViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
 
 @Composable
-fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel, chartViewModel: ChartViewModel, tippsViewModel: TippsViewModel) {
+fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel, chartViewModel: ChartViewModel, tippsViewModel: TippsViewModel, savingDepotViewModel: SavingDepotViewModel) {
     val navController = rememberNavController()
     var showDialog by remember{ mutableStateOf(false) }
 
@@ -41,13 +42,13 @@ fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: Sav
                 modifier = Modifier.padding(paddingValues)
             ){
                 composable(route= Screens.HomeScreen.name){
-                    HomeScreen(expenseViewModel,savingsGoalViewModel)
+                    HomeScreen(expenseViewModel,savingsGoalViewModel, savingDepotViewModel)
                 }
                 composable(route= Screens.AnalyticsScreen.name){
                     AnalyticsScreen(chartViewModel)
                 }
                 composable(route= Screens.ProfileScreen.name){
-                    ProfileScreen(savingsGoalViewModel)
+                    ProfileScreen(savingsGoalViewModel, expenseViewModel)
                 }
             }
         }

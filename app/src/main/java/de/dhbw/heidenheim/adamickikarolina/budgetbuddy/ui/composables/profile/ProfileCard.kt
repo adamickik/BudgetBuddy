@@ -25,7 +25,8 @@ fun ProfileCard(){
         verticalAlignment = Alignment.CenterVertically
     ){
         Text(
-            text = stringResource(R.string.profile_greeting),
+            // TODO Change with actual name
+            text = stringResource(R.string.profile_greeting, "KAROLINA"),
             style = MaterialTheme.typography.headlineLarge,
 
             modifier = Modifier

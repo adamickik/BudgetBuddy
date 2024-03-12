@@ -2,6 +2,7 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
@@ -12,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingDepot
 import java.util.Locale
 
 @Composable
-fun SavingsCard(savingsGoal: SavingGoal) {
+fun SavingDepotCard(savingDepot: SavingDepot) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -31,7 +32,7 @@ fun SavingsCard(savingsGoal: SavingGoal) {
             )
     ) {
         Text(
-            text = savingsGoal.sgName,
+            text = "SPARDEPOT",
             modifier = Modifier
                 .padding(
                     start = 10.dp,
@@ -40,7 +41,7 @@ fun SavingsCard(savingsGoal: SavingGoal) {
         )
         Text(
             // TODO: change with actual value and currency
-            text = String.format(Locale.GERMANY, "%.2f", savingsGoal.sgGoalAmount) + stringResource(R.string.savings_currency),
+            text = String.format(Locale.GERMANY, "%.2f", savingDepot.sdAmount) + stringResource(R.string.savings_currency),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(
@@ -49,5 +50,15 @@ fun SavingsCard(savingsGoal: SavingGoal) {
                 )
                 .align(Alignment.CenterHorizontally),
         )
+        Button(
+            onClick = { },
+            modifier = Modifier
+                .padding(
+                    bottom = 10.dp
+                )
+                .align(Alignment.CenterHorizontally),
+        ) {
+            Text(stringResource(R.string.assign_button))
+        }
     }
 }
