@@ -14,10 +14,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalModel
 
 @Composable
-fun SavingsCard(savingsGoal: SavingsGoalModel) {
+fun SavingsCard(savingsGoal: SavingGoal) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -32,7 +33,7 @@ fun SavingsCard(savingsGoal: SavingsGoalModel) {
             )
     ) {
         Text(
-            text = savingsGoal.savingsGoalName,
+            text = savingsGoal.sgName,
             modifier = Modifier
                 .padding(
                     start = 10.dp,
@@ -41,7 +42,7 @@ fun SavingsCard(savingsGoal: SavingsGoalModel) {
         )
         Text(
             // TODO: change with actual value and currency
-            text = "1509.24" + stringResource(R.string.savings_currency),
+            text = savingsGoal.sgGoalAmount.toString() + stringResource(R.string.savings_currency),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(

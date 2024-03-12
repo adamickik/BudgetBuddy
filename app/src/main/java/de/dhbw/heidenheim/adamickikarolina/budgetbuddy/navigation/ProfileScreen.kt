@@ -15,14 +15,17 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile.Pr
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingsGoalCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.TextIconButton
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.AddSavingGoalDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
 enum class DialogType {
     None, Payment, SavingGoal
 }
 
-@Preview
 @Composable
-fun ProfileScreen(){
+fun ProfileScreen(
+    savingGoalViewModel: SavingsGoalViewModel
+){
     var currentDialog by remember { mutableStateOf(DialogType.None) }
 
     Column {
@@ -42,15 +45,17 @@ fun ProfileScreen(){
     }
 
     when(currentDialog){
-        DialogType.Payment -> AddPaymentDialog(
+        // TODO: Give Expense ViewModel to PaymentDialog
+        /*DialogType.Payment -> AddPaymentDialog(
             showDialog = true,
             onDismiss = { currentDialog = DialogType.None },
             onConfirmAction = { payment ->
                 currentDialog = DialogType.None
                 // TODO: Delegate to ViewModel
             }
-        )
+        )*/
         DialogType.SavingGoal -> AddSavingGoalDialog(
+            savingGoalViewModel = savingGoalViewModel,
             showDialog = true,
             onDismiss = { currentDialog = DialogType.None },
             onConfirmAction = { savingGoal ->
@@ -59,5 +64,6 @@ fun ProfileScreen(){
             }
         )
         DialogType.None -> Unit
+        else -> {}
     }
 }

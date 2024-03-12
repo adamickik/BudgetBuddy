@@ -34,15 +34,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.ui.Alignment
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.DBHandler
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
 @Composable
 fun AddPaymentDialog(
+    expenseViewModel: ExpenseViewModel,
     showDialog: Boolean,
     onDismiss: () -> Unit,
     onConfirmAction: (String) -> Unit
 ) {
     // TODO: Resource Management issues with new DBHandler
-    val dbHandler = DBHandler(LocalContext.current)
     var paymentTitle by remember { mutableStateOf("") }
     var paymentValue by remember { mutableStateOf("") }
     var paymentDate by remember { mutableStateOf("") }
@@ -113,8 +114,9 @@ fun AddPaymentDialog(
             confirmButton = {
                 Button(
                     onClick = {
-                        // TODO: outsource to ViewModel
-                        dbHandler.addNewExpense(paymentTitle, (paymentValue).toInt(), 1);onDismiss(); onConfirmAction("test")
+                        expenseViewModel.addExpense(paymentTitle, (paymentValue).toString(), paymentDate);
+                        onDismiss();
+                        onConfirmAction("test")
                     }
                 ) {
                     Text(stringResource(id = R.string.addPaymentDialog_addButton))

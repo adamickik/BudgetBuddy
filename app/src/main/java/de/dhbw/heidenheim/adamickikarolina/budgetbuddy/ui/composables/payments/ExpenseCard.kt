@@ -11,10 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseModel
 
 @Composable
-fun ExpenseCard(expense: ExpenseModel) {
+fun ExpenseCard(expense: Expense) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -31,8 +32,8 @@ fun ExpenseCard(expense: ExpenseModel) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                // TODO: Change with actual payment title
-                text = expense.expenseName,
+                // TODO: Change with actual expense title
+                text = expense.eName,
 
                 modifier = Modifier
                     .padding(
@@ -45,7 +46,7 @@ fun ExpenseCard(expense: ExpenseModel) {
             )
             Text(
                 // TODO: change with actual payment
-                text = expense.expenseAmount.toString() + stringResource(R.string.savings_currency),
+                text = expense.eAmount.toString() + stringResource(R.string.savings_currency),
                 modifier = Modifier
                     .padding(
                         start = 10.dp,

@@ -20,16 +20,17 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
 
 
 @Composable
-fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel, chartViewModel: ChartViewModel, dbHandler: DBHandler) {
+fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel, chartViewModel: ChartViewModel, tippsViewModel: TippsViewModel) {
     val navController = rememberNavController()
     var showDialog by remember{ mutableStateOf(false) }
 
     BudgetBuddyTheme {
         if (showDialog) {
-            SavingTipsDialog(onDismissRequest = { showDialog = false }, dbHandler.readRandomTipp()[0])
+            SavingTipsDialog(onDismissRequest = { showDialog = false }, tippsViewModel)
         }
 
         Scaffold(
@@ -48,7 +49,7 @@ fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: Sav
                     AnalyticsScreen(chartViewModel)
                 }
                 composable(route= Screens.ProfileScreen.name){
-                    ProfileScreen()
+                    ProfileScreen(savingsGoalViewModel)
                 }
             }
         }

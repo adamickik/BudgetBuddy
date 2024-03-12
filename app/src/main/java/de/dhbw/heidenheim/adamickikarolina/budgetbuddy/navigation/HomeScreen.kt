@@ -43,6 +43,7 @@ fun HomeScreen(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: Savings
 
             if (showDialog) {
                 AddPaymentDialog(
+                    expenseViewModel= expenseViewModel,
                     showDialog = showDialog,
                     onDismiss = { showDialog = false },
                     onConfirmAction = { payment ->
