@@ -11,7 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import java.util.Locale
 
+// TODO: payments
 @Composable
 fun PaymentCard() {
     ElevatedCard(
@@ -30,7 +32,6 @@ fun PaymentCard() {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                // TODO: Change with actual payment title
                 text = "MIETE",
 
                 modifier = Modifier
@@ -43,8 +44,7 @@ fun PaymentCard() {
                     .weight(1f),
             )
             Text(
-                // TODO: change with actual payment
-                text = "1509.23" + stringResource(R.string.savings_currency),
+                text = String.format(Locale.GERMANY, "%.2f", 539.54F) + stringResource(R.string.savings_currency),
                 modifier = Modifier
                     .padding(
                         start = 10.dp,

@@ -39,15 +39,23 @@ fun SavingsCard(savingsGoal: SavingGoal) {
                 ),
         )
         Text(
-            // TODO: change with actual value and currency
             text = String.format(Locale.GERMANY, "%.2f", savingsGoal.sgGoalAmount) + stringResource(R.string.savings_currency),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(
-                    top = 10.dp,
-                    bottom = 10.dp
+                    top = 5.dp,
+                    bottom = 5.dp
                 )
                 .align(Alignment.CenterHorizontally),
+        )
+        Text(
+            text = stringResource(R.string.savingCard_remaining),
+            modifier = Modifier
+                .padding(
+                    start = 10.dp,
+                    top=5.dp,
+                    bottom = 10.dp
+                ),
         )
     }
 }

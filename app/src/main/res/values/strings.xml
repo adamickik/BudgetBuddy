@@ -15,6 +15,8 @@
     <string name="savings_account">DEIN SPARDEPOT</string>
     <string name="savings_currency">\u0020€</string>
 
+    <string name="savingCard_remaining">Übrig bleiben:\u0020</string>
+
     <string name="payments_name">ZAHLUNGEN</string>
     <string name="paymentsButton_description">Zahlung hinzufügen</string>
 

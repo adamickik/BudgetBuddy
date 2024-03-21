@@ -35,7 +35,6 @@ fun SavingsGoalCard(savingsGoal: SavingGoal){
             ){
                 Text(
                     text = savingsGoal.sgName,
-                    style = MaterialTheme.typography.headlineMedium,
 
                     modifier = Modifier
                         .padding(start = 10.dp,
@@ -46,7 +45,6 @@ fun SavingsGoalCard(savingsGoal: SavingGoal){
                 Text(
                     // TODO: change with actual savings goal
                     text = String.format(Locale.GERMANY, "%.2f", savingsGoal.sgGoalAmount) + stringResource(R.string.savings_currency),
-                    style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier
                         .padding(start = 10.dp,
                             top = 10.dp,
