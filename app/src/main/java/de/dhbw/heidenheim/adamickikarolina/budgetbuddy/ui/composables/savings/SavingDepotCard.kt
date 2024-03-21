@@ -17,7 +17,10 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingDepot
 import java.util.Locale
 
 @Composable
-fun SavingDepotCard(savingDepot: SavingDepot) {
+fun SavingDepotCard(
+    savingDepot: SavingDepot,
+    onAssignButtonClick: () -> Unit
+) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -51,7 +54,7 @@ fun SavingDepotCard(savingDepot: SavingDepot) {
                 .align(Alignment.CenterHorizontally),
         )
         Button(
-            onClick = { },
+            onClick = onAssignButtonClick,
             modifier = Modifier
                 .padding(
                     bottom = 10.dp

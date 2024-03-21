@@ -12,13 +12,16 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.Sa
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SnappingLazyRow(savingsGoals: List<SavingGoal>, savingDepot: SavingDepot) {
+fun SnappingLazyRow(
+    savingsGoals: List<SavingGoal>,
+    savingDepot: SavingDepot,
+    onAssignButtonClick: () -> Unit) {
     // PagerState for snap behaviour
     val savingsGoalsListSize = savingsGoals.size
     val pagerState = rememberPagerState(pageCount = { savingsGoalsListSize+1 })
 
     DotsIndicator(
-        totalDots = 3,
+        totalDots = savingsGoalsListSize+1,
         selectedIndex = pagerState.currentPage,
         selectedColor = MaterialTheme.colorScheme.onSurfaceVariant,
         unSelectedColor = MaterialTheme.colorScheme.outlineVariant,
@@ -28,7 +31,9 @@ fun SnappingLazyRow(savingsGoals: List<SavingGoal>, savingDepot: SavingDepot) {
         state = pagerState
     ) { page ->
         when(page){
-            0-> SavingDepotCard(savingDepot = savingDepot)
+            0-> SavingDepotCard(
+                savingDepot = savingDepot,
+                onAssignButtonClick = onAssignButtonClick)
             else -> SavingsCard(savingsGoal = savingsGoals[page-1])
         }
     }

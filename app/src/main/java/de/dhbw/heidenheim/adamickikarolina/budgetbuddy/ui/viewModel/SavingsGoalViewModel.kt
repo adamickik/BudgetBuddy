@@ -12,16 +12,8 @@ class SavingsGoalViewModel(private val savingGoalDao: SavingGoalDao) : ViewModel
 
     val savingsGoals: LiveData<List<SavingGoal>> = savingGoalDao.getAll()
 
-    fun addSavingsGoal(savingGoal: SavingGoal) {
-        viewModelScope.launch {
-            savingGoalDao.insert(savingGoal)
-        }
-    }
-
     fun addSavingsGoal(title: String, value: String, date: String) {
         val expenseValue = value.toFloatOrNull() ?: return
-        //val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).parse(date) ?: return
-
         val newSavingGoal = SavingGoal(title, expenseValue, date)
 
         savingGoalDao.insert(newSavingGoal)
