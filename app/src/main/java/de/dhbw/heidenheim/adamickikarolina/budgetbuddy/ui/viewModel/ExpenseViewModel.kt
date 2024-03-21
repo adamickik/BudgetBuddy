@@ -33,7 +33,7 @@ class ExpenseViewModel(private val expenseDao: ExpenseDao) : ViewModel() {
     fun assignExpenseToSavingsGoal(value: Float,assigment: SavingGoal) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val currentDate = dateFormat.format(Date())
-        //Expense mit Zuweisung auf neues Sparziel
+        //Expense mit Abzug aus SparDepot
         val negativeExpense = assigment.sgId?.let {
             Expense(
                 eName = assigment.sgName,
