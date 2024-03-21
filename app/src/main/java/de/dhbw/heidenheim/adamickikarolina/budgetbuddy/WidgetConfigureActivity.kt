@@ -44,11 +44,11 @@ class WidgetConfigureActivity : AppCompatActivity() {
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish()
         }
-        
-        val savingGoals = savingGoalDao.getAllOffline()
-        val savingGoalsList = savingGoals.map { savingGoal -> savingGoal.sgName }
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, savingGoalsList)
+        val savingGoalsList = savingGoalDao.getAllOffline()
+        val savingGoalsListName = savingGoalsList.map { savingGoal -> savingGoal.sgName }
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, savingGoalsListName)
         listView.adapter = adapter
 
         listView.setOnItemClickListener { _, _, position, _ ->
@@ -56,7 +56,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
 
             // Saving Goal ID oder ein anderer eindeutiger Identifier sollte hier gespeichert werden
             val prefs = getSharedPreferences("widgetPrefs", Context.MODE_PRIVATE)
-            prefs.edit().putString("WIDGET_$appWidgetId", selectedGoal).apply()
+            prefs.edit().putString("WIDGET_$appWidgetId", selectedGoal.sgId.toString()).apply()
 
             val appWidgetManager = AppWidgetManager.getInstance(this@WidgetConfigureActivity)
             updateAppWidget(this@WidgetConfigureActivity, appWidgetManager, appWidgetId)
