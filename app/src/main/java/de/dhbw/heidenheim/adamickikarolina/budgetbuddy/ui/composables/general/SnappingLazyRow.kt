@@ -5,23 +5,41 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.LiveData
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingDepot
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.AddPaymentDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.ExpenseCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingDepotCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingsCard
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SnappingLazyRow(
+    expenseViewModel: ExpenseViewModel,
     savingsGoals: List<SavingGoal>,
     savingDepot: SavingDepot,
-    onAssignButtonClick: () -> Unit) {
-    // PagerState for snap behaviour
+    onAssignButtonClick: () -> Unit
+) {
     val savingsGoalsListSize = savingsGoals.size
-    val pagerState = rememberPagerState(pageCount = { savingsGoalsListSize+1 })
+    var showPaymentDialog by remember { mutableStateOf(false) }
+    val pagerState = rememberPagerState(pageCount = { savingsGoalsListSize + 1 })
+
+    val expensesByAssignmentId: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentId(pagerState.currentPage)
+    val importantExpenses = expensesByAssignmentId.observeAsState(initial = emptyList()).value
+
 
     DotsIndicator(
-        totalDots = savingsGoalsListSize+1,
+        totalDots = savingsGoalsListSize + 1,
         selectedIndex = pagerState.currentPage,
         selectedColor = MaterialTheme.colorScheme.onSurfaceVariant,
         unSelectedColor = MaterialTheme.colorScheme.outlineVariant,
@@ -30,12 +48,36 @@ fun SnappingLazyRow(
     HorizontalPager(
         state = pagerState
     ) { page ->
-        when(page){
-            0-> SavingDepotCard(
+        when (page) {
+            0 -> SavingDepotCard(
                 savingDepot = savingDepot,
-                onAssignButtonClick = onAssignButtonClick)
-            else -> SavingsCard(savingsGoal = savingsGoals[page-1])
+                onAssignButtonClick = onAssignButtonClick
+            )
+
+            else -> SavingsCard(savingsGoal = savingsGoals[page - 1])
         }
     }
-}
+        TextIconButton(
+            stringResource(R.string.payments_name),
+            stringResource(R.string.paymentsButton_description),
+            onIconClick = { showPaymentDialog = true })
+
+
+        if (showPaymentDialog) {
+            AddPaymentDialog(
+                expenseViewModel= expenseViewModel,
+                showDialog = showPaymentDialog,
+                onDismiss = { showPaymentDialog = false },
+                onConfirmAction = { payment ->
+                    showPaymentDialog = false
+                    // TODO: Process payment in ViewModel
+                }
+            )
+        }
+
+        importantExpenses.forEach { expense ->
+            ExpenseCard(expense)
+        }
+    }
+
 
