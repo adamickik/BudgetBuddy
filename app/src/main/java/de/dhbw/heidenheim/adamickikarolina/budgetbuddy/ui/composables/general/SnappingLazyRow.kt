@@ -3,12 +3,12 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingDepot
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingDepotCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingsCard
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -16,6 +16,13 @@ fun SnappingLazyRow(savingsGoals: List<SavingGoal>, savingDepot: SavingDepot) {
     // PagerState for snap behaviour
     val savingsGoalsListSize = savingsGoals.size
     val pagerState = rememberPagerState(pageCount = { savingsGoalsListSize+1 })
+
+    DotsIndicator(
+        totalDots = 3,
+        selectedIndex = pagerState.currentPage,
+        selectedColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        unSelectedColor = MaterialTheme.colorScheme.outlineVariant,
+    )
 
     HorizontalPager(
         state = pagerState
@@ -26,3 +33,4 @@ fun SnappingLazyRow(savingsGoals: List<SavingGoal>, savingDepot: SavingDepot) {
         }
     }
 }
+
