@@ -1,16 +1,13 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.map
-import androidx.lifecycle.viewModelScope
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Expense
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.ExpenseDao
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoalDao
-import kotlinx.coroutines.launch
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
 
 
 class ChartViewModel(
@@ -93,7 +90,8 @@ class ChartViewModel(
 }
 class ChartViewModelFactory(
     private val expenseDao: ExpenseDao,
-    private val savingGoalDao: SavingGoalDao) : ViewModelProvider.Factory {
+    private val savingGoalDao: SavingGoalDao
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ChartViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

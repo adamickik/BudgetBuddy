@@ -10,14 +10,14 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.AppDatabase
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Expense
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.ExpenseDao
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingDepot
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingDepotDao
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoalDao
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Tipp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.TippDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepotDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.TippDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingDepotData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.BudgetBuddyApp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Create database via builder pattern
         val db = Room.databaseBuilder(this, AppDatabase::class.java, "budgetbuddyDB")
             .allowMainThreadQueries()
             .build()

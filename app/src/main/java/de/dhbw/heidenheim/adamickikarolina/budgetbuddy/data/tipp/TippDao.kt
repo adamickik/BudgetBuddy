@@ -1,10 +1,11 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
 
 @Dao
 interface TippDao {

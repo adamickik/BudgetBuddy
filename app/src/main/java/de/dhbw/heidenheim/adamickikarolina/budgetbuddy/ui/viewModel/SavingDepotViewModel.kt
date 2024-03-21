@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingDepot
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingDepotDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepotDao
 import kotlinx.coroutines.launch
 
 class SavingDepotViewModel(private val savingDepotDao: SavingDepotDao) : ViewModel() {

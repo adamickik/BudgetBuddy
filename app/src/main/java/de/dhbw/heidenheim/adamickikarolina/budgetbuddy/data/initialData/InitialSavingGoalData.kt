@@ -1,6 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData
 
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 
 object InitialSavingGoalData {
     val initialSavingGoals = listOf(

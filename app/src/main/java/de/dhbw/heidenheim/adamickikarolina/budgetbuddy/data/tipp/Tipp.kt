@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

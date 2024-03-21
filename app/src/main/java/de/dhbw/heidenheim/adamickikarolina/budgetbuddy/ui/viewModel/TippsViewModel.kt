@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Tipp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.TippDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.TippDao
 import kotlinx.coroutines.launch
 
 class TippsViewModel(private val tippDao: TippDao) : ViewModel() {

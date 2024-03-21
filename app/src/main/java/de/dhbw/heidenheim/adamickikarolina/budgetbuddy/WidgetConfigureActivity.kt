@@ -10,8 +10,8 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.AppDatabase
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.ExpenseDao
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoalDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
 
 class WidgetConfigureActivity : AppCompatActivity() {
 

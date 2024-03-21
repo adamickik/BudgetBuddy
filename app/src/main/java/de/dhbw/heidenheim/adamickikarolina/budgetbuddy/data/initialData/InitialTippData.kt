@@ -1,6 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData
 
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Tipp
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
 
 object InitialTippData {
     val initialTipps = listOf(

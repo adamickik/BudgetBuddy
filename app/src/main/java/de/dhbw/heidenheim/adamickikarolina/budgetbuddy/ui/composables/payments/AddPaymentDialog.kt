@@ -32,9 +32,8 @@ import java.util.Date
 import java.util.Locale
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Expense
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
 @Composable

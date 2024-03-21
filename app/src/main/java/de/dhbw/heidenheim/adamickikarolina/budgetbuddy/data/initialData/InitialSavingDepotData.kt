@@ -1,6 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData
 
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingDepot
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
 
 object InitialSavingDepotData {
     val initialSavingDepot = listOf(

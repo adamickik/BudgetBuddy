@@ -3,10 +3,8 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoalDao
-import kotlinx.coroutines.launch
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
 
 class SavingsGoalViewModel(private val savingGoalDao: SavingGoalDao) : ViewModel() {
 
