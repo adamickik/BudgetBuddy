@@ -22,6 +22,8 @@
 
     <string name="addSavingGoalDialog_name">SPARZIEL HINZUFÜGEN</string>
     <string name="addSavingGoalDialog_addButton">HINZUFÜGEN</string>
+    <string name="addSavingGoalDialog_editName">SPARZIEL ÄNDERN</string>
+    <string name="addSavingGoalDialog_editButton">ÄNDERN</string>
     <string name="addSavingGoalDialog_dismissButton">ABBRECHEN</string>
     <string name="addSavingGoalDialog_title">Titel</string>
     <string name="addSavingGoalDialog_value">Wert in €</string>
@@ -29,6 +31,9 @@
     <string name="addSavingGoalDialog_dueDateButton">Datum auswählen</string>
 
     <string name="addPaymentDialog_name">ZAHLUNG HINZUFÜGEN</string>
+    <string name="addPaymentDialog_editName">ZAHLUNG ÄNDERN</string>
+    <string name="addPaymentDialog_editButton">ÄNDERN</string>
+    <string name="addPaymentDialog_deleteButton">LÖSCHEN</string>
     <string name="addPaymentDialog_addButton">HINZUFÜGEN</string>
     <string name="addPaymentDialog_dismissButton">ABBRECHEN</string>
     <string name="addPaymentDialog_title">Titel</string>

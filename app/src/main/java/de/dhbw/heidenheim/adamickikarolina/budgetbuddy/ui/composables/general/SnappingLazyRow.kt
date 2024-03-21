@@ -37,6 +37,8 @@ fun SnappingLazyRow(
     val expensesByAssignmentId: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentId(pagerState.currentPage)
     val importantExpenses = expensesByAssignmentId.observeAsState(initial = emptyList()).value
 
+    var selectedExpense by remember{ mutableStateOf<Expense?>(null) }
+
     DotsIndicator(
         totalDots = savingsGoalsListSize + 1,
         selectedIndex = pagerState.currentPage,
@@ -67,27 +69,34 @@ fun SnappingLazyRow(
             }
         }
     }
-        TextIconButton(
-            stringResource(R.string.payments_name),
-            stringResource(R.string.paymentsButton_description),
-            onIconClick = { showPaymentDialog = true })
+    TextIconButton(
+        stringResource(R.string.payments_name),
+        stringResource(R.string.paymentsButton_description),
+        onIconClick = {
+            selectedExpense = null
+            showPaymentDialog = true})
 
 
-        if (showPaymentDialog) {
-            AddPaymentDialog(
-                expenseViewModel= expenseViewModel,
-                showDialog = showPaymentDialog,
-                onDismiss = { showPaymentDialog = false },
-                onConfirmAction = { payment ->
-                    showPaymentDialog = false
-                    // TODO: Process payment in ViewModel
-                }
-            )
-        }
-
-        importantExpenses.forEach { expense ->
-            ExpenseCard(expense)
-        }
+    if (showPaymentDialog) {
+        AddPaymentDialog(
+            expenseViewModel= expenseViewModel,
+            showDialog = showPaymentDialog,
+            onDismiss = { showPaymentDialog = false },
+            onConfirmAction = { payment ->
+                showPaymentDialog = false
+                // TODO: Process payment in ViewModel
+            },
+            editingExpense = selectedExpense
+        )
     }
+
+    importantExpenses.forEach { expense ->
+        ExpenseCard(expense = expense,
+            onCardClick = {clickedExpense ->
+                selectedExpense = clickedExpense
+                showPaymentDialog=true
+            })
+    }
+}
 
 

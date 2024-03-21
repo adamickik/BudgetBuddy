@@ -32,7 +32,9 @@ import java.util.Date
 import java.util.Locale
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
 @Composable
@@ -40,19 +42,26 @@ fun AddPaymentDialog(
     expenseViewModel: ExpenseViewModel,
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    onConfirmAction: (String) -> Unit
+    onConfirmAction: (String) -> Unit,
+    editingExpense: Expense? = null
 ) {
-    // TODO: Resource Management issues with new DBHandler
-    var paymentTitle by remember { mutableStateOf("") }
-    var paymentValue by remember { mutableStateOf("") }
-    var paymentDate by remember { mutableStateOf("") }
+    var paymentTitle by remember(showDialog) { mutableStateOf(editingExpense?.eName?: "") }
+    var paymentValue by remember (showDialog){ mutableStateOf(editingExpense?.eAmount?.toString() ?: "")  }
+    var paymentDate by remember (showDialog){ mutableStateOf(editingExpense?.eDate ?: "") }
     val context = LocalContext.current
 
     if (showDialog) {
         AlertDialog(
             modifier = Modifier.fillMaxWidth(),
-            onDismissRequest = { onDismiss() },
-            title = { Text(stringResource(id = R.string.addPaymentDialog_name))},
+            onDismissRequest = {
+                onDismiss()
+            },
+            title = { Text(
+                text = if (editingExpense != null)
+                    stringResource(id = R.string.addPaymentDialog_editName)
+                else
+                    stringResource(id = R.string.addPaymentDialog_name)
+            )},
             text = {
                 Column {
                     OutlinedTextField(
@@ -115,14 +124,33 @@ fun AddPaymentDialog(
                     onClick = {
                         expenseViewModel.addExpense(paymentTitle, (paymentValue).toString(), paymentDate)
                         onDismiss()
-                        onConfirmAction("test")
                     }
                 ) {
-                    Text(stringResource(id = R.string.addPaymentDialog_addButton))
+                    Text(
+                        text = if (editingExpense != null)
+                            stringResource(id = R.string.addPaymentDialog_editButton)
+                        else
+                            stringResource(id = R.string.addPaymentDialog_addButton)
+                    )
+                }
+                if(editingExpense != null){
+                    Button(
+                        onClick = {
+                            // TODO implement change payment
+                            onDismiss()
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.addPaymentDialog_deleteButton)
+                        )
+                    }
                 }
             },
             dismissButton = {
-                Button(onClick = { onDismiss() }) {
+                Button(
+                    onClick = {
+                        onDismiss()
+                    }) {
                     Text(stringResource(id = R.string.addPaymentDialog_dismissButton))
                 }
             }

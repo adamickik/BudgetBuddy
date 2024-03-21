@@ -1,5 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,7 +16,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Expense
 import java.util.Locale
 
 @Composable
-fun ExpenseCard(expense: Expense) {
+fun ExpenseCard(expense: Expense, onCardClick: (Expense) -> Unit) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -26,7 +27,8 @@ fun ExpenseCard(expense: Expense) {
                 start = 15.dp,
                 end = 15.dp,
                 bottom = 10.dp
-            ),
+            )
+            .clickable { onCardClick(expense)}
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
