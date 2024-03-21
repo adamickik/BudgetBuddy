@@ -8,16 +8,26 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.AppDatabase
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoalDao
 
 class WidgetConfigureActivity : AppCompatActivity() {
 
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private lateinit var listView: ListView
+    private lateinit var savingGoalDao: SavingGoalDao
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setResult(Activity.RESULT_CANCELED)
         setContentView(R.layout.budget_buddy_widget_configure)
+
+        val db = Room.databaseBuilder(this, AppDatabase::class.java, "budgetbuddyDB")
+            .allowMainThreadQueries()
+            .build()
+
+        savingGoalDao = db.getSavingGoalDao()
 
         // Finde die ListView im Layout
         listView = findViewById(R.id.lvSavingGoals)
@@ -34,10 +44,10 @@ class WidgetConfigureActivity : AppCompatActivity() {
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish()
         }
+        
+        val savingGoals = savingGoalDao.getAllOffline()
+        val savingGoalsList = savingGoals.map { savingGoal -> savingGoal.sgName }
 
-        // Hier sollte die Liste der Saving Goals aus deiner Datenbank geladen werden
-        // Dummy-Daten für dieses Beispiel
-        val savingGoalsList = listOf("Goal 1", "Goal 2", "Goal 3")
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, savingGoalsList)
         listView.adapter = adapter
 
