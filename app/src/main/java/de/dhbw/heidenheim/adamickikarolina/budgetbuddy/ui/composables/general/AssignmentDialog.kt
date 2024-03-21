@@ -24,10 +24,12 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.TextField
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
 import androidx.compose.material3.DropdownMenuItem
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AssignmentDialog(
+    expenseViewModel: ExpenseViewModel,
     savingGoals: List<SavingGoal>,
     showDialog: Boolean,
     onDismiss: () -> Unit,
@@ -96,7 +98,11 @@ fun AssignmentDialog(
             confirmButton = {
                 Button(
                     onClick = {
-                        // TODO: Implement Logic for assignment
+                        selectedGoal?.let {
+                            expenseViewModel.assignExpenseToSavingsGoal(assignmentValue.toFloat(),
+                                it
+                            )
+                        }
                         onDismiss()
                         onConfirmAction("test")
                     }

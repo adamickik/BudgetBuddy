@@ -17,6 +17,9 @@ interface ExpenseDao {
     @Query("SELECT * FROM expenses WHERE eName LIKE :expenseName LIMIT 1")
     fun getByName(expenseName: String): LiveData<Expense>
 
+    @Query("SELECT * FROM expenses WHERE eAssignment = :assignmentId")
+    fun getByAssignmentId(assignmentId: Int): LiveData<List<Expense>>
+
     @Insert
     fun insert(vararg expense: Expense)
 

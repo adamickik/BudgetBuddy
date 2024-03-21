@@ -56,6 +56,7 @@ fun HomeScreen(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: Savings
 
         if (showAssignmentDialog) {
             AssignmentDialog(
+                expenseViewModel= expenseViewModel,
                 savingGoals = savingsGoals,
                 showDialog = showAssignmentDialog,
                 onDismiss = { showAssignmentDialog = false },
