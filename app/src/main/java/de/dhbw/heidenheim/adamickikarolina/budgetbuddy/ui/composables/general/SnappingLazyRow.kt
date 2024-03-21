@@ -1,5 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -58,12 +59,13 @@ fun SnappingLazyRow(
             )
 
             else -> {
+                // TODO get this into ViewModel
                 val savingsGoal = savingsGoals[page - 1]
-                val savingsGoalSum = savingsGoal.sgId?.let {
-                    expenseViewModel.getSumOfExpensesByAssigmentID(it)?.value ?: 0f
-                } ?: 0f // Default to 0f if sgId is null or if getSumOfExpensesByAssignmentID returns null
-
+                val savingsGoalSum: Float by expenseViewModel.getSumOfExpensesByAssigmentID(
+                    assignmentId = savingsGoal.sgId!!
+                ).observeAsState(0f)
                 val remainingAmount = savingsGoal.sgGoalAmount.minus(savingsGoalSum)
+
                 SavingsCard(
                     savingsGoal = savingsGoal,
                     remainingAmount = remainingAmount
@@ -71,6 +73,7 @@ fun SnappingLazyRow(
             }
         }
     }
+
     TextIconButton(
         stringResource(R.string.payments_name),
         stringResource(R.string.paymentsButton_description),
