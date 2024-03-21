@@ -4,30 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepotDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepotRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SavingDepotViewModel(private val savingDepotDao: SavingDepotDao) : ViewModel() {
+@HiltViewModel
+class SavingDepotViewModel @Inject constructor(
+    private val savingDepotRepository: SavingDepotRepository
+) : ViewModel() {
 
-    val savingDepot: LiveData<SavingDepot> = savingDepotDao.getAll()
+    val savingDepot: LiveData<SavingDepot> = savingDepotRepository.getSavingDepot()
 
     fun changeSavingDepot(changeAmount: Float) {
         viewModelScope.launch {
-            val currentDepot = savingDepotDao.getAll().value?:return@launch
+            val currentDepot = savingDepotRepository.getSavingDepot().value?:return@launch
             val updatedAmount = currentDepot.sdAmount + changeAmount
             val updatedDepot = currentDepot.copy(sdAmount = updatedAmount)
-            savingDepotDao.update(updatedDepot)
+            savingDepotRepository.update(updatedDepot)
         }
-    }
-}
-
-class SavingsDepotViewModelFactory(private val savingDepotDao: SavingDepotDao) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SavingDepotViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return SavingDepotViewModel(savingDepotDao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

@@ -4,35 +4,42 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseRepository
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import javax.inject.Inject
 
-class ExpenseViewModel(private val expenseDao: ExpenseDao) : ViewModel() {
-    val expenses: LiveData<List<Expense>> = expenseDao.getAll()
+@HiltViewModel
+class ExpenseViewModel @Inject constructor(
+    private val expenseRepository: ExpenseRepository
+):ViewModel() {
+
+    fun getAllExpenses() :LiveData<List<Expense>>{
+        return expenseRepository.getAllExpenses()
+    }
 
     fun addExpense(title: String, value: String, date: String) {
         val expenseValue = value.toFloatOrNull() ?: return
-
-        //val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).parse(date) ?: return
-
         val newExpense = Expense(title, expenseValue, date, 0)
 
         viewModelScope.launch {
-            expenseDao.insert(newExpense)
+            expenseRepository.insert(newExpense)
         }
     }
+
     fun getExpensesByAssignmentId(assignmentId: Int): LiveData<List<Expense>> {
-        return expenseDao.getByAssignmentId(assignmentId)
+        return expenseRepository.getExpenseByAssignmentId(assignmentId)
     }
     fun getSumOfExpensesByAssigmentID(assignmentId: Int): LiveData<Float> {
-        return expenseDao.getSumByAssigmentId(assignmentId)
+        return expenseRepository.getSumByAssignmentId(assignmentId)
     }
-    fun assignExpenseToSavingsGoal(value: Float,assigment: SavingGoal) {
+    fun assignExpenseToSavingsGoal(value: Float, assigment: SavingGoal) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val currentDate = dateFormat.format(Date())
         //Expense mit Abzug aus SparDepot
@@ -45,7 +52,7 @@ class ExpenseViewModel(private val expenseDao: ExpenseDao) : ViewModel() {
             )
         }
         if (negativeExpense != null) {
-            expenseDao.insert(negativeExpense)
+            expenseRepository.insert(negativeExpense)
         }
 
         //Expense mit Zuweisung auf neues Sparziel
@@ -58,16 +65,7 @@ class ExpenseViewModel(private val expenseDao: ExpenseDao) : ViewModel() {
             )
         }
         if (expense != null) {
-            expenseDao.insert(expense)
+            expenseRepository.insert(expense)
         }
-    }
-}
-class ExpenseViewModelFactory(private val expenseDao: ExpenseDao) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ExpenseViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return ExpenseViewModel(expenseDao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

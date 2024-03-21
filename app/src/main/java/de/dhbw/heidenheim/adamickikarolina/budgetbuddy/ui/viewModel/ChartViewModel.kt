@@ -5,14 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.map
+import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseRepository
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalRepository
+import javax.inject.Inject
 
-
-class ChartViewModel(
-    private val expenseDao: ExpenseDao,
-    private val savingGoalDao: SavingGoalDao,
+@HiltViewModel
+class ChartViewModel @Inject constructor(
+    private val expenseRepository: ExpenseRepository,
+    private val savingGoalRepository: SavingGoalRepository
 ) : ViewModel() {
 
     // LineChart
@@ -21,9 +25,9 @@ class ChartViewModel(
 
     // PaymentsPieChart
     val slices = MutableLiveData<List<Float>>(listOf(30f, 10f, 60f))
-    private val savingGoals = savingGoalDao.getAll()
+    private val savingGoals = savingGoalRepository.getAllSavingGoals()
 
-    private val expenses: LiveData<List<Expense>> = expenseDao.getAll()
+    private val expenses: LiveData<List<Expense>> = expenseRepository.getAllExpenses()
     val points: LiveData<List<Float>> = expenses.map { expensesList ->
         expensesList.map { it.eAmount }.also {
             transformPointsListAscending(it)
@@ -86,17 +90,5 @@ class ChartViewModel(
 
         val maxPoint = pointsList.maxOrNull() ?: 0f
         maxPoint.coerceAtLeast(targetValue.value ?: 0f)
-    }
-}
-class ChartViewModelFactory(
-    private val expenseDao: ExpenseDao,
-    private val savingGoalDao: SavingGoalDao
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ChartViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return ChartViewModel(expenseDao, savingGoalDao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
