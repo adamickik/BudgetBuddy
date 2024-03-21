@@ -1,5 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy
 
+import android.content.Intent
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialExpenseData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingGoalData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialTippData
@@ -85,5 +86,13 @@ class MainActivity : AppCompatActivity() {
             savingGoalDao.insertAsList(savingGoals)
             savingDepotDao.insertAsList(savingDepot)
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val intent = Intent(this, BudgetBuddyWidget::class.java).apply {
+            action = "de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ACTION_UPDATE_WIDGET"
+        }
+        this.sendBroadcast(intent)
     }
 }
