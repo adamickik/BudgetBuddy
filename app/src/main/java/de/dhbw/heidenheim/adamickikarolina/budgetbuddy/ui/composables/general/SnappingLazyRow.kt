@@ -1,6 +1,8 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
@@ -90,12 +92,16 @@ fun SnappingLazyRow(
         )
     }
 
-    importantExpenses.forEach { expense ->
-        ExpenseCard(expense = expense,
-            onCardClick = {clickedExpense ->
-                selectedExpense = clickedExpense
-                showPaymentDialog=true
-            })
+    LazyColumn() {
+        items(importantExpenses) { expense ->
+            ExpenseCard(
+                expense = expense,
+                onCardClick = { clickedExpense ->
+                    selectedExpense = clickedExpense
+                    showPaymentDialog=true
+                }
+            )
+        }
     }
 }
 
