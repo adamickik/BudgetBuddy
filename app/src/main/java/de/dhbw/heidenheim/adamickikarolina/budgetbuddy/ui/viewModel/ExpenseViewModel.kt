@@ -1,41 +1,33 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.DBHandler
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Expense
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.ExpenseDao
 import kotlinx.coroutines.launch
 
-class ExpenseViewModel(private val dbHandler: DBHandler) : ViewModel() {
+class ExpenseViewModel(private val expenseDao: ExpenseDao) : ViewModel() {
+    val expenses: LiveData<List<Expense>> = expenseDao.getAll()
 
-    private val _expenses = MutableLiveData<List<ExpenseModel>>()
-    val expenses: LiveData<List<ExpenseModel>> = _expenses
+    fun addExpense(title: String, value: String, date: String) {
+        val expenseValue = value.toFloatOrNull() ?: return
 
-    init {
-        loadExpenses()
-    }
+        //val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).parse(date) ?: return
 
-    private fun loadExpenses() {
+        val newExpense = Expense(title, expenseValue, date, 0)
+
         viewModelScope.launch {
-            val expenseList = dbHandler.readExpenses()
-            _expenses.postValue(expenseList ?: emptyList())
-        }
-    }
-
-    fun addExpense(name: String, amount: Int, assignment: Int) {
-        viewModelScope.launch {
-            dbHandler.addNewExpense(name, amount, assignment)
-            loadExpenses() // Refresh the list
+            expenseDao.insert(newExpense)
         }
     }
 }
-class ExpenseViewModelFactory(private val dbHandler: DBHandler) : ViewModelProvider.Factory {
+class ExpenseViewModelFactory(private val expenseDao: ExpenseDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ExpenseViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return ExpenseViewModel(dbHandler) as T
+            return ExpenseViewModel(expenseDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

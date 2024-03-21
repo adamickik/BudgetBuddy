@@ -13,7 +13,7 @@
     <string name="analytics_savingsHistory_name">SPARVERLAUF %s</string>
 
     <string name="savings_account">DEIN SPARDEPOT</string>
-    <string name="savings_currency"> €</string>
+    <string name="savings_currency">\u0020€</string>
 
     <string name="payments_name">ZAHLUNGEN</string>
     <string name="paymentsButton_description">Zahlung hinzufügen</string>
@@ -42,12 +42,12 @@
     <string name="savingTips_name">SCHWABENTIPP</string>
     <string name="savingTips_button">OK</string>
 
-    <string name="profile_greeting">HALLO KAROLINA!</string>
+    <string name="profile_greeting">HALLO %s!</string>
     <string name="profileImage_description">Profilbild</string>
 
     <string name="savingsGoals_name">SPARZIELE</string>
     <string name="savingsGoalsButton_description">Sparziel hinzufügen</string>
-    <string name="savingsGoal_duedate">Fälligkeitstag: </string>
+    <string name="savingsGoal_duedate">Fälligkeitstag:\u0020</string>
 
     <string name="fixedPayments_name">FIXZAHLUNGEN</string>
     <string name="fixedPaymentsButton_description">Fixzahlung hinzufügen</string>

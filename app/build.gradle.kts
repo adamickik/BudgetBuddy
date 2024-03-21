@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+
+    kotlin("kapt")
 }
 
 android {
@@ -54,7 +56,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.material3:material3-android:1.2.0")
+    implementation("androidx.compose.material3:material3-android:1.2.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
@@ -75,8 +77,12 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.3.0-alpha08")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.compose.ui:ui:1.6.2")
     implementation("androidx.compose.material3:material3:1.2.0")
+    implementation("com.google.accompanist:accompanist-pager:0.34.0" )
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

@@ -1,5 +1,5 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation
-
+/*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -11,8 +11,6 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalModel
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
@@ -35,12 +33,11 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
         """.trimIndent()
 
         val createTippsTableQuery = """
-    CREATE TABLE $TABLE_NAME_TIPPS (
-        $ID_COL INTEGER PRIMARY KEY AUTOINCREMENT,
-        $TIPP_COL TEXT
-    )
-""".trimIndent()
-
+            CREATE TABLE $TABLE_NAME_TIPPS (
+                $ID_COL INTEGER PRIMARY KEY AUTOINCREMENT,
+                $TIPP_COL TEXT
+            )
+        """.trimIndent()
 
         db.execSQL(createExpensesTableQuery)
         db.execSQL(createSavingGoalsTableQuery)
@@ -261,4 +258,4 @@ class DBHandler(private val context: Context) : SQLiteOpenHelper(context, DB_NAM
             }
         }
     }
-}
+}*/

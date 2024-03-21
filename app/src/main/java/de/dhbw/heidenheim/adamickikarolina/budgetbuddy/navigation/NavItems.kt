@@ -16,7 +16,7 @@ data class NavItem(
 
 val listOfNavItems=listOf(
     NavItem(
-        label = "Analytics",
+        label = "Home",
         icon = Icons.Filled.Home,
         route = Screens.HomeScreen.name
     ),

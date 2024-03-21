@@ -11,13 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
+import java.util.Locale
 
-@Preview
 @Composable
-fun SavingsGoalCard(){
+fun SavingsGoalCard(savingsGoal: SavingGoal){
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -34,8 +34,7 @@ fun SavingsGoalCard(){
                 modifier = Modifier.fillMaxWidth()
             ){
                 Text(
-                    // TODO: Change with actual payment title
-                    text = "AUTO",
+                    text = savingsGoal.sgName,
                     style = MaterialTheme.typography.headlineMedium,
 
                     modifier = Modifier
@@ -46,7 +45,7 @@ fun SavingsGoalCard(){
                 )
                 Text(
                     // TODO: change with actual savings goal
-                    text = "15.000,00"+ stringResource(R.string.savings_currency),
+                    text = String.format(Locale.GERMANY, "%.2f", savingsGoal.sgGoalAmount) + stringResource(R.string.savings_currency),
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier
                         .padding(start = 10.dp,
@@ -55,7 +54,7 @@ fun SavingsGoalCard(){
                 )
             }
             Text(
-                text = stringResource(R.string.savingsGoal_duedate) + " 24.09.2024",
+                text = stringResource(R.string.savingsGoal_duedate) + savingsGoal.sgDueDate,
                 style = MaterialTheme.typography.bodyLarge,
 
                 modifier = Modifier

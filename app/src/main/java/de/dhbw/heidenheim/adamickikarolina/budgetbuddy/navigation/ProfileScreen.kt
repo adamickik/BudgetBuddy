@@ -3,58 +3,71 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.AddPaymentDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.PaymentCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile.ProfileCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingsGoalCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.TextIconButton
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.AddPaymentDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.AddSavingGoalDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
-@Preview
+enum class DialogType {
+    None, Payment, SavingGoal
+}
+
 @Composable
-fun ProfileScreen(){
-    var showPaymentDialog by remember{ mutableStateOf(false) }
-    var showSavingGoalDialog by remember{ mutableStateOf(false) }
+fun ProfileScreen(
+    savingGoalViewModel: SavingsGoalViewModel,
+    expenseViewModel: ExpenseViewModel
+){
+    var currentDialog by remember { mutableStateOf(DialogType.None) }
+    val savingsGoals by savingGoalViewModel.savingsGoals.observeAsState(emptyList())
 
     Column {
         ProfileCard()
         TextIconButton(
             stringResource(R.string.savingsGoals_name),
             stringResource(R.string.savingsGoalsButton_description),
-            onIconClick = {showSavingGoalDialog=true})
-        SavingsGoalCard()
+            onIconClick = {currentDialog = DialogType.SavingGoal}
+        )
+        savingsGoals.forEach { savingGoal ->
+            SavingsGoalCard(savingGoal)
+        }
         TextIconButton(
             stringResource(R.string.fixedPayments_name),
             stringResource(R.string.fixedPaymentsButton_description),
-            onIconClick = {showPaymentDialog=true})
+            onIconClick = {currentDialog = DialogType.Payment}
+        )
         PaymentCard()
     }
 
-    if(showPaymentDialog){
-        AddPaymentDialog(
-            showDialog = showPaymentDialog,
-            onDismiss = { showPaymentDialog = false },
+    when(currentDialog){
+        //TODO: Give Expense ViewModel to PaymentDialog
+        DialogType.Payment -> AddPaymentDialog(
+            expenseViewModel=expenseViewModel,
+            showDialog = true,
+            onDismiss = { currentDialog = DialogType.None },
             onConfirmAction = { payment ->
-                showPaymentDialog = false
-                // TODO: Process fixed payment
+                currentDialog = DialogType.None
+                // TODO: Delegate to ViewModel
             }
         )
-    }
-
-    if(showSavingGoalDialog){
-        AddSavingGoalDialog(
-            showDialog = showSavingGoalDialog,
-            onDismiss = { showSavingGoalDialog = false },
-            onConfirmAction = { payment ->
-                showSavingGoalDialog = false
-                // TODO: Process fixed payment
+        DialogType.SavingGoal -> AddSavingGoalDialog(
+            savingGoalViewModel = savingGoalViewModel,
+            showDialog = true,
+            onDismiss = { currentDialog = DialogType.None },
+            onConfirmAction = { savingGoal ->
+                currentDialog = DialogType.None
+                // TODO: Delegate to ViewModel
             }
         )
+        DialogType.None -> Unit
     }
 }
