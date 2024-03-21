@@ -10,6 +10,7 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.AppDatabase
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.ExpenseDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoalDao
 
 class WidgetConfigureActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
     private var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private lateinit var listView: ListView
     private lateinit var savingGoalDao: SavingGoalDao
+    private lateinit var expenseDao: ExpenseDao
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
             .build()
 
         savingGoalDao = db.getSavingGoalDao()
+        expenseDao = db.getExpenseDao()
 
         // Finde die ListView im Layout
         listView = findViewById(R.id.lvSavingGoals)
@@ -59,7 +62,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
             prefs.edit().putString("WIDGET_$appWidgetId", selectedGoal.sgId.toString()).apply()
 
             val appWidgetManager = AppWidgetManager.getInstance(this@WidgetConfigureActivity)
-            updateAppWidget(this@WidgetConfigureActivity, appWidgetManager, appWidgetId)
+            updateAppWidget(this@WidgetConfigureActivity, appWidgetManager, appWidgetId, savingGoalDao, expenseDao)
 
             // Ergebnis zurücksenden und Activity beenden
             val resultValue = Intent().apply {
