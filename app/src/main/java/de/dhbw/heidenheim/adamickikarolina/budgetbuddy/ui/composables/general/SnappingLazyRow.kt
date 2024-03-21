@@ -37,7 +37,6 @@ fun SnappingLazyRow(
     val expensesByAssignmentId: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentId(pagerState.currentPage)
     val importantExpenses = expensesByAssignmentId.observeAsState(initial = emptyList()).value
 
-
     DotsIndicator(
         totalDots = savingsGoalsListSize + 1,
         selectedIndex = pagerState.currentPage,
@@ -54,7 +53,18 @@ fun SnappingLazyRow(
                 onAssignButtonClick = onAssignButtonClick
             )
 
-            else -> SavingsCard(savingsGoal = savingsGoals[page - 1])
+            else -> {
+                val savingsGoal = savingsGoals[page - 1]
+                val savingsGoalSum = savingsGoal.sgId?.let {
+                    expenseViewModel.getSumOfExpensesByAssigmentID(it)?.value ?: 0f
+                } ?: 0f // Default to 0f if sgId is null or if getSumOfExpensesByAssignmentID returns null
+
+                val remainingAmount = savingsGoal.sgGoalAmount.minus(savingsGoalSum)
+                SavingsCard(
+                    savingsGoal = savingsGoal,
+                    remainingAmount = remainingAmount
+                )
+            }
         }
     }
         TextIconButton(

@@ -12,11 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.SavingGoal
 import java.util.Locale
 
 @Composable
-fun SavingsCard(savingsGoal: SavingGoal) {
+fun SavingsCard(savingsGoal: SavingGoal, remainingAmount: Float) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp

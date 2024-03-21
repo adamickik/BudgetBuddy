@@ -23,6 +23,9 @@ interface ExpenseDao {
     @Query("SELECT sum(eAmount) FROM expenses WHERE eAssignment = :assignmentId")
     fun getSumByAssigmentIdOffline(assignmentId: Int): Float
 
+    @Query("SELECT sum(eAmount) FROM expenses WHERE eAssignment = :assignmentId")
+    fun getSumByAssigmentId(assignmentId: Int): LiveData<Float>
+
     @Insert
     fun insert(vararg expense: Expense)
 

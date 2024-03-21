@@ -29,7 +29,9 @@ class ExpenseViewModel(private val expenseDao: ExpenseDao) : ViewModel() {
     fun getExpensesByAssignmentId(assignmentId: Int): LiveData<List<Expense>> {
         return expenseDao.getByAssignmentId(assignmentId)
     }
-
+    fun getSumOfExpensesByAssigmentID(assignmentId: Int): LiveData<Float>? {
+        return assignmentId?.let { expenseDao.getSumByAssigmentId(it) }
+    }
     fun assignExpenseToSavingsGoal(value: Float,assigment: SavingGoal) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val currentDate = dateFormat.format(Date())
