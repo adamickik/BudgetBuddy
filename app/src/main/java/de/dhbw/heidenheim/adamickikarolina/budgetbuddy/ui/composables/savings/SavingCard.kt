@@ -50,7 +50,7 @@ fun SavingsCard(savingsGoal: SavingGoal, remainingAmount: Float) {
                 .align(Alignment.CenterHorizontally),
         )
         Text(
-            text = stringResource(R.string.savingCard_remaining),
+            text =  stringResource(R.string.savingCard_remaining) + remainingAmount.toString(),
             modifier = Modifier
                 .padding(
                     start = 10.dp,
