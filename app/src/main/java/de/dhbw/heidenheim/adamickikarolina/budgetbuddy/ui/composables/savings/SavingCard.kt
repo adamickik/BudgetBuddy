@@ -42,7 +42,7 @@ fun SavingsCard(
                 ),
         )
         Text(
-            text = String.format(Locale.GERMANY, "%.2f", savingsGoal.sgGoalAmount) + stringResource(R.string.savings_currency),
+            text = String.format(Locale.GERMANY, "%.2f", savingsGoal.sgGoalAmount.minus(remainingAmount)) + stringResource(R.string.savings_currency),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(

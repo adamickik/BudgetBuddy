@@ -1,9 +1,7 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data
 
-import android.app.Application
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import dagger.hilt.android.HiltAndroidApp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
@@ -22,5 +20,3 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun getSavingDepotDao() : SavingDepotDao
 }
 
-@HiltAndroidApp
-class MyApp : Application()
