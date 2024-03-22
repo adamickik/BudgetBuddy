@@ -34,7 +34,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
-import java.text.NumberFormat
 import java.util.Date
 import java.util.Locale
 
@@ -46,6 +45,7 @@ fun AddPaymentDialog(
     editingExpense: Expense? = null
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
+    var isDatePickerShown by remember { mutableStateOf(false) }
     var paymentTitle by remember(showDialog) { mutableStateOf(editingExpense?.eName?: "") }
     var paymentValue by remember (showDialog){ mutableStateOf(editingExpense?.eAmount?.toString() ?: "")  }
     var paymentDate by remember (showDialog){ mutableStateOf(editingExpense?.eDate ?: "") }
@@ -104,11 +104,22 @@ fun AddPaymentDialog(
                         {
                             IconButton(
                                 onClick = {
-                                val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Zahlungsdatum").build()
-                                datePicker.show((context as androidx.fragment.app.FragmentActivity).supportFragmentManager, "DATE_PICKER")
-                                datePicker.addOnPositiveButtonClickListener { selection ->
-                                    paymentDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(selection))
-                                }
+                                    if(!isDatePickerShown){
+                                        val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Zahlungsdatum").build()
+                                        isDatePickerShown = true
+                                        datePicker.show((context as androidx.fragment.app.FragmentActivity).supportFragmentManager, "DATE_PICKER")
+
+                                        datePicker.addOnPositiveButtonClickListener { selection ->
+                                            paymentDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(selection))
+                                            isDatePickerShown = false
+                                        }
+
+                                        datePicker.addOnDismissListener {
+                                            isDatePickerShown = false
+                                        }
+                                    }
+
+
                             }) {
                                 Icon(
                                     Icons.Filled.DateRange,

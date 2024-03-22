@@ -44,6 +44,7 @@ fun AddSavingGoalDialog(
     onConfirmAction: (String) -> Unit
 ) {
     val savingGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
+    var isDatePickerShown by remember { mutableStateOf(false) }
     var savingGoalTitle by remember { mutableStateOf("") }
     var savingGoalValue by remember { mutableStateOf("") }
     var savingGoalDueDate by remember { mutableStateOf("") }
@@ -95,12 +96,22 @@ fun AddSavingGoalDialog(
                         {
                             IconButton(
                                 onClick = {
-                                    val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Fälligkeitsdatum").build()
-                                    datePicker.show((context as FragmentActivity).supportFragmentManager, "DATE_PICKER")
-                                    datePicker.addOnPositiveButtonClickListener { selection ->
-                                        savingGoalDueDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(selection))
+                                    if(!isDatePickerShown){
+                                        val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Zahlungsdatum").build()
+                                        isDatePickerShown = true
+                                        datePicker.show((context as androidx.fragment.app.FragmentActivity).supportFragmentManager, "DATE_PICKER")
+
+                                        datePicker.addOnPositiveButtonClickListener { selection ->
+                                            savingGoalDueDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(selection))
+                                            isDatePickerShown = false
+                                        }
+
+                                        datePicker.addOnDismissListener {
+                                            isDatePickerShown = false
+                                        }
                                     }
-                                }) {
+                                }
+                            ) {
                                 Icon(
                                     Icons.Filled.DateRange,
                                     modifier = Modifier.fillMaxSize(),
