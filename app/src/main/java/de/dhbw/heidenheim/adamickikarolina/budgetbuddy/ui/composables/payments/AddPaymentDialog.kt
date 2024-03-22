@@ -34,6 +34,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
+import java.text.NumberFormat
 import java.util.Date
 import java.util.Locale
 

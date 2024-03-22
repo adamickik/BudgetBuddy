@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
+import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
@@ -43,8 +44,7 @@ fun SavingsGoalCard(savingsGoal: SavingGoal){
                         .weight(1f),
                 )
                 Text(
-                    // TODO: change with actual savings goal
-                    text = String.format(Locale.GERMANY, "%.2f", savingsGoal.sgGoalAmount) + stringResource(R.string.savings_currency),
+                    text = NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(savingsGoal.sgGoalAmount),
                     modifier = Modifier
                         .padding(start = 10.dp,
                             top = 10.dp,

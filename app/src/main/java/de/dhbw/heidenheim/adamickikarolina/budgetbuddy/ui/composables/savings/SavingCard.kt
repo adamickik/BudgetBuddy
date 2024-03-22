@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
+import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
@@ -42,7 +43,7 @@ fun SavingsCard(
                 ),
         )
         Text(
-            text = String.format(Locale.GERMANY, "%.2f", savingsGoal.sgGoalAmount.minus(remainingAmount)) + stringResource(R.string.savings_currency),
+            text = NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(savingsGoal.sgGoalAmount.minus(remainingAmount)),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(
@@ -52,7 +53,7 @@ fun SavingsCard(
                 .align(Alignment.CenterHorizontally),
         )
         Text(
-            text =  stringResource(R.string.savingCard_remaining) + String.format(Locale.GERMANY, "%.2f", remainingAmount) + stringResource(R.string.savings_currency),
+            text =  stringResource(R.string.savingCard_remaining) +  NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(remainingAmount),
             modifier = Modifier
                 .padding(
                     start = 10.dp,

@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
+import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
@@ -44,7 +45,7 @@ fun SavingDepotCard(
         )
         Text(
             // TODO: change with actual value and currency
-            text = String.format(Locale.GERMANY, "%.2f", savingDepot.sdAmount) + stringResource(R.string.savings_currency),
+            text = NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(savingDepot.sdAmount),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(

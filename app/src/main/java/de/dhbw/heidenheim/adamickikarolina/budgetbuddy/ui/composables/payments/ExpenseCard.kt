@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
+import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
@@ -48,7 +49,7 @@ fun ExpenseCard(expense: Expense, onCardClick: (Expense) -> Unit) {
             )
             Text(
                 // TODO: change with actual payment
-                text = String.format(Locale.GERMANY, "%.2f", expense.eAmount)+ stringResource(R.string.savings_currency),
+                text = NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(expense.eAmount),
                 modifier = Modifier
                     .padding(
                         start = 10.dp,
