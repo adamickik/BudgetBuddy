@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primaryColor">#F2C000</color>
+    <color name="primaryContainer">#FFE08E</color>
     <color name="onSurface">#1E1B16</color>
     <color name="onSurfaceVariant">#4C4639</color>
 </resources>

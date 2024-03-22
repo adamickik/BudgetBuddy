@@ -3,6 +3,7 @@
     <style name="Base.Theme.BudgetBuddy" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/primaryColor</item>
         <item name="android:statusBarColor">@color/primaryColor</item>
+        <item name="android:navigationBarColor">@color/primaryContainer</item>
     </style>
 
     <style name="Theme.BudgetBuddy" parent="Base.Theme.BudgetBuddy" />
