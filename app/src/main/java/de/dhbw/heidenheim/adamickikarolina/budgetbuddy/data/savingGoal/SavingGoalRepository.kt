@@ -1,8 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal
 
 import androidx.lifecycle.LiveData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.TippDao
 import javax.inject.Inject
 
 class SavingGoalRepository @Inject constructor(

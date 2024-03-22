@@ -6,13 +6,13 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import androidx.room.Room
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.AppDatabase
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class BudgetBuddyWidget : AppWidgetProvider() {

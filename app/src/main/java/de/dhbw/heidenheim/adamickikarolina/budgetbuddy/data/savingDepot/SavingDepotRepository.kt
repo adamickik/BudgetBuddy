@@ -1,7 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot
 
 import androidx.lifecycle.LiveData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import javax.inject.Inject
 
 class SavingDepotRepository @Inject constructor(

@@ -15,7 +15,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot

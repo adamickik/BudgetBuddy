@@ -1,13 +1,13 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.ChartType
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.charts.ChartCard
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 
 @Preview
 @Composable

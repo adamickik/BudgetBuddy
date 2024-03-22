@@ -9,10 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
 
 @Composable

@@ -2,12 +2,9 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalRepository
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
 import javax.inject.Inject
 
 @HiltViewModel

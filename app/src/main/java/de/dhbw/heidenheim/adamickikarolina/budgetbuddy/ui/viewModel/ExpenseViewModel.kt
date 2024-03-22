@@ -2,13 +2,10 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseRepository
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

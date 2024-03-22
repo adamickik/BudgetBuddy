@@ -1,19 +1,19 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy
 
 import android.content.Intent
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialExpenseData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingGoalData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialTippData
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialExpenseData
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingDepotData
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingGoalData
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialTippData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingDepotData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.BudgetBuddyApp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingDepotViewModel

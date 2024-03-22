@@ -16,11 +16,6 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.HomeScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.ProfileScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.Screens
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingDepotViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
 
 @Composable
 fun BudgetBuddyApp() {
