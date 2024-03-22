@@ -44,9 +44,7 @@ fun SnappingLazyRow(
 
     DotsIndicator(
         totalDots = savingsGoalsListSize + 1,
-        selectedIndex = pagerState.currentPage,
-        selectedColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        unSelectedColor = MaterialTheme.colorScheme.outlineVariant,
+        selectedIndex = pagerState.currentPage
     )
 
     HorizontalPager(

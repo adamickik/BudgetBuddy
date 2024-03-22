@@ -25,6 +25,9 @@ interface SavingGoalDao {
     @Query("SELECT * FROM savingGoals WHERE sgName LIKE :savingGoalName LIMIT 1")
     fun getByName(savingGoalName: String): LiveData<SavingGoal>
 
+    @Query("SELECT COUNT(*) FROM savingGoals")
+    fun getCount(): Int
+
     @Insert
     fun insert(vararg savingGoal: SavingGoal)
 

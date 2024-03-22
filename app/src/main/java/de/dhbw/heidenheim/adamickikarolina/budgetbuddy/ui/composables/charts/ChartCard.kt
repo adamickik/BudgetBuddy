@@ -24,6 +24,7 @@ fun ChartCard(
 
     // TODO change to string
     val savingsGoalName = chartViewModel.savingsGoalName.observeAsState("Default Name")
+
     ElevatedCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         modifier = Modifier
@@ -31,7 +32,6 @@ fun ChartCard(
             .padding(top = 15.dp, start = 15.dp, end = 15.dp, bottom = 10.dp),
     ) {
         Column {
-
             val text = when (chartType) {
                 ChartType.LineChart -> stringResource(R.string.analytics_savingsHistory_name, savingsGoalName.value)
                 ChartType.PieChart -> stringResource(R.string.analytics_expenses_name)

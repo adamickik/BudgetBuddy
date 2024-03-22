@@ -61,8 +61,6 @@ fun SavingsGoalCard(savingsGoal: SavingGoal){
                         end = 10.dp,
                         bottom=10.dp),
             )
-
         }
-
     }
 }

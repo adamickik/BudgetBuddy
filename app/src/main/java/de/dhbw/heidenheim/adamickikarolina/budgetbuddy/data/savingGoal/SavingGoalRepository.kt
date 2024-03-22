@@ -26,6 +26,10 @@ class SavingGoalRepository @Inject constructor(
         return savingGoalDao.getByName(sgName)
     }
 
+    fun getSavingGoalCount(): Int {
+        return savingGoalDao.getCount()
+    }
+
     fun insert(savingGoal: SavingGoal) {
         savingGoalDao.insert(savingGoal)
     }

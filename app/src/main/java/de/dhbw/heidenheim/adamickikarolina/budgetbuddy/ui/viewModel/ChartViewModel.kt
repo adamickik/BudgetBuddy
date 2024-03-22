@@ -34,53 +34,53 @@ class ChartViewModel @Inject constructor(
         return points.sorted()
     }
 
-    val savingsGoalName: LiveData<String> = savingGoals.map { goals ->
-        if(goals.isNotEmpty()) goals[0].sgName else "Default"
-    }
+        val savingsGoalName: LiveData<String> = savingGoals.map { goals ->
+            if(goals.isNotEmpty()) goals[0].sgName else "Default"
+        }
 
     /*
-    init {
-        loadInitialData()
-    }
+           init {
+               loadInitialData()
+           }
 
-    // TODO change so that update does not only happen on init
-    private fun loadInitialData() {
-        viewModelScope.launch {
-            savingGoalDao.getAll().value?.let { goals ->
-                if (goals.isNotEmpty()) {
-                    val goal = goals[0]
-                    targetValue.value = goal.sgGoalAmount
-                    // Logge das Ziel
-                    Log.d("loadInitialData", "Erstes Sparziel geladen: ${goal.sgName}, Zielbetrag: ${goal.sgGoalAmount}")
-                } else {
-                    Log.d("loadInitialData", "Keine Sparziele gefunden.")
-                }
-            }
+           // TODO change so that update does not only happen on init
+           private fun loadInitialData() {
+               viewModelScope.launch {
+                   savingGoalDao.getAll().value?.let { goals ->
+                       if (goals.isNotEmpty()) {
+                           val goal = goals[0]
+                           targetValue.value = goal.sgGoalAmount
+                           // Logge das Ziel
+                           Log.d("loadInitialData", "Erstes Sparziel geladen: ${goal.sgName}, Zielbetrag: ${goal.sgGoalAmount}")
+                       } else {
+                           Log.d("loadInitialData", "Keine Sparziele gefunden.")
+                       }
+                   }
 
-            expenseDao.getAll().value?.let { expenses ->
-                if (expenses.isNotEmpty()) {
-                    // Logge die Ausgaben
-                    Log.d("loadInitialData", "Ausgaben geladen: ${expenses.joinToString { it.eAmount.toString() }}")
-                } else {
-                    Log.d("loadInitialData", "Keine Ausgaben gefunden.")
-                }
-                points.value = expenses.map { it.eAmount }
-                transformPointsListAscending()
-            }
-        }
-    }
+                   expenseDao.getAll().value?.let { expenses ->
+                       if (expenses.isNotEmpty()) {
+                           // Logge die Ausgaben
+                           Log.d("loadInitialData", "Ausgaben geladen: ${expenses.joinToString { it.eAmount.toString() }}")
+                       } else {
+                           Log.d("loadInitialData", "Keine Ausgaben gefunden.")
+                       }
+                       points.value = expenses.map { it.eAmount }
+                       transformPointsListAscending()
+                   }
+               }
+           }
 
-    private fun transformPointsListAscending() {
-        points.value?.let { list ->
-            var sum = 0f
-            val transformedList = list.map { amount ->
-                sum += amount
-                sum
-            }
-            points.postValue(transformedList)
-        }
-    }
-*/
+           private fun transformPointsListAscending() {
+               points.value?.let { list ->
+                   var sum = 0f
+                   val transformedList = list.map { amount ->
+                       sum += amount
+                       sum
+                   }
+                   points.postValue(transformedList)
+               }
+           }
+       */
 
     //max. Value of LineChart
     val maxValue: LiveData<Float> = points.map { pointsList ->

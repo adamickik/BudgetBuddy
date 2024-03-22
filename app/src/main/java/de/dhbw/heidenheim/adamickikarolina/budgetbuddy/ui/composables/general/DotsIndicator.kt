@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,9 +20,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun DotsIndicator(
     totalDots : Int,
-    selectedIndex : Int,
-    selectedColor: Color,
-    unSelectedColor: Color,
+    selectedIndex : Int
 ){
     LazyRow(
         modifier = Modifier
@@ -36,14 +35,14 @@ fun DotsIndicator(
                     modifier = Modifier
                         .size(5.dp)
                         .clip(CircleShape)
-                        .background(selectedColor)
+                        .background(MaterialTheme.colorScheme.onSurfaceVariant)
                 )
             } else {
                 Box(
                     modifier = Modifier
                         .size(5.dp)
                         .clip(CircleShape)
-                        .background(unSelectedColor)
+                        .background(MaterialTheme.colorScheme.outlineVariant)
                 )
             }
             if (index != totalDots - 1) {
