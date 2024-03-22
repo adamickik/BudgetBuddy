@@ -11,6 +11,7 @@ interface ExpenseDao {
     @Query("SELECT * FROM expenses")
     fun getAll(): LiveData<List<Expense>>
 
+
     @Query("SELECT * FROM expenses WHERE eid LIKE :expenseId LIMIT 1")
     fun getById(expenseId: Int): LiveData<Expense>
 
@@ -19,6 +20,9 @@ interface ExpenseDao {
 
     @Query("SELECT * FROM expenses WHERE eAssignment = :assignmentId")
     fun getByAssignmentId(assignmentId: Int): LiveData<List<Expense>>
+
+    @Query("SELECT * FROM expenses WHERE eAssignment = :assignmentId ORDER BY eDate DESC")
+    fun getByAssignmentIdSorted(assignmentId: Int): LiveData<List<Expense>>
 
     @Query("SELECT sum(eAmount) FROM expenses WHERE eAssignment = :assignmentId")
     fun getSumByAssigmentIdOffline(assignmentId: Int): Float

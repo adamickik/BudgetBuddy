@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -35,8 +34,8 @@ fun SnappingLazyRow(
     var showPaymentDialog by remember { mutableStateOf(false) }
     val pagerState = rememberPagerState(pageCount = { savingsGoalsListSize + 1 })
 
-    val expensesByAssignmentId: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentId(pagerState.currentPage)
-    val importantExpenses = expensesByAssignmentId.observeAsState(initial = emptyList()).value
+    val expensesByAssignmentIdSorted: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentIdSorted(pagerState.currentPage)
+    val importantExpenses = expensesByAssignmentIdSorted.observeAsState(initial = emptyList()).value
 
     var selectedExpense by remember{ mutableStateOf<Expense?>(null) }
 

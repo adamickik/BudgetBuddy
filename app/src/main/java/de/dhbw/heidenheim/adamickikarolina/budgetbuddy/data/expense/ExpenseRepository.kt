@@ -22,6 +22,10 @@ class ExpenseRepository @Inject constructor(
         return expenseDao.getByAssignmentId(assignmentId)
     }
 
+    fun getExpenseByAssignmentIdSorted(assignmentId: Int): LiveData<List<Expense>>{
+        return expenseDao.getByAssignmentIdSorted(assignmentId)
+    }
+
     fun getSumByAssignmentIdOffline(assignmentId: Int): Float{
         return expenseDao.getSumByAssigmentIdOffline(assignmentId)
     }

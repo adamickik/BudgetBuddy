@@ -38,6 +38,11 @@ class ExpenseViewModel @Inject constructor(
     fun getExpensesByAssignmentId(assignmentId: Int): LiveData<List<Expense>> {
         return expenseRepository.getExpenseByAssignmentId(assignmentId)
     }
+
+    fun getExpensesByAssignmentIdSorted(assignmentId: Int): LiveData<List<Expense>> {
+        return expenseRepository.getExpenseByAssignmentIdSorted(assignmentId)
+    }
+
     fun getSumOfExpensesByAssigmentID(assignmentId: Int): LiveData<Float> {
         return expenseRepository.getSumByAssignmentId(assignmentId)
     }
