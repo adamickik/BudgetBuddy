@@ -37,6 +37,10 @@ class ExpenseRepository @Inject constructor(
         expenseDao.insert(expense)
     }
 
+    fun update(expense: Expense) {
+        expenseDao.update(expense)
+    }
+
     fun insertAsList(eList: List<Expense>) {
         expenseDao.insertAsList(eList)
     }

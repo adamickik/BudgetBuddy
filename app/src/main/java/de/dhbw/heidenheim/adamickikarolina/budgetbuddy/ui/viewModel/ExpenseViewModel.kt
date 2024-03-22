@@ -35,6 +35,14 @@ class ExpenseViewModel @Inject constructor(
         expenseRepository.insertAsList(expenses)
     }
 
+    fun deleteExpense(expense: Expense) {
+        expenseRepository.delete(expense)
+    }
+
+    fun editExpense(expense: Expense) {
+        expenseRepository.update(expense)
+    }
+
     fun getExpensesByAssignmentId(assignmentId: Int): LiveData<List<Expense>> {
         return expenseRepository.getExpenseByAssignmentId(assignmentId)
     }

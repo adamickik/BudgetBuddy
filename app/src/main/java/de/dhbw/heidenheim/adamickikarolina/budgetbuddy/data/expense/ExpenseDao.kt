@@ -5,6 +5,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
 
 @Dao
 interface ExpenseDao {
@@ -32,6 +34,9 @@ interface ExpenseDao {
 
     @Insert
     fun insert(vararg expense: Expense)
+
+    @Update
+    fun update(expense: Expense)
 
     @Insert
     fun insertAsList(expenseList: List<Expense>)

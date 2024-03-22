@@ -11,7 +11,6 @@ import javax.inject.Inject
 class SavingsGoalViewModel @Inject constructor(
     private val savingGoalRepository: SavingGoalRepository
 ) : ViewModel() {
-
     val savingsGoals: LiveData<List<SavingGoal>> = savingGoalRepository.getAllSavingGoals()
 
     fun addSavingsGoal(title: String, value: String, date: String) {

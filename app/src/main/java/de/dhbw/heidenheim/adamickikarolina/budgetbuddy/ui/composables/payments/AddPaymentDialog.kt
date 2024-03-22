@@ -85,7 +85,8 @@ fun AddPaymentDialog(
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                     )
-                    DropdownExample()
+                    /* TODO Add Category DropDown
+                    DropdownExample()*/
                     Row(
                         modifier = Modifier.padding(bottom = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
@@ -136,7 +137,15 @@ fun AddPaymentDialog(
             confirmButton = {
                 Button(
                     onClick = {
-                        expenseViewModel.addExpense(paymentTitle, paymentValue, paymentDate)
+                        if (editingExpense != null){
+                            editingExpense.eName = paymentTitle
+                            editingExpense.eAmount = paymentValue.toFloat()
+                            editingExpense.eDate = paymentDate
+
+                            expenseViewModel.editExpense(editingExpense)
+                        }
+                        else
+                            expenseViewModel.addExpense(paymentTitle, paymentValue, paymentDate)
                         onDismiss()
                     }
                 ) {
@@ -150,7 +159,7 @@ fun AddPaymentDialog(
                 if(editingExpense != null){
                     Button(
                         onClick = {
-                            // TODO implement change payment
+                            expenseViewModel.deleteExpense(editingExpense)
                             onDismiss()
                         }
                     ) {

@@ -36,7 +36,7 @@ fun AnalyticsScreen(){
         modifier = Modifier.fillMaxWidth()
     ) {
         DotsIndicator(
-            totalDots = savingsGoalsListSize + 1,
+            totalDots = savingsGoalsListSize,
             selectedIndex = pagerState.currentPage
         )
         HorizontalPager(

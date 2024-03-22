@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "expenses")
 data class Expense(
     @ColumnInfo(name="eName")
-    val eName: String,
+    var eName: String,
     @ColumnInfo(name="eAmount")
-    val eAmount: Float,
+    var eAmount: Float,
     @ColumnInfo(name="eDate")
-    val eDate: String,
+    var eDate: String,
     @ColumnInfo(name="eAssignment")
     val eAssignment: Int
 )
