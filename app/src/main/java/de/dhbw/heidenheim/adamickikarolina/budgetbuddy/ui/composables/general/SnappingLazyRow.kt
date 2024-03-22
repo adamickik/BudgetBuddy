@@ -17,7 +17,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LiveData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.AddPaymentDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.ExpenseCard
@@ -29,7 +28,6 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewM
 @Composable
 fun SnappingLazyRow(
     savingsGoals: List<SavingGoal>,
-    savingDepot: SavingDepot,
     onAssignButtonClick: () -> Unit
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
@@ -51,10 +49,16 @@ fun SnappingLazyRow(
         state = pagerState
     ) { page ->
         when (page) {
-            0 -> SavingDepotCard(
-                savingDepot = savingDepot,
-                onAssignButtonClick = onAssignButtonClick
-            )
+            0 -> {
+                val savingsDepotSum: Float by expenseViewModel.getSumOfExpensesByAssigmentID(
+                    assignmentId = 0
+                ).observeAsState(0f)
+
+                SavingDepotCard(
+                    savingsDepotSum = savingsDepotSum,
+                    onAssignButtonClick = onAssignButtonClick
+                )
+            }
 
             else -> {
                 // TODO get this into ViewModel

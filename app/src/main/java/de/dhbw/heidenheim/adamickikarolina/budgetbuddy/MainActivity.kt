@@ -8,15 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialExpenseData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingDepotData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingGoalData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialTippData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.BudgetBuddyApp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingDepotViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
 
@@ -25,24 +22,22 @@ class MainActivity : AppCompatActivity() {
     private val expenseViewModel: ExpenseViewModel by viewModels()
     private val savingsGoalViewModel: SavingsGoalViewModel by viewModels()
     private val tippsViewModel: TippsViewModel by viewModels()
-    private val savingDepotViewModel: SavingDepotViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fillDatabaseInitially(InitialTippData.initialTipps, InitialExpenseData.initialExpenses, InitialSavingGoalData.initialSavingGoals, InitialSavingDepotData.initialSavingDepot)
+        fillDatabaseInitially(InitialTippData.initialTipps, InitialExpenseData.initialExpenses, InitialSavingGoalData.initialSavingGoals)
 
         setContent {
             BudgetBuddyApp()
         }
     }
 
-    private fun fillDatabaseInitially(tipps: List<Tipp>, expenses: List<Expense>, savingGoals: List<SavingGoal>, savingDepot: List<SavingDepot>) {
+    private fun fillDatabaseInitially(tipps: List<Tipp>, expenses: List<Expense>, savingGoals: List<SavingGoal>) {
         // Fill list initially if tables are empty
         if (tippsViewModel.getTippCount()==0) {
             tippsViewModel.insertAsList(tipps)
             expenseViewModel.insertAsList(expenses)
             savingsGoalViewModel.insertAsList(savingGoals)
-            savingDepotViewModel.insertAsList(savingDepot)
         }
     }
 

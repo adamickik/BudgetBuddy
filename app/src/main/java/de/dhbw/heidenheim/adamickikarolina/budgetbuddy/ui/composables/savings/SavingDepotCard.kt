@@ -13,13 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
 import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
 fun SavingDepotCard(
-    savingDepot: SavingDepot,
+    savingsDepotSum: Float,
     onAssignButtonClick: () -> Unit
 ) {
     ElevatedCard(
@@ -45,7 +44,7 @@ fun SavingDepotCard(
         )
         Text(
             // TODO: change with actual value and currency
-            text = NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(savingDepot.sdAmount),
+            text = NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(savingsDepotSum),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier
                 .padding(
