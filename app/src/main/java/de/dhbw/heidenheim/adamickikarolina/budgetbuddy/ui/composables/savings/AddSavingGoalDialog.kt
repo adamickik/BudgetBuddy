@@ -34,15 +34,18 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.ui.Alignment
 import androidx.fragment.app.FragmentActivity
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
 @Composable
 fun AddSavingGoalDialog(
-    savingGoalViewModel: SavingsGoalViewModel,
     showDialog: Boolean,
     onDismiss: () -> Unit,
     onConfirmAction: (String) -> Unit
 ) {
+    val savingGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
     var savingGoalTitle by remember { mutableStateOf("") }
     var savingGoalValue by remember { mutableStateOf("") }
     var savingGoalDueDate by remember { mutableStateOf("") }

@@ -33,17 +33,19 @@ import java.util.Locale
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.ui.Alignment
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
 @Composable
 fun AddPaymentDialog(
-    expenseViewModel: ExpenseViewModel,
     showDialog: Boolean,
     onDismiss: () -> Unit,
     onConfirmAction: (String) -> Unit,
     editingExpense: Expense? = null
 ) {
+    val expenseViewModel = hiltViewModel<ExpenseViewModel>()
     var paymentTitle by remember(showDialog) { mutableStateOf(editingExpense?.eName?: "") }
     var paymentValue by remember (showDialog){ mutableStateOf(editingExpense?.eAmount?.toString() ?: "")  }
     var paymentDate by remember (showDialog){ mutableStateOf(editingExpense?.eDate ?: "") }

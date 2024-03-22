@@ -18,13 +18,17 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 
 @Composable
-fun PaymentsPieChart(chartViewModel: ChartViewModel) {
+fun PaymentsPieChart(
+) {
+    val chartViewModel = hiltViewModel<ChartViewModel>()
     val slices by chartViewModel.slices.observeAsState(initial = listOf<Float>())
-    //val descriptions by chartViewModel.descriptions.observeAsState(initial = listOf<String>())
+    // val descriptions by chartViewModel.descriptions.observeAsState(initial = listOf<String>())
     // TODO: Fetch payments from ViewModel
     val descriptions = listOf("Miete", "Essen", "OF Abos")
 

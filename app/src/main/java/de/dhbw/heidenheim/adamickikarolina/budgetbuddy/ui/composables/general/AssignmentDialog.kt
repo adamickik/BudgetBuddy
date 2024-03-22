@@ -24,17 +24,21 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.TextField
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import androidx.compose.material3.DropdownMenuItem
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AssignmentDialog(
-    expenseViewModel: ExpenseViewModel,
     savingGoals: List<SavingGoal>,
     showDialog: Boolean,
     onDismiss: () -> Unit,
     onConfirmAction: (String) -> Unit
 ) {
+    val expenseViewModel = hiltViewModel<ExpenseViewModel>()
+
     var assignmentValue by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
     var selectedGoal by remember { mutableStateOf(savingGoals.firstOrNull()) }

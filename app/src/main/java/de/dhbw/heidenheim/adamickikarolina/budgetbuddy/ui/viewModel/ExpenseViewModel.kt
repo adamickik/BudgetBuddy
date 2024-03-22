@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseRepository
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -31,6 +32,10 @@ class ExpenseViewModel @Inject constructor(
         viewModelScope.launch {
             expenseRepository.insert(newExpense)
         }
+    }
+
+    fun insertAsList(expenses: List<Expense>) {
+        expenseRepository.insertAsList(expenses)
     }
 
     fun getExpensesByAssignmentId(assignmentId: Int): LiveData<List<Expense>> {

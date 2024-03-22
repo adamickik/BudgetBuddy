@@ -23,13 +23,13 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalV
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
 
 @Composable
-fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: SavingsGoalViewModel, chartViewModel: ChartViewModel, tippsViewModel: TippsViewModel, savingDepotViewModel: SavingDepotViewModel) {
+fun BudgetBuddyApp() {
     val navController = rememberNavController()
     var showDialog by remember{ mutableStateOf(false) }
 
     BudgetBuddyTheme {
         if (showDialog) {
-            SavingTipsDialog(onDismissRequest = { showDialog = false }, tippsViewModel)
+            SavingTipsDialog(onDismissRequest = { showDialog = false })
         }
 
         Scaffold(
@@ -42,13 +42,13 @@ fun BudgetBuddyApp(expenseViewModel: ExpenseViewModel, savingsGoalViewModel: Sav
                 modifier = Modifier.padding(paddingValues)
             ){
                 composable(route= Screens.HomeScreen.name){
-                    HomeScreen(expenseViewModel,savingsGoalViewModel, savingDepotViewModel)
+                    HomeScreen()
                 }
                 composable(route= Screens.AnalyticsScreen.name){
-                    AnalyticsScreen(chartViewModel)
+                    AnalyticsScreen()
                 }
                 composable(route= Screens.ProfileScreen.name){
-                    ProfileScreen(savingsGoalViewModel, expenseViewModel)
+                    ProfileScreen()
                 }
             }
         }

@@ -9,7 +9,6 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
 
 @Dao
 interface TippDao {
-
     @Query("SELECT * FROM tipps")
     fun getAll(): LiveData<List<Tipp>>
 

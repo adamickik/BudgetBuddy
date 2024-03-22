@@ -7,9 +7,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalRepository
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
+import javax.inject.Inject
 
 @HiltViewModel
-class SavingsGoalViewModel(
+class SavingsGoalViewModel @Inject constructor(
     private val savingGoalRepository: SavingGoalRepository
 ) : ViewModel() {
 
@@ -20,5 +22,9 @@ class SavingsGoalViewModel(
         val newSavingGoal = SavingGoal(title, expenseValue, date)
 
         savingGoalRepository.insert(newSavingGoal)
+    }
+
+    fun insertAsList(savingGoals: List<SavingGoal>) {
+        savingGoalRepository.insertAsList(savingGoals)
     }
 }

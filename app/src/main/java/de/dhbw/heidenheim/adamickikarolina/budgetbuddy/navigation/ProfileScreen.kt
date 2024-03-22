@@ -13,6 +13,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.PaymentCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile.ProfileCard
@@ -29,9 +31,8 @@ enum class DialogType {
 
 @Composable
 fun ProfileScreen(
-    savingGoalViewModel: SavingsGoalViewModel,
-    expenseViewModel: ExpenseViewModel
 ){
+    val savingGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
     var currentDialog by remember { mutableStateOf(DialogType.None) }
     val savingsGoals by savingGoalViewModel.savingsGoals.observeAsState(emptyList())
 
@@ -61,7 +62,6 @@ fun ProfileScreen(
 
     when(currentDialog){
         DialogType.Payment -> AddPaymentDialog(
-            expenseViewModel=expenseViewModel,
             showDialog = true,
             onDismiss = { currentDialog = DialogType.None },
             onConfirmAction = { payment ->
@@ -70,7 +70,6 @@ fun ProfileScreen(
             }
         )
         DialogType.SavingGoal -> AddSavingGoalDialog(
-            savingGoalViewModel = savingGoalViewModel,
             showDialog = true,
             onDismiss = { currentDialog = DialogType.None },
             onConfirmAction = { savingGoal ->

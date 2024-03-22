@@ -16,7 +16,10 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoa
 import java.util.Locale
 
 @Composable
-fun SavingsCard(savingsGoal: SavingGoal, remainingAmount: Float) {
+fun SavingsCard(
+    savingsGoal: SavingGoal,
+    remainingAmount: Float
+) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp

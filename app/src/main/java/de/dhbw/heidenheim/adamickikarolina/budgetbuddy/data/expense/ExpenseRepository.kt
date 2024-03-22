@@ -1,8 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense
 
 import androidx.lifecycle.LiveData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
 import javax.inject.Inject
 
 class ExpenseRepository @Inject constructor(

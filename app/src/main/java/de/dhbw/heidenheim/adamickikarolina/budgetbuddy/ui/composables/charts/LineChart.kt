@@ -15,11 +15,15 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 
 @Composable
-fun LineChart(chartViewModel: ChartViewModel) {
+fun LineChart(
+) {
+    val chartViewModel = hiltViewModel<ChartViewModel>()
     val targetValue by chartViewModel.targetValue.observeAsState(0f)
     val currentValue by chartViewModel.currentValue.observeAsState(0f)
     val points by chartViewModel.points.observeAsState(listOf())

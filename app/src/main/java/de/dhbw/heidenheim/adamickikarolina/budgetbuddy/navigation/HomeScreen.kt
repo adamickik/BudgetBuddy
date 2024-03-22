@@ -8,6 +8,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.AssignmentDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.SnappingLazyRow
@@ -16,24 +18,21 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalV
 
 @Composable
 fun HomeScreen(
-    expenseViewModel: ExpenseViewModel,
-    savingsGoalViewModel: SavingsGoalViewModel,
-    savingDepotViewModel: SavingDepotViewModel
 ) {
+    val savingsGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
+    val savingDepotViewModel = hiltViewModel<SavingDepotViewModel>()
     var showAssignmentDialog by remember { mutableStateOf(false) }
     val savingsGoals by savingsGoalViewModel.savingsGoals.observeAsState(emptyList())
     val savingDepot by savingDepotViewModel.savingDepot.observeAsState(SavingDepot(0.0f))
 
     Column {
         SnappingLazyRow(
-            expenseViewModel = expenseViewModel,
             savingsGoals = savingsGoals,
             savingDepot=savingDepot,
             onAssignButtonClick = { showAssignmentDialog = true })
 
         if (showAssignmentDialog) {
             AssignmentDialog(
-                expenseViewModel= expenseViewModel,
                 savingGoals = savingsGoals,
                 showDialog = showAssignmentDialog,
                 onDismiss = { showAssignmentDialog = false },

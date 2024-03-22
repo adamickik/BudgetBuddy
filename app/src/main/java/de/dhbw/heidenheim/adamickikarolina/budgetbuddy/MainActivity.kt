@@ -7,83 +7,42 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialT
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.lifecycle.ViewModelProvider
-import androidx.room.Room
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.AppDatabase
+import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepot
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingDepot.SavingDepotDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.TippDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingDepotData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.BudgetBuddyApp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModelFactory
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModelFactory
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingDepotViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsDepotViewModelFactory
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModelFactory
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModelFactory
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var expenseViewModel: ExpenseViewModel
-    private lateinit var savingsGoalViewModel: SavingsGoalViewModel
-    private lateinit var chartViewModel: ChartViewModel
-    private lateinit var tippsViewModel: TippsViewModel
-    private lateinit var savingDepotViewModel: SavingDepotViewModel
-
-    private lateinit var expenseDao: ExpenseDao
-    private lateinit var tippDao: TippDao
-    private lateinit var savingGoalDao: SavingGoalDao
-    private lateinit var savingDepotDao: SavingDepotDao
+    private val expenseViewModel: ExpenseViewModel by viewModels()
+    private val savingsGoalViewModel: SavingsGoalViewModel by viewModels()
+    private val tippsViewModel: TippsViewModel by viewModels()
+    private val savingDepotViewModel: SavingDepotViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val db = Room.databaseBuilder(this, AppDatabase::class.java, "budgetbuddyDB")
-            .allowMainThreadQueries()
-            .build()
-
-        // Get daos from database
-        expenseDao = db.getExpenseDao()
-        tippDao = db.getTippDao()
-        savingGoalDao = db.getSavingGoalDao()
-        savingDepotDao = db.getSavingDepotDao()
-
         fillDatabaseInitially(InitialTippData.initialTipps, InitialExpenseData.initialExpenses, InitialSavingGoalData.initialSavingGoals, InitialSavingDepotData.initialSavingDepot)
 
-        val expenseFactory = ExpenseViewModelFactory(expenseDao)
-        val savingsGoalFactory = SavingsGoalViewModelFactory(savingGoalDao)
-        val savingDepotFactory = SavingsDepotViewModelFactory(savingDepotDao)
-        val chartFactory = ChartViewModelFactory(expenseDao, savingGoalDao)
-        val tippFactory = TippsViewModelFactory(tippDao)
-
-        expenseViewModel = ViewModelProvider(this, expenseFactory).get(ExpenseViewModel::class.java)
-        savingsGoalViewModel = ViewModelProvider(this, savingsGoalFactory).get(SavingsGoalViewModel::class.java)
-        chartViewModel = ViewModelProvider(this, chartFactory).get(ChartViewModel::class.java)
-        tippsViewModel = ViewModelProvider(this, tippFactory).get(TippsViewModel::class.java)
-        savingDepotViewModel = ViewModelProvider(this, savingDepotFactory).get(SavingDepotViewModel::class.java)
-
         setContent {
-            BudgetBuddyApp(expenseViewModel, savingsGoalViewModel, chartViewModel, tippsViewModel, savingDepotViewModel)
+            BudgetBuddyApp()
         }
     }
 
     private fun fillDatabaseInitially(tipps: List<Tipp>, expenses: List<Expense>, savingGoals: List<SavingGoal>, savingDepot: List<SavingDepot>) {
         // Fill list initially if tables are empty
-        // TODO: better logic for initially filling db
-        if (tippDao.getCount()==0) {
-            tippDao.insertAsList(tipps)
-            expenseDao.insertAsList(expenses)
-            savingGoalDao.insertAsList(savingGoals)
-            savingDepotDao.insertAsList(savingDepot)
+        if (tippsViewModel.getTippCount()==0) {
+            tippsViewModel.insertAsList(tipps)
+            expenseViewModel.insertAsList(expenses)
+            savingsGoalViewModel.insertAsList(savingGoals)
+            savingDepotViewModel.insertAsList(savingDepot)
         }
     }
 

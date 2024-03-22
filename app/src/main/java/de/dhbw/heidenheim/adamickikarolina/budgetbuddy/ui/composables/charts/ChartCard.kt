@@ -11,15 +11,19 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.ChartType
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 
 @Composable
 fun ChartCard(
-    chartType: ChartType,
-    chartViewModel : ChartViewModel
+    chartType: ChartType
 ) {
+    val chartViewModel = hiltViewModel<ChartViewModel>()
+
+    // TODO change to string
     val savingsGoalName = chartViewModel.savingsGoalName.observeAsState("Default Name")
     ElevatedCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
@@ -41,8 +45,8 @@ fun ChartCard(
             )
 
             when (chartType) {
-                ChartType.LineChart -> LineChart(chartViewModel)
-                ChartType.PieChart -> PaymentsPieChart(chartViewModel)
+                ChartType.LineChart -> LineChart()
+                ChartType.PieChart -> PaymentsPieChart()
             }
         }
     }

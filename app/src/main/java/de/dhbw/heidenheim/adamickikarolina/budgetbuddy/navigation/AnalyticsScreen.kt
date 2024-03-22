@@ -4,19 +4,20 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.ChartType
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.charts.ChartCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 
 @Preview
 @Composable
-fun AnalyticsScreen(chartViewModel: ChartViewModel) {
+fun AnalyticsScreen(){
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
         Column {
-            ChartCard(chartType = ChartType.LineChart, chartViewModel)
-            ChartCard(chartType = ChartType.PieChart, chartViewModel)
+            ChartCard(chartType = ChartType.LineChart)
+            ChartCard(chartType = ChartType.PieChart)
         }
     }
 }

@@ -10,8 +10,10 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.TippDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.TippRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+
 @HiltViewModel
-class TippsViewModel(
+class TippsViewModel @Inject constructor(
     private val tippRepository: TippRepository
 ) : ViewModel() {
     private val _randomTipp = MutableLiveData<Tipp?>()
@@ -25,5 +27,13 @@ class TippsViewModel(
         viewModelScope.launch {
             _randomTipp.value = tippRepository.getRandomTipp()
         }
+    }
+
+    fun getTippCount(): Int {
+        return tippRepository.getTippCount()
+    }
+
+    fun insertAsList(tipps: List<Tipp>) {
+        tippRepository.insertAsList(tipps)
     }
 }
