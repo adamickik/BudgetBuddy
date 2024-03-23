@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName="savingGoals")
 data class SavingGoal(
     @ColumnInfo(name="sgName")
-    val sgName: String,
+    var sgName: String,
     @ColumnInfo(name="sgGoalAmount")
-    val sgGoalAmount: Float,
+    var sgGoalAmount: Float,
     @ColumnInfo(name="sgDueDate")
-    val sgDueDate: String,
+    var sgDueDate: String,
 ){
     @PrimaryKey(autoGenerate = true)
     var sgId: Int? = null

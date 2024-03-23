@@ -13,8 +13,6 @@
     <string name="analytics_savingsHistory_name">SPARVERLAUF %s</string>
     <string name="analytics_chart_defaultName">SPARZIEL</string>
 
-
-
     <string name="savings_account">DEIN SPARDEPOT</string>
     <string name="savings_currency">\u0020€</string>
 
@@ -53,6 +51,7 @@
 
     <string name="savingTips_name">SCHWABENTIPP</string>
     <string name="savingTips_button">OK</string>
+    <string name="savingTips_null">Kein Tipp verfügbar</string>
 
     <string name="profile_greeting">HALLO %s!</string>
     <string name="profileImage_description">Profilbild</string>

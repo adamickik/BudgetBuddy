@@ -33,19 +33,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.DropdownExample
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.DatePickerInput
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import java.util.Date
 import java.util.Locale
 
 @Composable
-fun AddPaymentDialog(
+fun PaymentDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    onConfirmAction: (String) -> Unit,
     editingExpense: Expense? = null
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
+
     var isDatePickerShown by remember { mutableStateOf(false) }
     var paymentTitle by remember(showDialog) { mutableStateOf(editingExpense?.eName?: "") }
     var paymentValue by remember (showDialog){ mutableStateOf(editingExpense?.eAmount?.toString() ?: "")  }
@@ -55,10 +55,9 @@ fun AddPaymentDialog(
     if (showDialog) {
         AlertDialog(
             modifier = Modifier.fillMaxWidth(),
-            onDismissRequest = {
-                onDismiss()
-            },
-            title = { Text(
+            onDismissRequest = { onDismiss() },
+            title = {
+                Text(
                 text = if (editingExpense != null)
                     stringResource(id = R.string.addPaymentDialog_editName)
                 else
@@ -77,8 +76,7 @@ fun AddPaymentDialog(
                         value = paymentValue,
                         modifier=Modifier.padding(bottom=8.dp),
                         onValueChange = { newValue ->
-                            // TODO: Proper Validation for Money in ViewModel
-                            if (newValue.matches(Regex("^\\d*,?\\d{0,2}$"))) {
+                            if (newValue.matches(Regex("^-?\\d{1,3}(\\.\\d{3})*(,\\d{0,2})?$"))) {
                                 paymentValue = newValue
                             }},
                         label = { Text(stringResource(id = R.string.addPaymentDialog_value))},
@@ -86,14 +84,15 @@ fun AddPaymentDialog(
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                     )
                     /* TODO Add Category DropDown
-                    DropdownExample()*/
+                    CategoryDropDown()*/
+
                     Row(
                         modifier = Modifier.padding(bottom = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         OutlinedTextField(
                             value = paymentDate,
-                            onValueChange = { /* Read-Only Text Field */ },
+                            onValueChange = { },
                             label = { Text(stringResource(id = R.string.addPaymentDialog_date)) },
                             readOnly = true,
                             singleLine = true,
@@ -132,6 +131,15 @@ fun AddPaymentDialog(
                             }
                         }
                     }
+
+                    /* TODO FINISH DATEPICKER COMPOSABLE
+                    DatePickerInput(
+                        labelText = stringResource(id = R.string.addPaymentDialog_date),
+                        selectedDate = paymentDate,
+                        onDateSelected = { newDate ->
+                            paymentDate = newDate
+                        }
+                    )*/
                 }
             },
             confirmButton = {
@@ -139,7 +147,7 @@ fun AddPaymentDialog(
                     onClick = {
                         if (editingExpense != null){
                             editingExpense.eName = paymentTitle
-                            //editingExpense.eAmount = paymentValue.toFloat()
+                            editingExpense.eAmount = paymentValue.toFloat()
                             editingExpense.eDate = paymentDate
 
                             expenseViewModel.editExpense(editingExpense)

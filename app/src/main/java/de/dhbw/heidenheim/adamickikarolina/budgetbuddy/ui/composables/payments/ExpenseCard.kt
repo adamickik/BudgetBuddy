@@ -15,7 +15,10 @@ import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
-fun ExpenseCard(expense: Expense, onCardClick: (Expense) -> Unit) {
+fun ExpenseCard(
+    expense: Expense,
+    onCardClick: (Expense) -> Unit
+) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -46,7 +49,6 @@ fun ExpenseCard(expense: Expense, onCardClick: (Expense) -> Unit) {
                     .weight(1f),
             )
             Text(
-                // TODO: change with actual payment
                 text = NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(expense.eAmount),
                 modifier = Modifier
                     .padding(

@@ -28,10 +28,10 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewMod
 @Composable
 fun PaymentsPieChart(
 ) {
+    // TODO: Create Categories in Expenses to assign to then create Pie Chart based on those categories
     val chartViewModel = hiltViewModel<ChartViewModel>()
+    
     val slices by chartViewModel.slices.observeAsState(initial = listOf<Float>())
-    // val descriptions by chartViewModel.descriptions.observeAsState(initial = listOf<String>())
-    // TODO: Fetch payments from ViewModel
     val descriptions = listOf("Miete", "Essen", "OF Abos")
 
     val primaryColor = colorResource(id = R.color.primaryColor)

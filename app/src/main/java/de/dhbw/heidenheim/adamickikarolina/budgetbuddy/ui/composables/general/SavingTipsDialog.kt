@@ -18,7 +18,6 @@ fun SavingTipsDialog(
     onDismissRequest:() -> Unit,
 ) {
     val tipsViewModel = hiltViewModel<TippsViewModel>()
-
     val tipp by tipsViewModel.randomTipp.observeAsState(Tipp(""))
 
     LaunchedEffect(Unit) {
@@ -28,7 +27,7 @@ fun SavingTipsDialog(
     AlertDialog(
         onDismissRequest = onDismissRequest,
         title = { Text(stringResource(R.string.savingTips_name)) },
-        text = {  Text(tipp?.tTipp ?: "Kein Tipp verfügbar")},
+        text = {  Text(tipp?.tTipp ?: stringResource(R.string.savingTips_null))},
         confirmButton = {
             Button(onClick = { onDismissRequest() }) {
                 Text(stringResource(R.string.savingTips_button))

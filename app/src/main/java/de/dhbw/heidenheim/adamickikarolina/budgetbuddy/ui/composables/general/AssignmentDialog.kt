@@ -86,8 +86,7 @@ fun AssignmentDialog(
                         value = assignmentValue,
                         modifier=Modifier.padding(bottom=8.dp),
                         onValueChange = { newValue ->
-                            // TODO: Proper Validation for Money in ViewModel
-                            if (newValue.matches(Regex("^\\d*,?\\d{0,2}$"))) {
+                            if (newValue.matches(Regex("^\\d{1,3}(\\.\\d{3})*(,\\d{0,2})?$"))) {
                                 assignmentValue = newValue
                             }},
                         label = { Text(stringResource(id = R.string.assignmentDialog_value))},
@@ -100,9 +99,7 @@ fun AssignmentDialog(
                 Button(
                     onClick = {
                         selectedGoal?.let {
-                            expenseViewModel.assignExpenseToSavingsGoal(assignmentValue.toFloat(),
-                                it
-                            )
+                            expenseViewModel.assignExpenseToSavingsGoal(assignmentValue.toFloat(), it)
                         }
                         onDismiss()
                     }

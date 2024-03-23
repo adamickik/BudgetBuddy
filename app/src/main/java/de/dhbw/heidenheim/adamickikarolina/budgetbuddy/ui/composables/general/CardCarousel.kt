@@ -13,11 +13,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LiveData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.AddPaymentDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.PaymentDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.ExpenseCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingDepotCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingsCard
@@ -30,17 +29,13 @@ fun CardCarousel(
     onAssignButtonClick: () -> Unit
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
-    val savingsGoalsListSize = savingsGoals.size
+    val pagerState = rememberPagerState(pageCount = { savingsGoals.size + 1 })
     var showPaymentDialog by remember { mutableStateOf(false) }
-    val pagerState = rememberPagerState(pageCount = { savingsGoalsListSize + 1 })
-
-    val expensesByAssignmentIdSorted: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentIdSorted(pagerState.currentPage)
-    val importantExpenses = expensesByAssignmentIdSorted.observeAsState(initial = emptyList()).value
-
     var selectedExpense by remember{ mutableStateOf<Expense?>(null) }
+    val importantExpenses by expenseViewModel.getExpensesByAssignmentIdSorted(pagerState.currentPage).observeAsState(initial = emptyList())
 
     DotsIndicator(
-        totalDots = savingsGoalsListSize + 1,
+        totalDots = savingsGoals.size + 1,
         selectedIndex = pagerState.currentPage
     )
 
@@ -60,11 +55,8 @@ fun CardCarousel(
             }
 
             else -> {
-                // TODO get this into ViewModel
                 val savingsGoal = savingsGoals[page - 1]
-                val savingsGoalSum: Float by expenseViewModel.getSumOfExpensesByAssigmentID(
-                    assignmentId = savingsGoal.sgId!!
-                ).observeAsState(0f)
+                val savingsGoalSum by expenseViewModel.getSumOfExpensesByAssigmentID(assignmentId = savingsGoal.sgId!!).observeAsState(0f)
                 val remainingAmount = savingsGoal.sgGoalAmount.minus(savingsGoalSum)
 
                 SavingsCard(
@@ -82,16 +74,11 @@ fun CardCarousel(
             selectedExpense = null
             showPaymentDialog = true})
 
-
     if (showPaymentDialog) {
-        AddPaymentDialog(
+        PaymentDialog(
             showDialog = showPaymentDialog,
             onDismiss = { showPaymentDialog = false },
-            onConfirmAction = { payment ->
-                showPaymentDialog = false
-                // TODO: Process payment in ViewModel
-            },
-            editingExpense = selectedExpense
+            editingExpense = selectedExpense,
         )
     }
 

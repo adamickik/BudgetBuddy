@@ -3,6 +3,7 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalRepository
 import javax.inject.Inject
@@ -26,5 +27,13 @@ class SavingsGoalViewModel @Inject constructor(
 
     fun getSavingGoalCount(): Int {
         return savingGoalRepository.getSavingGoalCount()
+    }
+
+    fun editSavingGoal(savingGoal: SavingGoal) {
+        savingGoalRepository.update(savingGoal)
+    }
+
+    fun deleteSavingGoal(savingGoal: SavingGoal) {
+        savingGoalRepository.delete(savingGoal)
     }
 }

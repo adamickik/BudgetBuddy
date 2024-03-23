@@ -1,5 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,12 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
-fun SavingsGoalCard(savingsGoal: SavingGoal){
+fun SavingsGoalCard(
+    savingsGoal: SavingGoal,
+    onCardClick: (SavingGoal) -> Unit
+){
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -28,7 +33,8 @@ fun SavingsGoalCard(savingsGoal: SavingGoal){
             .padding(
                 start = 15.dp,
                 end=15.dp,
-                bottom = 10.dp),
+                bottom = 10.dp)
+            .clickable { onCardClick(savingsGoal)}
     ) {
         Column{
             Row(

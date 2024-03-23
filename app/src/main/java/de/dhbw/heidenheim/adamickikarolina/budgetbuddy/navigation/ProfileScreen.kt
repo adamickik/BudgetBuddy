@@ -15,11 +15,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.TextIconButton
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.AddPaymentDialog
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.PaymentCard
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.PaymentDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile.ProfileCard
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.AddSavingGoalDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingGoalDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingsGoalCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
@@ -34,9 +35,11 @@ fun ProfileScreen(
     val savingsGoals by savingGoalViewModel.savingsGoals.observeAsState(emptyList())
 
     var currentDialog by remember { mutableStateOf(DialogType.None) }
+    var selectedSavingGoal by remember { mutableStateOf<SavingGoal?>(null) }
 
     Column {
         ProfileCard()
+
         TextIconButton(
             stringResource(R.string.savingsGoals_name),
             stringResource(R.string.savingsGoalsButton_description),
@@ -47,7 +50,10 @@ fun ProfileScreen(
             modifier = Modifier
             .height(150.dp)) {
             items(savingsGoals) { savingGoal ->
-                SavingsGoalCard(savingGoal)
+                SavingsGoalCard(savingsGoal = savingGoal) {
+                    selectedSavingGoal = savingGoal
+                    currentDialog = DialogType.SavingGoal
+                }
             }
         }
 
@@ -56,24 +62,21 @@ fun ProfileScreen(
             stringResource(R.string.fixedPaymentsButton_description),
             onIconClick = {currentDialog = DialogType.Payment}
         )
-        PaymentCard()
+        //PaymentCard()
     }
 
     when(currentDialog){
-        DialogType.Payment -> AddPaymentDialog(
+        DialogType.Payment -> PaymentDialog(
             showDialog = true,
             onDismiss = { currentDialog = DialogType.None },
-            onConfirmAction = {
-                // TODO better confirm action
-                currentDialog = DialogType.None
-            }
         )
-        DialogType.SavingGoal -> AddSavingGoalDialog(
+        DialogType.SavingGoal -> SavingGoalDialog(
             showDialog = true,
-            onDismiss = { currentDialog = DialogType.None },
-            onConfirmAction = {
+            onDismiss = {
                 currentDialog = DialogType.None
-            }
+                selectedSavingGoal = null
+            },
+            editingSavingGoal = selectedSavingGoal
         )
         DialogType.None -> Unit
     }

@@ -29,32 +29,42 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import java.util.Date
 import java.util.Locale
 
+// TODO Check functionality of SavingGoalDialog
+
 @Composable
-fun AddSavingGoalDialog(
+fun SavingGoalDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    onConfirmAction: (String) -> Unit
+    editingSavingGoal: SavingGoal? = null
 ) {
     val savingGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
+
     var isDatePickerShown by remember { mutableStateOf(false) }
-    var savingGoalTitle by remember { mutableStateOf("") }
-    var savingGoalValue by remember { mutableStateOf("") }
-    var savingGoalDueDate by remember { mutableStateOf("") }
+    var savingGoalTitle by remember (showDialog){ mutableStateOf(editingSavingGoal?.sgName?:"") }
+    var savingGoalValue by remember (showDialog){ mutableStateOf(editingSavingGoal?.sgGoalAmount?.toString() ?:"") }
+    var savingGoalDueDate by remember (showDialog){ mutableStateOf(editingSavingGoal?.sgDueDate?:"") }
     val context = LocalContext.current
 
     if (showDialog) {
         AlertDialog(
             modifier = Modifier.fillMaxWidth(),
             onDismissRequest = { onDismiss() },
-            title = { Text(stringResource(id = R.string.addSavingGoalDialog_name))},
+            title = {
+                Text(
+                    text= if (editingSavingGoal!= null)
+                        stringResource(id = R.string.addSavingGoalDialog_editName)
+                    else
+                        stringResource(id = R.string.addSavingGoalDialog_name)
+                )},
             text = {
                 Column {
                     OutlinedTextField(
@@ -68,8 +78,7 @@ fun AddSavingGoalDialog(
                         value = savingGoalValue,
                         modifier=Modifier.padding(bottom=8.dp),
                         onValueChange = { newValue ->
-                            // Validation for Money
-                            if (newValue.matches(Regex("^\\d*,?\\d{0,2}$"))) {
+                            if (newValue.matches(Regex("^\\d{1,3}(\\.\\d{3})*(,\\d{0,2})?$"))) {
                                 savingGoalValue = newValue
                             }},
                         label = { Text(stringResource(id = R.string.addSavingGoalDialog_value))},
@@ -82,7 +91,7 @@ fun AddSavingGoalDialog(
                     ) {
                         OutlinedTextField(
                             value = savingGoalDueDate,
-                            onValueChange = { /* Read-Only Text Field */ },
+                            onValueChange = {},
                             label = { Text(stringResource(id = R.string.addSavingGoalDialog_duedate)) },
                             readOnly = true,
                             singleLine = true,
@@ -123,11 +132,39 @@ fun AddSavingGoalDialog(
                 }
             },
             confirmButton = {
-                Button(onClick = {
-                    savingGoalViewModel.addSavingsGoal(savingGoalTitle, savingGoalValue, savingGoalDueDate)
-                    onDismiss()
-                    onConfirmAction("test") }) {
-                    Text(stringResource(id = R.string.addSavingGoalDialog_addButton))
+                Button(
+                    onClick = {
+                        if (editingSavingGoal != null){
+                            editingSavingGoal.sgName = savingGoalTitle
+                            editingSavingGoal.sgGoalAmount = savingGoalValue.toFloat()
+                            editingSavingGoal.sgDueDate = savingGoalDueDate
+
+                            savingGoalViewModel.editSavingGoal(editingSavingGoal)
+                        }
+                        else{
+                            savingGoalViewModel.addSavingsGoal(savingGoalTitle, savingGoalValue, savingGoalDueDate)
+                        }
+                        onDismiss()
+                    }
+                ){
+                    Text(
+                        text = if (editingSavingGoal != null)
+                            stringResource(id = R.string.addSavingGoalDialog_editButton)
+                        else
+                            stringResource(id = R.string.addSavingGoalDialog_addButton)
+                    )
+                }
+                if(editingSavingGoal!=null){
+                    Button(
+                        onClick = {
+                            savingGoalViewModel.deleteSavingGoal(editingSavingGoal)
+                            onDismiss()
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.addPaymentDialog_deleteButton)
+                        )
+                    }
                 }
             },
             dismissButton = {

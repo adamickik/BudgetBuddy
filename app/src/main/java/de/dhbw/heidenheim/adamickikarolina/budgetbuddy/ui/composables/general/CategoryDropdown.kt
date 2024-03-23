@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropdownExample() {
+fun CategoryDropDown() {
     var expanded by remember { mutableStateOf(false) }
     val items = listOf("Essen", "Freizeit", "Wohnung", "Shoppen", "Zocken","Sonstige")
     var selectedIndex by remember { mutableStateOf(0) }
