@@ -5,6 +5,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 
 
 @Dao
@@ -33,6 +35,8 @@ interface SavingGoalDao {
 
     @Insert
     fun insertAsList(savingGoalList: List<SavingGoal>)
+    @Update
+    fun update(savingGoal: SavingGoal)
 
     @Delete
     fun delete(savingGoal: SavingGoal)

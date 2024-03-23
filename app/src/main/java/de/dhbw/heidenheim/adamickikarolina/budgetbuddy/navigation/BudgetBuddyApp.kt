@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -11,10 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.AnalyticsScreen
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.HomeScreen
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.ProfileScreen
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.Screens
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.BottomNavBar
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.SavingTipsDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.Topbar
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
 
 @Composable
@@ -49,5 +48,3 @@ fun BudgetBuddyApp() {
         }
     }
 }
-
-

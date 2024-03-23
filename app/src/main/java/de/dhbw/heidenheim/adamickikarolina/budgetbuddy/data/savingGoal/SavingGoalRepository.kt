@@ -38,6 +38,10 @@ class SavingGoalRepository @Inject constructor(
         savingGoalDao.insertAsList(sgList)
     }
 
+    fun update(savingGoal: SavingGoal){
+        savingGoalDao.update(savingGoal)
+    }
+
     fun delete(savingGoal: SavingGoal) {
         savingGoalDao.delete(savingGoal)
     }

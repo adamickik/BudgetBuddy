@@ -32,8 +32,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewM
 fun AssignmentDialog(
     savingGoals: List<SavingGoal>,
     showDialog: Boolean,
-    onDismiss: () -> Unit,
-    onConfirmAction: (String) -> Unit
+    onDismiss: () -> Unit
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
 
@@ -106,7 +105,6 @@ fun AssignmentDialog(
                             )
                         }
                         onDismiss()
-                        onConfirmAction("test")
                     }
                 ) {
                     Text(stringResource(id = R.string.assignmentDialog_addButton))

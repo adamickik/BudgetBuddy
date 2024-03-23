@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

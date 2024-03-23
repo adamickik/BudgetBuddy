@@ -31,8 +31,9 @@ enum class DialogType {
 fun ProfileScreen(
 ){
     val savingGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
-    var currentDialog by remember { mutableStateOf(DialogType.None) }
     val savingsGoals by savingGoalViewModel.savingsGoals.observeAsState(emptyList())
+
+    var currentDialog by remember { mutableStateOf(DialogType.None) }
 
     Column {
         ProfileCard()
@@ -62,17 +63,16 @@ fun ProfileScreen(
         DialogType.Payment -> AddPaymentDialog(
             showDialog = true,
             onDismiss = { currentDialog = DialogType.None },
-            onConfirmAction = { payment ->
+            onConfirmAction = {
+                // TODO better confirm action
                 currentDialog = DialogType.None
-                // TODO: Delegate to ViewModel
             }
         )
         DialogType.SavingGoal -> AddSavingGoalDialog(
             showDialog = true,
             onDismiss = { currentDialog = DialogType.None },
-            onConfirmAction = { savingGoal ->
+            onConfirmAction = {
                 currentDialog = DialogType.None
-                // TODO: Delegate to ViewModel
             }
         )
         DialogType.None -> Unit

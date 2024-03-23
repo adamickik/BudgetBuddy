@@ -12,7 +12,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialS
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialTippData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.BudgetBuddyApp
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.BudgetBuddyApp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel

@@ -139,7 +139,7 @@ fun AddPaymentDialog(
                     onClick = {
                         if (editingExpense != null){
                             editingExpense.eName = paymentTitle
-                            editingExpense.eAmount = paymentValue.toFloat()
+                            //editingExpense.eAmount = paymentValue.toFloat()
                             editingExpense.eDate = paymentDate
 
                             expenseViewModel.editExpense(editingExpense)

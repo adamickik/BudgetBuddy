@@ -17,7 +17,7 @@ import javax.inject.Inject
 class ExpenseViewModel @Inject constructor(
     private val expenseRepository: ExpenseRepository
 ):ViewModel() {
-
+    val expenses: LiveData<List<Expense>> = expenseRepository.getAllExpenses()
     fun getAllExpenses() :LiveData<List<Expense>>{
         return expenseRepository.getAllExpenses()
     }

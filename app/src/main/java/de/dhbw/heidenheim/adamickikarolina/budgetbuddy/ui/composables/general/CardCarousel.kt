@@ -25,7 +25,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewM
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SnappingLazyRow(
+fun CardCarousel(
     savingsGoals: List<SavingGoal>,
     onAssignButtonClick: () -> Unit
 ) {

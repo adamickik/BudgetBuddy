@@ -6,18 +6,6 @@ import javax.inject.Inject
 class TippRepository @Inject constructor(
     private val tippDao: TippDao
 ) {
-    fun getAllTips(): LiveData<List<Tipp>> {
-        return tippDao.getAll()
-    }
-
-    fun getTippById(tippId: Int): LiveData<Tipp> {
-        return tippDao.getById(tippId)
-    }
-
-    fun getTippByName(tippName: String): LiveData<Tipp> {
-        return tippDao.getByName(tippName)
-    }
-
     fun insert(tipp: Tipp) {
         tippDao.insert(tipp)
     }

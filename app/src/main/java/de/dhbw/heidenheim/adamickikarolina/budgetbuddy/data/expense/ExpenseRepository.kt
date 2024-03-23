@@ -33,16 +33,21 @@ class ExpenseRepository @Inject constructor(
     fun getSumByAssignmentId(assignmentId: Int): LiveData<Float>{
         return expenseDao.getSumByAssigmentId(assignmentId)
     }
+
+    fun getAmountsByAssignmentId(assignmentId: Int): LiveData<List<Float>> {
+        return expenseDao.getAmountsByAssignmentId(assignmentId)
+    }
+
     fun insert(expense: Expense) {
         expenseDao.insert(expense)
     }
 
-    fun update(expense: Expense) {
-        expenseDao.update(expense)
-    }
-
     fun insertAsList(eList: List<Expense>) {
         expenseDao.insertAsList(eList)
+    }
+
+    fun update(expense: Expense) {
+        expenseDao.update(expense)
     }
 
     fun delete(expense: Expense) {
