@@ -41,6 +41,7 @@ import java.util.Locale
 @Composable
 fun PaymentDialog(
     showDialog: Boolean,
+    pageIndex: Int,
     onDismiss: () -> Unit,
     editingExpense: Expense? = null
 ) {
@@ -153,7 +154,7 @@ fun PaymentDialog(
                             expenseViewModel.editExpense(editingExpense)
                         }
                         else
-                            expenseViewModel.addExpense(paymentTitle, paymentValue, paymentDate)
+                            expenseViewModel.addExpenseAssignment(paymentTitle, paymentValue, paymentDate, pageIndex)
                         onDismiss()
                     }
                 ) {

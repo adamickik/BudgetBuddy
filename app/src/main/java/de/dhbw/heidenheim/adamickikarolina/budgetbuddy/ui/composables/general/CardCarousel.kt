@@ -81,6 +81,7 @@ fun CardCarousel(
     if (showPaymentDialog) {
         PaymentDialog(
             showDialog = showPaymentDialog,
+            pageIndex = pagerState.currentPage,
             onDismiss = { showPaymentDialog = false },
             editingExpense = selectedExpense,
         )

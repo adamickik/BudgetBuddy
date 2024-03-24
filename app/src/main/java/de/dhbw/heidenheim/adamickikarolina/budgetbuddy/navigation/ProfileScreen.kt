@@ -69,6 +69,7 @@ fun ProfileScreen(
     when(currentDialog){
         DialogType.Payment -> PaymentDialog(
             showDialog = true,
+            pageIndex = 0,
             onDismiss = { currentDialog = DialogType.None },
         )
         DialogType.SavingGoal -> SavingGoalDialog(

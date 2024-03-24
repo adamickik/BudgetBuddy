@@ -32,6 +32,15 @@ class ExpenseViewModel @Inject constructor(
         }
     }
 
+    fun addExpenseAssignment(title: String, value: String, date: String, assignmentId: Int) {
+        val expenseValue = value.toFloatOrNull() ?: return
+        val newExpense = Expense(title, expenseValue, date, assignmentId)
+
+        viewModelScope.launch {
+            expenseRepository.insert(newExpense)
+        }
+    }
+
     fun insertAsList(expenses: List<Expense>) {
         expenseRepository.insertAsList(expenses)
     }
