@@ -14,6 +14,11 @@ class SavingsGoalViewModel @Inject constructor(
 ) : ViewModel() {
     val savingsGoals: LiveData<List<SavingGoal>> = savingGoalRepository.getAllSavingGoals()
 
+
+    fun getSavingGoals(): LiveData<List<SavingGoal>> {
+        return savingGoalRepository.getAllSavingGoals()
+    }
+
     fun addSavingsGoal(title: String, value: String, date: String) {
         val expenseValue = value.toFloatOrNull() ?: return
         val newSavingGoal = SavingGoal(title, expenseValue, date)

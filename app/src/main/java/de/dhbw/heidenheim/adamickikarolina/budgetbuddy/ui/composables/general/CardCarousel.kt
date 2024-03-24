@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LiveData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
@@ -32,7 +33,10 @@ fun CardCarousel(
     val pagerState = rememberPagerState(pageCount = { savingsGoals.size + 1 })
     var showPaymentDialog by remember { mutableStateOf(false) }
     var selectedExpense by remember{ mutableStateOf<Expense?>(null) }
-    val importantExpenses by expenseViewModel.getExpensesByAssignmentIdSorted(pagerState.currentPage).observeAsState(initial = emptyList())
+
+    val expensesByAssignmentId: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentIdSorted(pagerState.currentPage)
+    val importantExpenses = expensesByAssignmentId.observeAsState(initial = emptyList()).value
+
 
     DotsIndicator(
         totalDots = savingsGoals.size + 1,

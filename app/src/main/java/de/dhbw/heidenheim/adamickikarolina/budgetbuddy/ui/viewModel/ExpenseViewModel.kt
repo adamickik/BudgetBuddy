@@ -18,6 +18,7 @@ class ExpenseViewModel @Inject constructor(
     private val expenseRepository: ExpenseRepository
 ):ViewModel() {
     val expenses: LiveData<List<Expense>> = expenseRepository.getAllExpenses()
+
     fun getAllExpenses() :LiveData<List<Expense>>{
         return expenseRepository.getAllExpenses()
     }
@@ -54,13 +55,13 @@ class ExpenseViewModel @Inject constructor(
     fun getSumOfExpensesByAssigmentID(assignmentId: Int): LiveData<Float> {
         return expenseRepository.getSumByAssignmentId(assignmentId)
     }
-    fun assignExpenseToSavingsGoal(value: Float, assigment: SavingGoal) {
+    fun assignExpenseToSavingsGoal(value: Float, assignment: SavingGoal) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val currentDate = dateFormat.format(Date())
         //Expense mit Abzug aus SparDepot
-        val negativeExpense = assigment.sgId?.let {
+        val negativeExpense = assignment.sgId?.let {
             Expense(
-                eName = assigment.sgName,
+                eName = assignment.sgName,
                 eAmount = value*(-1),
                 eDate = currentDate,
                 eAssignment = 0
@@ -71,9 +72,9 @@ class ExpenseViewModel @Inject constructor(
         }
 
         //Expense mit Zuweisung auf neues Sparziel
-        val expense = assigment.sgId?.let {
+        val expense = assignment.sgId?.let {
             Expense(
-                eName = assigment.sgName,
+                eName = assignment.sgName,
                 eAmount = value,
                 eDate = currentDate,
                 eAssignment = it

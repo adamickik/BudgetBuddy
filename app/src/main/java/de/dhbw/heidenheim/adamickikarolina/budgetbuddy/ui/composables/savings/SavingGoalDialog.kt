@@ -78,7 +78,7 @@ fun SavingGoalDialog(
                         value = savingGoalValue,
                         modifier=Modifier.padding(bottom=8.dp),
                         onValueChange = { newValue ->
-                            if (newValue.matches(Regex("^\\d{1,3}(\\.\\d{3})*(,\\d{0,2})?$"))) {
+                            if (newValue.matches(Regex("^\\d*,?\\d{0,2}$"))) {
                                 savingGoalValue = newValue
                             }},
                         label = { Text(stringResource(id = R.string.addSavingGoalDialog_value))},

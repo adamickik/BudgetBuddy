@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LiveData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
@@ -32,14 +33,14 @@ enum class DialogType {
 fun ProfileScreen(
 ){
     val savingGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
-    val savingsGoals by savingGoalViewModel.savingsGoals.observeAsState(emptyList())
+    val savingGoalsFromUser: LiveData<List<SavingGoal>> = savingGoalViewModel.getSavingGoals()
+    val savingGoals = savingGoalsFromUser.observeAsState(initial = emptyList()).value
 
     var currentDialog by remember { mutableStateOf(DialogType.None) }
     var selectedSavingGoal by remember { mutableStateOf<SavingGoal?>(null) }
 
     Column {
         ProfileCard()
-
         TextIconButton(
             stringResource(R.string.savingsGoals_name),
             stringResource(R.string.savingsGoalsButton_description),
@@ -49,7 +50,7 @@ fun ProfileScreen(
         LazyColumn(
             modifier = Modifier
             .height(150.dp)) {
-            items(savingsGoals) { savingGoal ->
+            items(savingGoals) { savingGoal ->
                 SavingsGoalCard(savingsGoal = savingGoal) {
                     selectedSavingGoal = savingGoal
                     currentDialog = DialogType.SavingGoal
