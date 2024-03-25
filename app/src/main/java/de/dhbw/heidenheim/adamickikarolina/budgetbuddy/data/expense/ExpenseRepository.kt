@@ -37,6 +37,15 @@ class ExpenseRepository @Inject constructor(
         }
     }
 
+    fun getAllAssignmentIds(): LiveData<List<Int>> = expenseDao.getAllAssignmentIds()
+
+
+    fun getSumByCategory(cId: Int): LiveData<Float>{
+        return expenseDao.getSumByCategory(cId).map { sum ->
+            sum ?: 0f
+        }
+    }
+
     fun getAmountsByAssignmentId(assignmentId: Int): LiveData<List<Float>> {
         return expenseDao.getAmountsByAssignmentId(assignmentId)
     }

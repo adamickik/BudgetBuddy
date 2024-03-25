@@ -43,7 +43,6 @@ fun SavingDepotCard(
                 ),
         )
         Text(
-            // TODO: change with actual value and currency
             text = NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(savingsDepotSum),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier

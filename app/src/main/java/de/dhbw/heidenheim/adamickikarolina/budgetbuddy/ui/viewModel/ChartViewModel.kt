@@ -21,8 +21,26 @@ class ChartViewModel @Inject constructor(
     private val savingGoals: LiveData<List<SavingGoal>> = savingGoalRepository.getAllSavingGoals()
     private val expenses: LiveData<List<Expense>> = expenseRepository.getAllExpenses()
 
+    // PaymentsPieChart
+    val slices = MutableLiveData<List<Float>>(listOf(30f, 10f, 60f))
+
     fun getSumOfExpensesByAssigmentID(assignmentId: Int): LiveData<Float> {
         return expenseRepository.getSumByAssignmentId(assignmentId)
+    }
+
+    fun getSumsForAllAssignments(): LiveData<List<Float>> {
+        val assignmentIds = expenseRepository.getAllAssignmentIds()
+
+        return assignmentIds.map { assignmentIdList ->
+            val sumList = mutableListOf<Float>()
+            var sum = 0f
+
+            assignmentIdList.forEach { id ->
+                sum = getSumOfExpensesByAssigmentID(id).toString().toFloat()
+                sumList.add(sum)
+            }
+            sumList
+        }
     }
 
     fun getCumulativeAmountsByAssignmentId(assignmentId: Int): LiveData<List<Float>> {
@@ -58,8 +76,4 @@ class ChartViewModel @Inject constructor(
             }
         }
     }
-
-    // PaymentsPieChart
-    val slices = MutableLiveData<List<Float>>(listOf(30f, 10f, 60f))
-
 }

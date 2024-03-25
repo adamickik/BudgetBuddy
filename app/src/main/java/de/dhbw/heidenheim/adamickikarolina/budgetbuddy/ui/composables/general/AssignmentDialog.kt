@@ -86,6 +86,7 @@ fun AssignmentDialog(
                         value = assignmentValue,
                         modifier=Modifier.padding(bottom=8.dp),
                         onValueChange = { newValue ->
+                            // TODO: Move Validation to Assign Button, ViewModel
                             if (newValue.matches(Regex("^\\d{1,3}(\\.\\d{3})*(,\\d{0,2})?$"))) {
                                 assignmentValue = newValue
                             }},

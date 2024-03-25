@@ -36,7 +36,6 @@ fun ExpenseCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                // TODO: Change with actual expense title
                 text = expense.eName,
 
                 modifier = Modifier

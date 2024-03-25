@@ -6,7 +6,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
 
 @Dao
 interface ExpenseDao {
@@ -22,6 +21,12 @@ interface ExpenseDao {
     @Query("SELECT * FROM expenses WHERE eAssignment = :assignmentId")
     fun getByAssignmentId(assignmentId: Int): LiveData<List<Expense>>
 
+    @Query("SELECT DISTINCT eAssignment FROM expenses")
+    fun getAllAssignmentIds(): LiveData<List<Int>>
+
+    @Query("SELECT SUM(eAmount) FROM expenses WHERE eAssignment = :assignmentId")
+    fun getSumByAssignmentId(assignmentId: Int): LiveData<Float>
+
     @Query("SELECT * FROM expenses WHERE eAssignment = :assignmentId ORDER BY eDate DESC")
     fun getByAssignmentIdSorted(assignmentId: Int): LiveData<List<Expense>>
 
@@ -36,6 +41,10 @@ interface ExpenseDao {
 
     @Query("SELECT COALESCE(SUM(eAmount), 0) FROM expenses WHERE eAssignment = :assignmentId")
     fun getSumByAssigmentId(assignmentId: Int): LiveData<Float>
+
+    // TODO Change to actual category
+    @Query("SELECT COALESCE(SUM(eAmount), 0) FROM expenses WHERE eAssignment = :cId")
+    fun getSumByCategory(cId: Int): LiveData<Float>
 
     @Insert
     fun insert(vararg expense: Expense)

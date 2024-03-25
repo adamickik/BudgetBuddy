@@ -12,6 +12,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,8 +32,7 @@ fun CategoryDropDown() {
             readOnly = true,
             value = items[selectedIndex],
             onValueChange = { },
-            // TODO Change to String
-            label = { Text("Kategorie") },
+            label = {stringResource(id = R.string.categories_name) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },

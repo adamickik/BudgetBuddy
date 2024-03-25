@@ -1,5 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.charts
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,6 +13,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -30,15 +32,20 @@ fun PaymentsPieChart(
 ) {
     // TODO: Create Categories in Expenses to assign to then create Pie Chart based on those categories
     val chartViewModel = hiltViewModel<ChartViewModel>()
-    
-    val slices by chartViewModel.slices.observeAsState(initial = listOf<Float>())
+
+    val slices by chartViewModel.getSumsForAllAssignments().observeAsState(initial = emptyList())
+
     val descriptions = listOf("Miete", "Essen", "OF Abos")
 
     val primaryColor = colorResource(id = R.color.primaryColor)
     val onSurfaceColor = colorResource(id = R.color.onSurface)
     val onSurfaceVariantColor = colorResource(id = R.color.onSurfaceVariant)
 
-    val colors = listOf(primaryColor, onSurfaceVariantColor, onSurfaceColor)
+    val colors = listOf(primaryColor, onSurfaceVariantColor, onSurfaceColor,primaryColor,onSurfaceVariantColor)
+
+    LaunchedEffect(slices) {
+        Log.d("YourComposable", "Berechnete Summen: $slices")
+    }
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
@@ -63,8 +70,8 @@ fun PaymentsPieChart(
             ) {
                 val radius = size.minDimension / 2
                 var startAngle = 0f
-                val total = slices.sum()
 
+                val total = slices.sum()
                 slices.forEachIndexed { index, slice ->
                     val angle = (slice / total) * 360f
                     drawArc(

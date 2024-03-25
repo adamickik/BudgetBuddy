@@ -32,13 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import java.util.Date
 import java.util.Locale
 
-// TODO Check functionality of SavingGoalDialog
 
 @Composable
 fun SavingGoalDialog(
@@ -78,6 +76,7 @@ fun SavingGoalDialog(
                         value = savingGoalValue,
                         modifier=Modifier.padding(bottom=8.dp),
                         onValueChange = { newValue ->
+                            // TODO: Move Validation to Assign Button, ViewModel
                             if (newValue.matches(Regex("^\\d*,?\\d{0,2}$"))) {
                                 savingGoalValue = newValue
                             }},

@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 
+
 @Entity(tableName = "expenses",
     foreignKeys = [
         ForeignKey(entity = SavingGoal::class,

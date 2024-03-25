@@ -64,6 +64,9 @@
     <string name="fixedPaymentsButton_description">Fixzahlung hinzufügen</string>
 
 
+    <string name="categories_name">Kategorie</string>
+
+
     <string name="title_activity_topbar">Topbar</string>
     <string name="appwidget_text">0</string>
     <string name="add_widget">Add widget</string>
