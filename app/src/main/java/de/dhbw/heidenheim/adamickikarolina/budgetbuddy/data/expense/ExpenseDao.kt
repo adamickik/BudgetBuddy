@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.category.CategoryExpenseSummary
 
 @Dao
 interface ExpenseDao {
@@ -43,8 +44,11 @@ interface ExpenseDao {
     fun getSumByAssigmentId(assignmentId: Int): LiveData<Float>
 
     // TODO Change to actual category
-    @Query("SELECT COALESCE(SUM(eAmount), 0) FROM expenses WHERE eAssignment = :cId")
-    fun getSumByCategory(cId: Int): LiveData<Float>
+    //@Query("SELECT COALESCE(SUM(eAmount), 0) FROM expenses WHERE eAssignment = :cId")
+    //fun getSumByCategory(cId: Int): LiveData<Float>
+
+    @Query("SELECT SUM(eAmount) FROM expenses WHERE kId = :kId")
+    fun getSumByCategoryId(kId: Int): LiveData<Float>
 
     @Insert
     fun insert(vararg expense: Expense)
@@ -56,4 +60,8 @@ interface ExpenseDao {
 
     @Delete
     fun delete(expense: Expense)
+
+    @Query("SELECT c.name AS categoryName, SUM(e.eAmount) AS totalAmount FROM expenses e JOIN categories c ON e.kId = c.kId GROUP BY e.kId")
+    fun getCategoryExpensesSummary(): LiveData<List<CategoryExpenseSummary>>
+
 }

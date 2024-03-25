@@ -2,12 +2,13 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.category.Category
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialCategoryData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialExpenseData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingGoalData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialTippData
@@ -26,14 +27,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fillDatabaseInitially(InitialTippData.initialTipps, InitialExpenseData.initialExpenses, InitialSavingGoalData.initialSavingGoals)
+        fillDatabaseInitially(InitialTippData.initialTipps, InitialExpenseData.initialExpenses, InitialSavingGoalData.initialSavingGoals, InitialCategoryData.initialCategories )
 
         setContent {
             BudgetBuddyApp()
         }
     }
 
-    private fun fillDatabaseInitially(tipps: List<Tipp>, expenses: List<Expense>, savingGoals: List<SavingGoal>) {
+    private fun fillDatabaseInitially(tipps: List<Tipp>, expenses: List<Expense>, savingGoals: List<SavingGoal>, categories: List<Category>) {
         if (tippsViewModel.getTippCount()==0) {
             tippsViewModel.insertAsList(tipps)
             savingsGoalViewModel.insertAsListAndGetIds(savingGoals)

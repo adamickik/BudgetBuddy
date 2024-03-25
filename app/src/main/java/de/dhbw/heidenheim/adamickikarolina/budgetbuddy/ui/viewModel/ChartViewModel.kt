@@ -20,6 +20,8 @@ class ChartViewModel @Inject constructor(
 
     private val savingGoals: LiveData<List<SavingGoal>> = savingGoalRepository.getAllSavingGoals()
     private val expenses: LiveData<List<Expense>> = expenseRepository.getAllExpenses()
+    val categoryExpensesSummary = expenseRepository.getCategoryExpensesSummary()
+
 
     // PaymentsPieChart
     val slices = MutableLiveData<List<Float>>(listOf(30f, 10f, 60f))
