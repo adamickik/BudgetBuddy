@@ -72,6 +72,7 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.6.4")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation ("androidx.work:work-runtime-ktx:2.9.0")
 
     implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
