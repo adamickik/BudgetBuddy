@@ -33,7 +33,7 @@ fun PaymentsPieChart(
     // TODO: Create Categories in Expenses to assign to then create Pie Chart based on those categories
     val chartViewModel = hiltViewModel<ChartViewModel>()
 
-    val slices by chartViewModel.getSumsForAllAssignments().observeAsState(initial = emptyList())
+    val slices by chartViewModel.slices.observeAsState(initial = emptyList())
 
     val descriptions = listOf("Miete", "Essen", "OF Abos")
 

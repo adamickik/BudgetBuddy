@@ -36,12 +36,8 @@ class MainActivity : AppCompatActivity() {
     private fun fillDatabaseInitially(tipps: List<Tipp>, expenses: List<Expense>, savingGoals: List<SavingGoal>) {
         if (tippsViewModel.getTippCount()==0) {
             tippsViewModel.insertAsList(tipps)
-            val savedSavingGoalsIds = savingsGoalViewModel.insertAsListAndGetIds(savingGoals)
-            Log.d("MainActivity", "Gespeicherte SavingGoal IDs: $savedSavingGoalsIds")
-            val updatedExpenses = expenses.map { expense ->
-                expense.copy(eAssignment = savedSavingGoalsIds[expense.eAssignment].toInt())
-            }
-            expenseViewModel.insertAsList(updatedExpenses)
+            savingsGoalViewModel.insertAsListAndGetIds(savingGoals)
+            expenseViewModel.insertAsList(expenses)
         }
     }
 

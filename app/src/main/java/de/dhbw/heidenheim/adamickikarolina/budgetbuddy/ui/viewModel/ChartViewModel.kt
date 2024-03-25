@@ -28,6 +28,7 @@ class ChartViewModel @Inject constructor(
         return expenseRepository.getSumByAssignmentId(assignmentId)
     }
 
+    /*
     fun getSumsForAllAssignments(): LiveData<List<Float>> {
         val assignmentIds = expenseRepository.getAllAssignmentIds()
 
@@ -41,7 +42,7 @@ class ChartViewModel @Inject constructor(
             }
             sumList
         }
-    }
+    }*/
 
     fun getCumulativeAmountsByAssignmentId(assignmentId: Int): LiveData<List<Float>> {
         val amountsLiveData = expenseRepository.getAmountsByAssignmentId(assignmentId)

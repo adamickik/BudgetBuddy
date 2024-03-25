@@ -66,7 +66,6 @@ class ExpenseViewModel @Inject constructor(
         return expenseRepository.getSumByAssignmentId(assignmentId).map { sum ->
             sum ?: 0f
         }
-        //return expenseRepository.getSumByAssignmentId(assignmentId)
     }
 
 
@@ -79,7 +78,7 @@ class ExpenseViewModel @Inject constructor(
                 eName = assignment.sgName,
                 eAmount = value*(-1),
                 eDate = currentDate,
-                eAssignment = 0
+                eAssignment = 1
             )
         }
         if (negativeExpense != null) {

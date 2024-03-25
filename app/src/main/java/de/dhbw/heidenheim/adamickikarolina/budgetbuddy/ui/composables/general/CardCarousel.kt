@@ -30,16 +30,16 @@ fun CardCarousel(
     onAssignButtonClick: () -> Unit
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
-    val pagerState = rememberPagerState(pageCount = { savingsGoals.size })
+    val pagerState = rememberPagerState(pageCount = { savingsGoals.size +1})
     var showPaymentDialog by remember { mutableStateOf(false) }
     var selectedExpense by remember{ mutableStateOf<Expense?>(null) }
 
-    val expensesByAssignmentId: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentIdSorted(pagerState.currentPage+1)
+    val expensesByAssignmentId: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentIdSorted(pagerState.currentPage +1)
     val importantExpenses = expensesByAssignmentId.observeAsState(initial = emptyList()).value
 
 
     DotsIndicator(
-        totalDots = savingsGoals.size,
+        totalDots = savingsGoals.size +1,
         selectedIndex = pagerState.currentPage
     )
 
@@ -48,9 +48,7 @@ fun CardCarousel(
     ) { page ->
         when (page) {
             0 -> {
-                val savingsDepotSum: Float by expenseViewModel.getSumOfExpensesByAssignmentID(
-                    assignmentId = 0
-                ).observeAsState(0f)
+                val savingsDepotSum: Float by expenseViewModel.getSumOfExpensesByAssignmentID(assignmentId = 1).observeAsState(0f)
 
                 SavingDepotCard(
                     savingsDepotSum = savingsDepotSum,
@@ -59,7 +57,7 @@ fun CardCarousel(
             }
 
             else -> {
-                val savingsGoal = savingsGoals[page]
+                val savingsGoal = savingsGoals[page-1]
                 val savingsGoalSum by expenseViewModel.getSumOfExpensesByAssignmentID(assignmentId = savingsGoal.sgId!!).observeAsState(0f)
                 val remainingAmount = savingsGoal.sgGoalAmount.minus(savingsGoalSum)
 
