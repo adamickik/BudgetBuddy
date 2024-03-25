@@ -30,6 +30,9 @@ interface SavingGoalDao {
     @Query("SELECT COUNT(*) FROM savingGoals")
     fun getCount(): Int
 
+    @Query("SELECT COUNT(*) FROM savingGoals WHERE sgId LIKE :savingGoalId")
+    fun getCountById(savingGoalId: Int): Int
+
     @Insert
     fun insert(vararg savingGoal: SavingGoal)
 

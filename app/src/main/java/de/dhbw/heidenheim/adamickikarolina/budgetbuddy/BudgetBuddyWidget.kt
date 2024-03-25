@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.room.Room
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.AppDatabase
@@ -67,21 +68,39 @@ internal fun updateAppWidget(
     val prefs = context.getSharedPreferences("widgetPrefs", Context.MODE_PRIVATE)
     val savingGoalId = prefs.getString("WIDGET_$appWidgetId", null)
 
+    var topLeft = ""
+    var topRight = ""
+
+    var bottomLeft = ""
+    var bottomRight = ""
+
+    var progessValue = 0
+
     val views = RemoteViews(context.packageName, R.layout.budget_buddy_widget)
     if(savingGoalId != null) {
-        val savingGoal = savingGoalDao.getByIdOffline(savingGoalId.toInt())
-        val expense = expenseDao.getSumByAssigmentIdOffline(savingGoalId.toInt())
+        val count = savingGoalDao.getCountById(savingGoalId.toInt());
+        if(count!= 0) {
+            val savingGoal = savingGoalDao.getByIdOffline(savingGoalId.toInt())
+            val expense = expenseDao.getSumByAssigmentIdOffline(savingGoalId.toInt())
 
-        // Update das Widget mit den neuen Informationen
-        views.setTextViewText(R.id.text_top_left, savingGoal.sgName)
-        views.setTextViewText(R.id.text_top_right, savingGoal.sgGoalAmount.toString())
-        views.setTextViewText(R.id.text_bottom_left, expense.toString())
-        views.setTextViewText(R.id.text_bottom_right, (savingGoal.sgGoalAmount-expense).toString())
+            // Update das Widget mit den neuen Informationen
+            topLeft = savingGoal.sgName
+            topRight = savingGoal.sgGoalAmount.toInt().toString() + "€"
+            bottomLeft = expense.toInt().toString() + "€"
+            bottomRight = (savingGoal.sgGoalAmount-expense).toInt().toString() + "€"
 
-        views.setProgressBar(R.id.widget_progress_bar, 100, (expense/savingGoal.sgGoalAmount*100).toInt(), false)
-
-        appWidgetManager.updateAppWidget(appWidgetId, views)
+            progessValue = (expense/savingGoal.sgGoalAmount*100).toInt()
+        } else {
+            topLeft = "Goal deleted"
+        }
     } else {
-        views.setTextViewText(R.id.text_top_left, "Goal not found")
+        topLeft = "Goal not found"
     }
+
+    views.setTextViewText(R.id.text_top_left, topLeft)
+    views.setTextViewText(R.id.text_top_right, topRight)
+    views.setTextViewText(R.id.text_bottom_left, bottomLeft)
+    views.setTextViewText(R.id.text_bottom_right, bottomRight)
+    views.setProgressBar(R.id.widget_progress_bar, 100, progessValue, false)
+    appWidgetManager.updateAppWidget(appWidgetId, views)
 }
