@@ -25,8 +25,6 @@ class ExpenseRepository @Inject constructor(
         }
     }
 
-    fun getAllAssignmentIds(): LiveData<List<Int>> = expenseDao.getAllAssignmentIds()
-
     fun getSumNegative():  LiveData<Float> = expenseDao.getSumNegative()
 
     fun getAllCategoryExpenses(): LiveData<List<CategorySum>> = expenseDao.getAllCategoryExpenses()

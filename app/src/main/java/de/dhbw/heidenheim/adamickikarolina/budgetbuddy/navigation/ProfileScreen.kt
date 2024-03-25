@@ -47,9 +47,7 @@ fun ProfileScreen(
             onIconClick = {currentDialog = DialogType.SavingGoal}
         )
 
-        LazyColumn(
-            modifier = Modifier
-            .height(150.dp)) {
+        LazyColumn {
             items(savingGoals.drop(1)) { savingGoal ->
                 SavingsGoalCard(savingsGoal = savingGoal) {
                     selectedSavingGoal = savingGoal
@@ -57,13 +55,6 @@ fun ProfileScreen(
                 }
             }
         }
-
-        TextIconButton(
-            stringResource(R.string.fixedPayments_name),
-            stringResource(R.string.fixedPaymentsButton_description),
-            onIconClick = {currentDialog = DialogType.Payment}
-        )
-        //PaymentCard()
     }
 
     when(currentDialog){

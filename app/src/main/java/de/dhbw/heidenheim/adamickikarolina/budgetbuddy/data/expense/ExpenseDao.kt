@@ -43,21 +43,14 @@ interface ExpenseDao {
 
     @Query("SELECT sum(eAmount) FROM expenses WHERE eAssignment = :assignmentId")
     fun getSumByAssigmentIdOffline(assignmentId: Int): Float
-/*
-    @Query("SELECT sum(eAmount) FROM expenses WHERE eAssignment = :assignmentId")
-    fun getSumByAssigmentId(assignmentId: Int): LiveData<Float>*/
 
     @Query("SELECT COALESCE(SUM(eAmount), 0) FROM expenses WHERE eAssignment = :assignmentId")
     fun getSumByAssigmentId(assignmentId: Int): LiveData<Float>
 
-    // TODO Change to actual category
-    //@Query("SELECT COALESCE(SUM(eAmount), 0) FROM expenses WHERE eAssignment = :cId")
-    //fun getSumByCategory(cId: Int): LiveData<Float>
-
     @Query("SELECT SUM(eAmount) FROM expenses WHERE kId = :kId")
     fun getSumByCategoryId(kId: Int): LiveData<Float>
 
-    @Query("SELECT -SUM(eAmount) FROM expenses WHERE eAmount<0")
+    @Query("SELECT -SUM(eAmount) FROM expenses WHERE kId != 1 and eAmount<0")
     fun getSumNegative(): LiveData<Float>
 
     @Insert
@@ -70,10 +63,4 @@ interface ExpenseDao {
 
     @Delete
     fun delete(expense: Expense)
-
-    /*
-    @Query("SELECT c.name AS categoryName, SUM(e.eAmount) AS totalAmount FROM expenses e JOIN categories c ON e.kId = c.kId GROUP BY e.kId")
-    fun getCategoryExpensesSummary(): LiveData<List<CategoryExpenseSummary>>
-    */
-
 }

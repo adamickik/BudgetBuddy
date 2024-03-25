@@ -8,19 +8,29 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryDropDown() {
+fun CategoryDropDown(
+    selectedCategoryId: Int?,
+    onCategorySelected: (Int?)-> Unit
+) {
+    val chartViewModel = hiltViewModel<ChartViewModel>()
+
+    val categories by chartViewModel.categories.observeAsState(emptyList())
+    var selectedCategory by remember { mutableStateOf(categories.find { it.kId == selectedCategoryId }) }
+
     var expanded by remember { mutableStateOf(false) }
-    val items = listOf("Essen", "Freizeit", "Wohnung", "Shoppen", "Zocken","Sonstige")
-    var selectedIndex by remember { mutableStateOf(0) }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -30,14 +40,13 @@ fun CategoryDropDown() {
     ) {
         TextField(
             readOnly = true,
-            value = items[selectedIndex],
+            value = selectedCategory?.kName ?: "Kategorie",
             onValueChange = { },
             label = {stringResource(id = R.string.categories_name) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
-            modifier = Modifier
-                .menuAnchor(),
+            modifier = Modifier.menuAnchor(),
         )
         ExposedDropdownMenu(
             expanded = expanded,
@@ -45,11 +54,12 @@ fun CategoryDropDown() {
                 expanded = false
             }
         ) {
-            items.forEachIndexed { index, selectionOption ->
+            categories.forEach { category ->
                 DropdownMenuItem(
-                    text = { Text(text = selectionOption) },
+                    text = { Text(text = category.kName) },
                     onClick = {
-                        selectedIndex = index
+                        selectedCategory = category
+                        onCategorySelected(category.kId)
                         expanded = false
                     }
                 )

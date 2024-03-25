@@ -58,12 +58,9 @@ fun AssignmentDialog(
                             value = selectedGoal?.sgName?: "Sparziel",
                             onValueChange = { },
                             trailingIcon = {
-                                ExposedDropdownMenuDefaults.TrailingIcon(
-                                    expanded = expanded
-                                )
+                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                             },
-                            modifier = Modifier.menuAnchor(),
-                            colors = ExposedDropdownMenuDefaults.textFieldColors()
+                            modifier = Modifier.menuAnchor()
                         )
                         ExposedDropdownMenu(
                             expanded = expanded,

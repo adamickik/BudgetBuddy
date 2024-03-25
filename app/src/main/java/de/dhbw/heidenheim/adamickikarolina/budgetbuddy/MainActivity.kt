@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             tippsViewModel.insertAsList(tipps)
             savingsGoalViewModel.insertAsListAndGetIds(savingGoals)
             chartViewModel.insertAsList(categories)
-            expenseViewModel.insertAsList(expenses)
+            //expenseViewModel.insertAsList(expenses)
         }
     }
 

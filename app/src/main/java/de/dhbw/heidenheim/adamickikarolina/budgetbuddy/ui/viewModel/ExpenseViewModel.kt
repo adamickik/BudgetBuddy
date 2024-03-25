@@ -33,9 +33,9 @@ class ExpenseViewModel @Inject constructor(
         }
     }
 
-    fun addExpenseAssignment(title: String, value: String, date: String, assignmentId: Int) {
+    fun addExpenseAssignment(title: String, value: String, date: String, assignmentId: Int, categoryId: Int) {
         val expenseValue = value.toFloatOrNull() ?: return
-        val newExpense = Expense(title, expenseValue, date, assignmentId)
+        val newExpense = Expense(title, expenseValue, date, assignmentId, categoryId)
 
         viewModelScope.launch {
             expenseRepository.insert(newExpense)
@@ -52,10 +52,6 @@ class ExpenseViewModel @Inject constructor(
 
     fun editExpense(expense: Expense) {
         expenseRepository.update(expense)
-    }
-
-    fun getExpensesByAssignmentId(assignmentId: Int): LiveData<List<Expense>> {
-        return expenseRepository.getExpenseByAssignmentId(assignmentId)
     }
 
     fun getExpensesByAssignmentIdSorted(assignmentId: Int): LiveData<List<Expense>> {
@@ -78,7 +74,8 @@ class ExpenseViewModel @Inject constructor(
                 eName = assignment.sgName,
                 eAmount = value*(-1),
                 eDate = currentDate,
-                eAssignment = 1
+                eAssignment = 1,
+                kId=1
             )
         }
         if (negativeExpense != null) {
@@ -91,7 +88,8 @@ class ExpenseViewModel @Inject constructor(
                 eName = assignment.sgName,
                 eAmount = value,
                 eDate = currentDate,
-                eAssignment = it
+                eAssignment = it,
+                kId=1
             )
         }
         if (expense != null) {

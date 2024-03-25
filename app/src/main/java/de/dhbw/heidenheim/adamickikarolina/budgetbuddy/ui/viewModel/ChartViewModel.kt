@@ -22,10 +22,7 @@ class ChartViewModel @Inject constructor(
 ) : ViewModel() {
     private val savingGoals: LiveData<List<SavingGoal>> = savingGoalRepository.getAllSavingGoals()
     private val expenses: LiveData<List<Expense>> = expenseRepository.getAllExpenses()
-    private val categories: LiveData<List<Category>> = categoryRepository.getAllCategories()
-
-    // PaymentsPieChart
-    //val slices = MutableLiveData<List<Float>>(listOf(30f, 10f, 60f))
+    val categories: LiveData<List<Category>> = categoryRepository.getAllCategories()
 
     fun insertAsList(categories: List<Category>) {
         categoryRepository.insertAsList(categories)
@@ -40,30 +37,15 @@ class ChartViewModel @Inject constructor(
     }
 
     fun getSumOfExpensesAllCategories():LiveData<List<CategorySum>> {
-        return expenseRepository.getAllCategoryExpenses()
+        val allCategoryExpenses = expenseRepository.getAllCategoryExpenses()
+
+        return allCategoryExpenses.map { list ->
+            list.filterNot { it.categoryId == 1 }
+        }
     }
 
     fun getCategoryNameById(categoryId: Int): LiveData<String> {
         return categoryRepository.getNameByCategoryId(categoryId)
-    }
-
-    private fun getSumOfExpensesByCategoryID(kId: Int): LiveData<Float> {
-        return expenseRepository.getSumByCategoryId(kId)
-    }
-
-    fun getAmountsByCategoryId(catId: Int): LiveData<List<Float>> {
-        val amountsLiveData = expenseRepository.getAmountsByAssignmentId(catId)
-
-        return amountsLiveData.map { amountsList ->
-            val cumulativeList = mutableListOf<Float>()
-            var sum = 0f
-            cumulativeList.add(0f)
-            amountsList.forEach { amount ->
-                sum += amount
-                cumulativeList.add(sum)
-            }
-            cumulativeList
-        }
     }
 
     fun getCumulativeAmountsByAssignmentId(assignmentId: Int): LiveData<List<Float>> {
@@ -94,8 +76,9 @@ class ChartViewModel @Inject constructor(
 
         return sgGoalAmountLiveData.switchMap { sgGoalAmount ->
             cumulativeAmountsLiveData.map { cumulativeList ->
-                val lastAmount = if (cumulativeList.isNotEmpty()) cumulativeList.last() else 0f
-                maxOf(lastAmount, sgGoalAmount)
+                cumulativeList.maxOfOrNull { amount ->
+                    maxOf(amount, sgGoalAmount)
+                } ?: sgGoalAmount
             }
         }
     }

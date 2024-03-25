@@ -33,6 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.CategoryDropDown
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import java.util.Date
 import java.util.Locale
@@ -50,6 +51,8 @@ fun PaymentDialog(
     var paymentTitle by remember(showDialog) { mutableStateOf(editingExpense?.eName?: "") }
     var paymentValue by remember (showDialog){ mutableStateOf(editingExpense?.eAmount?.toString() ?: "")  }
     var paymentDate by remember (showDialog){ mutableStateOf(editingExpense?.eDate ?: "") }
+    var selectedCategoryId by remember { mutableStateOf(editingExpense?.kId ?: 1) }
+
     val context = LocalContext.current
 
     if (showDialog) {
@@ -84,8 +87,12 @@ fun PaymentDialog(
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                     )
-                    /* TODO Add Category DropDown
-                    CategoryDropDown()*/
+                    /* TODO Add Category DropDown*/
+                    CategoryDropDown(
+                        selectedCategoryId= selectedCategoryId,
+                        onCategorySelected = { categoryId ->
+                        selectedCategoryId = categoryId!!
+                    })
 
                     Row(
                         modifier = Modifier.padding(bottom = 8.dp),
@@ -150,11 +157,12 @@ fun PaymentDialog(
                             editingExpense.eName = paymentTitle
                             editingExpense.eAmount = paymentValue.toFloat()
                             editingExpense.eDate = paymentDate
+                            editingExpense.kId = selectedCategoryId
 
                             expenseViewModel.editExpense(editingExpense)
                         }
                         else
-                            expenseViewModel.addExpenseAssignment(paymentTitle, paymentValue, paymentDate, pageIndex)
+                            expenseViewModel.addExpenseAssignment(paymentTitle, paymentValue, paymentDate, pageIndex, selectedCategoryId!!)
                         onDismiss()
                     }
                 ) {

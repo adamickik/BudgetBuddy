@@ -92,26 +92,30 @@ fun LineChart(
                 }
 
                 val targetY = size.height - (savingGoal.sgGoalAmount * stepY)
-                drawLine(
-                    color = primaryColor,
-                    start = Offset(0f, targetY),
-                    end = Offset(size.width, targetY),
-                    strokeWidth = 5f
-                )
                 val formattedGoalAmount = NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(savingGoal.sgGoalAmount)
                 val formattedCurrentAmount = NumberFormat.getCurrencyInstance(Locale("de", "DE")).format(currentValue)
 
-                drawContext.canvas.nativeCanvas.drawText(
-                    formattedGoalAmount,
-                    size.width - getTextWidth(formattedGoalAmount),
-                    targetY - 5f,
-                    Paint().apply {
-                        color = Color.BLACK
-                        textSize = 40f
-                    }
-                )
+                if(savingGoal.sgId!=1){
+                    drawLine(
+                        color = primaryColor,
+                        start = Offset(0f, targetY),
+                        end = Offset(size.width, targetY),
+                        strokeWidth = 5f
+                    )
+
+                    drawContext.canvas.nativeCanvas.drawText(
+                        formattedGoalAmount,
+                        size.width - getTextWidth(formattedGoalAmount),
+                        targetY - 5f,
+                        Paint().apply {
+                            color = Color.BLACK
+                            textSize = 40f
+                        }
+                    )
+                }
 
                 val currentY = size.height - (currentValue.toFloat() * stepY)
+
                 drawContext.canvas.nativeCanvas.drawText(
                     formattedCurrentAmount,
                     size.width - getTextWidth(formattedCurrentAmount),

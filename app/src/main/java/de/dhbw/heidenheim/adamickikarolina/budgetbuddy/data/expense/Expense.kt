@@ -29,7 +29,7 @@ data class Expense(
     @ColumnInfo(name="eAssignment")
     val eAssignment: Int,
     @ColumnInfo(name="kId")
-val kId: Int? = null
+    var kId: Int? = null
 )
 {
     @PrimaryKey(autoGenerate = true)
