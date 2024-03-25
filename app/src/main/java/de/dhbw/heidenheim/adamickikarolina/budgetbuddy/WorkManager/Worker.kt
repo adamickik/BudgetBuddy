@@ -3,6 +3,9 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.WorkManager
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class DatabaseInsertWorker(
     context: Context,
@@ -22,6 +25,11 @@ class DatabaseInsertWorker(
     }
 
     private fun insertIntoDatabase(name: String, value: String) {
-        // Your database insertion logic here
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val currentDate = dateFormat.format(Date())
+        val negativeValue = (value.toFloat()*(-1)).toString()
+
+        //TODO: expenseViewModel hier reinbringen, versteh nicht wie du das jz genau machst mit diesem hiltViewModel
+        //expenseViewModel.addexpense(title = name, value = value, date = currentDate, assignment = 1)
     }
 }
