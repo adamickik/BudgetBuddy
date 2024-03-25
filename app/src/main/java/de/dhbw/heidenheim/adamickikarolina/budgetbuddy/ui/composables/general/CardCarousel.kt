@@ -30,16 +30,16 @@ fun CardCarousel(
     onAssignButtonClick: () -> Unit
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
-    val pagerState = rememberPagerState(pageCount = { savingsGoals.size + 1 })
+    val pagerState = rememberPagerState(pageCount = { savingsGoals.size })
     var showPaymentDialog by remember { mutableStateOf(false) }
     var selectedExpense by remember{ mutableStateOf<Expense?>(null) }
 
-    val expensesByAssignmentId: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentIdSorted(pagerState.currentPage)
+    val expensesByAssignmentId: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentIdSorted(pagerState.currentPage+1)
     val importantExpenses = expensesByAssignmentId.observeAsState(initial = emptyList()).value
 
 
     DotsIndicator(
-        totalDots = savingsGoals.size + 1,
+        totalDots = savingsGoals.size,
         selectedIndex = pagerState.currentPage
     )
 
@@ -48,7 +48,7 @@ fun CardCarousel(
     ) { page ->
         when (page) {
             0 -> {
-                val savingsDepotSum: Float by expenseViewModel.getSumOfExpensesByAssigmentID(
+                val savingsDepotSum: Float by expenseViewModel.getSumOfExpensesByAssignmentID(
                     assignmentId = 0
                 ).observeAsState(0f)
 
@@ -59,8 +59,8 @@ fun CardCarousel(
             }
 
             else -> {
-                val savingsGoal = savingsGoals[page - 1]
-                val savingsGoalSum by expenseViewModel.getSumOfExpensesByAssigmentID(assignmentId = savingsGoal.sgId!!).observeAsState(0f)
+                val savingsGoal = savingsGoals[page]
+                val savingsGoalSum by expenseViewModel.getSumOfExpensesByAssignmentID(assignmentId = savingsGoal.sgId!!).observeAsState(0f)
                 val remainingAmount = savingsGoal.sgGoalAmount.minus(savingsGoalSum)
 
                 SavingsCard(
@@ -78,15 +78,6 @@ fun CardCarousel(
             selectedExpense = null
             showPaymentDialog = true})
 
-    if (showPaymentDialog) {
-        PaymentDialog(
-            showDialog = showPaymentDialog,
-            pageIndex = pagerState.currentPage,
-            onDismiss = { showPaymentDialog = false },
-            editingExpense = selectedExpense,
-        )
-    }
-
     LazyColumn() {
         items(importantExpenses) { expense ->
             ExpenseCard(
@@ -97,6 +88,15 @@ fun CardCarousel(
                 }
             )
         }
+    }
+
+    if (showPaymentDialog) {
+        PaymentDialog(
+            showDialog = showPaymentDialog,
+            pageIndex = pagerState.currentPage+1,
+            onDismiss = { showPaymentDialog = false },
+            editingExpense = selectedExpense,
+        )
     }
 }
 

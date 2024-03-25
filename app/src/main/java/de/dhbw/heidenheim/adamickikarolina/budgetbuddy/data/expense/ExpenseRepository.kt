@@ -1,6 +1,7 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import javax.inject.Inject
 
 class ExpenseRepository @Inject constructor(
@@ -31,7 +32,9 @@ class ExpenseRepository @Inject constructor(
     }
 
     fun getSumByAssignmentId(assignmentId: Int): LiveData<Float>{
-        return expenseDao.getSumByAssigmentId(assignmentId)
+        return expenseDao.getSumByAssigmentId(assignmentId).map { sum ->
+            sum ?: 0f
+        }
     }
 
     fun getAmountsByAssignmentId(assignmentId: Int): LiveData<List<Float>> {

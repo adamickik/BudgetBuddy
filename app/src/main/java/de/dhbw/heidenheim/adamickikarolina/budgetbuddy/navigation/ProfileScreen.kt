@@ -50,7 +50,7 @@ fun ProfileScreen(
         LazyColumn(
             modifier = Modifier
             .height(150.dp)) {
-            items(savingGoals) { savingGoal ->
+            items(savingGoals.drop(1)) { savingGoal ->
                 SavingsGoalCard(savingsGoal = savingGoal) {
                     selectedSavingGoal = savingGoal
                     currentDialog = DialogType.SavingGoal

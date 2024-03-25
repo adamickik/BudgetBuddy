@@ -2,6 +2,7 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
@@ -61,9 +62,14 @@ class ExpenseViewModel @Inject constructor(
         return expenseRepository.getExpenseByAssignmentIdSorted(assignmentId)
     }
 
-    fun getSumOfExpensesByAssigmentID(assignmentId: Int): LiveData<Float> {
-        return expenseRepository.getSumByAssignmentId(assignmentId)
+    fun getSumOfExpensesByAssignmentID(assignmentId: Int): LiveData<Float> {
+        return expenseRepository.getSumByAssignmentId(assignmentId).map { sum ->
+            sum ?: 0f
+        }
+        //return expenseRepository.getSumByAssignmentId(assignmentId)
     }
+
+
     fun assignExpenseToSavingsGoal(value: Float, assignment: SavingGoal) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val currentDate = dateFormat.format(Date())

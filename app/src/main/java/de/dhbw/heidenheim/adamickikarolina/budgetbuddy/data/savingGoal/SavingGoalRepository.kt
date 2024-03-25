@@ -38,6 +38,13 @@ class SavingGoalRepository @Inject constructor(
         savingGoalDao.insertAsList(sgList)
     }
 
+    fun insertAsListAndGetIds(savingGoals: List<SavingGoal>): List<Long> {
+        return savingGoals.map { savingGoal ->
+            savingGoalDao.insert(savingGoal)
+        }
+    }
+
+
     fun update(savingGoal: SavingGoal){
         savingGoalDao.update(savingGoal)
     }

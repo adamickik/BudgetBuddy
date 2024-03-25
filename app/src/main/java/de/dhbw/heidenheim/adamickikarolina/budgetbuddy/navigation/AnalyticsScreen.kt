@@ -24,7 +24,7 @@ fun AnalyticsScreen(){
     val savingGoalsListSize = savingGoalsViewModel.getSavingGoalCount()
     val savingGoals by savingGoalsViewModel.savingsGoals.observeAsState(emptyList())
 
-    val pagerState = rememberPagerState(pageCount = { savingGoals.size })
+    val pagerState = rememberPagerState(pageCount = { savingGoals.size})
 
     Column(
         modifier = Modifier.fillMaxWidth()

@@ -30,6 +30,10 @@ class SavingsGoalViewModel @Inject constructor(
         savingGoalRepository.insertAsList(savingGoals)
     }
 
+    fun insertAsListAndGetIds(savingGoals: List<SavingGoal>): List<Long> {
+        return savingGoalRepository.insertAsListAndGetIds(savingGoals)
+    }
+
     fun getSavingGoalCount(): Int {
         return savingGoalRepository.getSavingGoalCount()
     }

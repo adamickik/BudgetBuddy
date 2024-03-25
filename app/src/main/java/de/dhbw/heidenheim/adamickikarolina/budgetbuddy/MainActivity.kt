@@ -2,6 +2,7 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -33,11 +34,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fillDatabaseInitially(tipps: List<Tipp>, expenses: List<Expense>, savingGoals: List<SavingGoal>) {
-        // Fill list initially if tables are empty
         if (tippsViewModel.getTippCount()==0) {
             tippsViewModel.insertAsList(tipps)
-            expenseViewModel.insertAsList(expenses)
-            savingsGoalViewModel.insertAsList(savingGoals)
+            val savedSavingGoalsIds = savingsGoalViewModel.insertAsListAndGetIds(savingGoals)
+            Log.d("MainActivity", "Gespeicherte SavingGoal IDs: $savedSavingGoalsIds")
+            val updatedExpenses = expenses.map { expense ->
+                expense.copy(eAssignment = savedSavingGoalsIds[expense.eAssignment].toInt())
+            }
+            expenseViewModel.insertAsList(updatedExpenses)
         }
     }
 
