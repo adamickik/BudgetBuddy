@@ -73,4 +73,10 @@
     <string name="click_me">Drücke mich</string>
     <string name="app_widget_description">This is an app widget description</string>
     <string name="widget_icon_description">Icon</string>
+
+    <string name="widget_choose_Goal">Sparziel auswählen</string>
+    <string name="widget_goal">Sparziel</string>
+    <string name="widget_tr">170€</string>
+    <string name="widget_bl">50€</string>
+    <string name="widget_br">200€</string>
 </resources>
