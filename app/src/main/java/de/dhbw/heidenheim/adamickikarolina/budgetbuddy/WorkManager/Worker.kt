@@ -13,14 +13,10 @@ class DatabaseInsertWorker(
 ) : Worker(context, workerParams) {
 
     override fun doWork(): Result {
-        // Extract the input data
         val name = inputData.getString("name") ?: return Result.failure()
         val value = inputData.getString("value") ?: return Result.failure()
 
-        // Perform the database insertion
         insertIntoDatabase(name, value)
-
-        // Indicate whether the work finished successfully with the Result
         return Result.success()
     }
 

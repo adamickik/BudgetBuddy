@@ -15,6 +15,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialT
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.BudgetBuddyApp
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
@@ -23,6 +24,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewMod
 class MainActivity : AppCompatActivity() {
     private val expenseViewModel: ExpenseViewModel by viewModels()
     private val savingsGoalViewModel: SavingsGoalViewModel by viewModels()
+    private val chartViewModel: ChartViewModel by viewModels()
     private val tippsViewModel: TippsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         if (tippsViewModel.getTippCount()==0) {
             tippsViewModel.insertAsList(tipps)
             savingsGoalViewModel.insertAsListAndGetIds(savingGoals)
+            chartViewModel.insertAsList(categories)
             expenseViewModel.insertAsList(expenses)
         }
     }

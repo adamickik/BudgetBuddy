@@ -5,8 +5,9 @@ import androidx.work.WorkManager
 import androidx.work.Data
 import java.util.concurrent.TimeUnit
 
-//TODO: scheduleRepeatingDatabaseInsertJob(LocalContext, name, value) in Fixkosten-Dialog (wenn LocalContext nicht geht dann versuch GlobalContext)
+//TODO: scheduleRepeatingDatabaseInsertJob(LocalContext, name, value, repeatDays) in Fixkosten-Dialog (wenn LocalContext nicht geht dann versuch GlobalContext)
 fun scheduleRepeatingDatabaseInsertJob(context: Context, name: String, value: String, repeatDays: Long) {
+
     val inputData = Data.Builder()
         .putString("name", name)
         .putString("value", value)

@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.category.CategoryDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.TippDao
@@ -31,6 +32,11 @@ object DataBaseModule {
     @Provides
     fun provideSavingGoalDao(appDatabase: AppDatabase): SavingGoalDao {
         return appDatabase.getSavingGoalDao()
+    }
+
+    @Provides
+    fun provideCategoryDao(appDatabase: AppDatabase): CategoryDao {
+        return appDatabase.getCategoryDao()
     }
 
     @Provides

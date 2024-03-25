@@ -6,13 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "categories")
 data class Category(
+    @ColumnInfo(name="kName")
+    var kName: String
+)
+{
     @PrimaryKey(autoGenerate = true)
-    var kId: Int? = null,
-    @ColumnInfo(name="name")
-    var name: String
-)
-data class CategoryExpenseSummary(
-    val categoryName: String,
-    val totalAmount: Float
-)
-
+    var kId: Int? = null
+}
