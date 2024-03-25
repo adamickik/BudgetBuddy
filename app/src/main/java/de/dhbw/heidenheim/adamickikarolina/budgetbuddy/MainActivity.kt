@@ -1,5 +1,6 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy
 
+import InitialBootScreen
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -19,6 +20,20 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewMod
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
+import android.app.Activity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -32,7 +47,16 @@ class MainActivity : AppCompatActivity() {
         fillDatabaseInitially(InitialTippData.initialTipps, InitialExpenseData.initialExpenses, InitialSavingGoalData.initialSavingGoals, InitialCategoryData.initialCategories )
 
         setContent {
-            BudgetBuddyApp()
+            var setupComplete by remember { mutableStateOf(!isFirstAppLaunch()) }
+
+            if (!setupComplete) {
+                InitialBootScreen(onSetupComplete = {
+                    setAppLaunched()
+                    setupComplete = true
+                })
+            } else {
+                BudgetBuddyApp()
+            }
         }
     }
 
@@ -51,5 +75,17 @@ class MainActivity : AppCompatActivity() {
             action = "de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ACTION_UPDATE_WIDGET"
         }
         this.sendBroadcast(intent)
+    }
+    private fun isFirstAppLaunch(): Boolean {
+        val sharedPref = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        return sharedPref.getBoolean("isFirstLaunch", true)
+    }
+
+    private fun setAppLaunched() {
+        val sharedPref = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putBoolean("isFirstLaunch", false)
+            apply()
+        }
     }
 }
