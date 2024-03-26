@@ -35,13 +35,13 @@ fun PaymentsPieChart(
 
     val totalExpenses by chartViewModel.getSumNegative().observeAsState(0f)
 
-    val primaryColor = colorResource(id = R.color.primaryColor)
-    val onSurfaceColor = colorResource(id = R.color.onSurface)
-    val onSurfaceVariantColor = colorResource(id = R.color.onSurfaceVariant)
-    val surfaceTint = colorResource(id = R.color.surfaceTint)
-    val primaryContainer = colorResource(id = R.color.primaryContainer)
+    val colorPie1 = colorResource(id = R.color.col1)
+    val colorPie2 = colorResource(id = R.color.col2)
+    val colorPie3 = colorResource(id = R.color.col3)
+    val colorPie4 = colorResource(id = R.color.col4)
+    val colorPie5 = colorResource(id = R.color.col5)
 
-    val colors = listOf(primaryColor, onSurfaceVariantColor, onSurfaceColor,surfaceTint,primaryContainer)
+    val colors = listOf(colorPie1, colorPie3, colorPie2,colorPie4,colorPie5)
 
     ElevatedCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
