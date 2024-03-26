@@ -21,6 +21,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -41,6 +42,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import java.util.Date
 import java.util.Locale
+import kotlin.math.abs
 
 // TODO Change to Switch
 
@@ -56,10 +58,10 @@ fun PaymentDialog(
 
     var isDatePickerShown by remember { mutableStateOf(false) }
     var paymentTitle by remember(showDialog) { mutableStateOf(editingExpense?.eName?: "") }
-    var paymentValue by remember (showDialog){ mutableStateOf(editingExpense?.eAmount?.let { ExpenseViewModel.floatToGermanCurrencyString(it) } ?: "") }
+    var paymentValue by remember (showDialog){ mutableStateOf(editingExpense?.eAmount?.let { ExpenseViewModel.floatToGermanCurrencyString(abs(it)) } ?: "") }
     var paymentDate by remember (showDialog){ mutableStateOf(editingExpense?.eDate ?: "") }
-    var selectedCategoryId by remember { mutableStateOf(editingExpense?.kId ?: 1) }
-    var isIncome by remember { mutableStateOf(true) }
+    var selectedCategoryId by remember(showDialog) { mutableIntStateOf(editingExpense?.kId ?: 1) }
+    var isIncome by remember(showDialog) { mutableStateOf(editingExpense?.eAmount?.let { it >= 0 } ?: true) }
 
     val context = LocalContext.current
 
@@ -177,16 +179,18 @@ fun PaymentDialog(
             confirmButton = {
                 Button(
                     onClick = {
+                        val amountFloat = expenseViewModel.convertGermanCurrencyStringToFloat(paymentValue) * if (isIncome) 1 else -1
+
                         if (editingExpense != null){
                             editingExpense.eName = paymentTitle
-                            editingExpense.eAmount = expenseViewModel.convertGermanCurrencyStringToFloat(paymentValue)
+                            editingExpense.eAmount = amountFloat
                             editingExpense.eDate = paymentDate
                             editingExpense.kId = selectedCategoryId
 
                             expenseViewModel.editExpense(editingExpense)
                         }
                         else
-                            expenseViewModel.addExpenseAssignment(paymentTitle, paymentValue, paymentDate, pageIndex, selectedCategoryId!!)
+                            expenseViewModel.addExpenseAssignment(paymentTitle, amountFloat, paymentDate, pageIndex, selectedCategoryId)
                         onDismiss()
                     },
                     enabled = isInputValid

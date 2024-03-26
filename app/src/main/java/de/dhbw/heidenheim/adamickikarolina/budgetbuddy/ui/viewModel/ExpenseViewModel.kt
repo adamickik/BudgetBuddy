@@ -33,9 +33,9 @@ class ExpenseViewModel @Inject constructor(
         }
     }
 
-    fun addExpenseAssignment(title: String, value: String, date: String, assignmentId: Int, categoryId: Int) {
-        val expenseValue = convertGermanCurrencyStringToFloat(value)
-        val newExpense = Expense(title, expenseValue, date, assignmentId, categoryId)
+    fun addExpenseAssignment(title: String, value: Float, date: String, assignmentId: Int, categoryId: Int) {
+
+        val newExpense = Expense(title, value, date, assignmentId, categoryId)
 
         viewModelScope.launch {
             expenseRepository.insert(newExpense)
@@ -68,13 +68,8 @@ class ExpenseViewModel @Inject constructor(
         return paymentTitle.matches(Regex("^[a-zA-Z]{2,16}\$"))
     }
 
-    /*
     fun isValidValue(paymentValue: String): Boolean {
         return paymentValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})*|(\\d+))(,\\d{2})?\$"))
-    }*/
-
-    fun isValidValue(paymentValue: String): Boolean {
-        return paymentValue.matches(Regex("^-?\\+?(\\d{1,3}(\\.\\d{3})*|(\\d+))(,\\d{2})?$"))
     }
 
     fun isValidAssignmentValue(paymentValue: String): Boolean {
