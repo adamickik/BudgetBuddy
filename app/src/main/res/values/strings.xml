@@ -68,8 +68,8 @@
     <string name="savingsGoal_congrats">Herzlichen Glückwunsch! Du hast dein Sparziel %s erreicht.</string>
     <string name="savingsGoal_congratsButton">SPARZIEL LÖSCHEN</string>
     <string name="savingsGoal_expiredTitle">SPARZIEL ABGELAUFEN</string>
-    <string name="savingsGoal_expired">Schade! Dein Sparziel %s ist abgelaufen.</string>
-    <string name="savingsGoal_expiredButton">SPARZIEL LÖSCHEN</string>
+    <string name="savingsGoal_expired">Schade! Dein Sparziel %s ist abgelaufen. Bitte verlängere oder lösche dein Sparziel</string>
+    <string name="savingsGoal_expiredButton">OK</string>
 
     <string name="fixedPayments_name">FIXZAHLUNGEN</string>
     <string name="fixedPaymentsButton_description">Fixzahlung hinzufügen</string>

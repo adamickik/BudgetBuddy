@@ -106,8 +106,7 @@ fun CardCarousel(
                             message=stringResource(id=R.string.savingsGoal_expired, savingsGoal.sgName),
                             confirmButtonText = stringResource(id = R.string.savingsGoal_expiredButton),
                             onConfirm = {
-                                showFulfilledDialog=false
-                                savingsGoalViewModel.deleteSavingGoal(savingsGoal)
+                                showExpiredDialog=false
                             })
                     }
                 }
