@@ -10,20 +10,8 @@ class SavingGoalRepository @Inject constructor(
         return savingGoalDao.getAll()
     }
 
-    fun getAllOfflineSavingGoals(): List<SavingGoal> {
-        return savingGoalDao.getAllOffline()
-    }
-
     fun getSavingGoalById(sgId: Int): LiveData<SavingGoal> {
         return savingGoalDao.getById(sgId)
-    }
-
-    fun getSavingGoalByIdOffline(sgId: Int): SavingGoal {
-        return savingGoalDao.getByIdOffline(sgId)
-    }
-
-    fun getSavingGoalByName(sgName: String): LiveData<SavingGoal> {
-        return savingGoalDao.getByName(sgName)
     }
 
     fun getSavingGoalCount(): Int {
@@ -43,7 +31,6 @@ class SavingGoalRepository @Inject constructor(
             savingGoalDao.insert(savingGoal)
         }
     }
-
 
     fun update(savingGoal: SavingGoal){
         savingGoalDao.update(savingGoal)

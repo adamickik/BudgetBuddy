@@ -4,8 +4,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -37,7 +37,7 @@ fun CategoryDropDown(
             expanded = !expanded
         }
     ) {
-        TextField(
+        OutlinedTextField(
             readOnly = true,
             value = selectedCategory?.kName ?: "Kategorie",
             onValueChange = { },
@@ -45,7 +45,7 @@ fun CategoryDropDown(
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
-            modifier = Modifier.menuAnchor(),
+            modifier = Modifier.menuAnchor()
         )
         ExposedDropdownMenu(
             expanded = expanded,
@@ -53,7 +53,7 @@ fun CategoryDropDown(
                 expanded = false
             }
         ) {
-            categories.forEach { category ->
+            categories.drop(1).forEach { category ->
                 DropdownMenuItem(
                     text = { Text(text = category.kName) },
                     onClick = {

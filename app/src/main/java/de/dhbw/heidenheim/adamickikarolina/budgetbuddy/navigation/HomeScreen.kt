@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.AssignmentDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.AssignmentDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.CardCarousel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 

@@ -22,19 +22,6 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
 import java.io.FileOutputStream
 import java.io.InputStream
 
-
-fun saveImageFromUriToInternalStorage(context: Context, imageUri: Uri, fileName: String) {
-    val contentResolver = context.contentResolver
-    val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
-    val fileOutputStream: FileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE)
-
-    inputStream?.use { input ->
-        fileOutputStream.use { output ->
-            input.copyTo(output)
-        }
-    }
-}
-
 @Composable
 fun InitialBootScreen(onSetupComplete: () -> Unit) {
     val context = LocalContext.current
@@ -111,4 +98,16 @@ fun InitialBootScreen(onSetupComplete: () -> Unit) {
 
 fun isValidUsername(text: String): Boolean {
     return text.matches(Regex("^[a-zA-Z]{2,16}\$"))
+}
+
+fun saveImageFromUriToInternalStorage(context: Context, imageUri: Uri, fileName: String) {
+    val contentResolver = context.contentResolver
+    val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
+    val fileOutputStream: FileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE)
+
+    inputStream?.use { input ->
+        fileOutputStream.use { output ->
+            input.copyTo(output)
+        }
+    }
 }

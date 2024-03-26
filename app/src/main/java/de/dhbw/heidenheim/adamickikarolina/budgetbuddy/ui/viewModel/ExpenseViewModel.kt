@@ -34,7 +34,7 @@ class ExpenseViewModel @Inject constructor(
     }
 
     fun addExpenseAssignment(title: String, value: String, date: String, assignmentId: Int, categoryId: Int) {
-        val expenseValue = value.toFloatOrNull() ?: return
+        val expenseValue = convertGermanCurrencyStringToFloat(value)
         val newExpense = Expense(title, expenseValue, date, assignmentId, categoryId)
 
         viewModelScope.launch {
@@ -61,6 +61,40 @@ class ExpenseViewModel @Inject constructor(
     fun getSumOfExpensesByAssignmentID(assignmentId: Int): LiveData<Float> {
         return expenseRepository.getSumByAssignmentId(assignmentId).map { sum ->
             sum ?: 0f
+        }
+    }
+
+    fun isValidTitle(paymentTitle: String): Boolean {
+        return paymentTitle.matches(Regex("^[a-zA-Z]{2,16}\$"))
+    }
+
+    /*
+    fun isValidValue(paymentValue: String): Boolean {
+        return paymentValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})*|(\\d+))(,\\d{2})?\$"))
+    }*/
+
+    fun isValidValue(paymentValue: String): Boolean {
+        return paymentValue.matches(Regex("^-?\\+?(\\d{1,3}(\\.\\d{3})*|(\\d+))(,\\d{2})?$"))
+    }
+
+    fun isValidAssignmentValue(paymentValue: String): Boolean {
+        return paymentValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})*|(\\d+))(,\\d{2})?\$"))
+    }
+
+    fun isValidDueDate(paymentDate: String): Boolean {
+        return paymentDate.matches(Regex("^(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((19|20)\\d\\d)\$"))
+    }
+
+    fun convertGermanCurrencyStringToFloat(currencyString: String): Float {
+        val normalizedString = currencyString
+            .replace(".", "")
+            .replace(",", ".")
+        return normalizedString.toFloat()
+    }
+
+    companion object {
+        fun floatToGermanCurrencyString(it: Float):String {
+            return String.format(Locale.GERMAN, "%.2f", it)
         }
     }
 

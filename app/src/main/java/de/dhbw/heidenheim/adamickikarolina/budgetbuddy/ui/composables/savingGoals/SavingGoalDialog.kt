@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals
 
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.layout.Box
@@ -30,13 +30,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.CustomOutlinedTextField
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import java.util.Date
 import java.util.Locale
-
 
 @Composable
 fun SavingGoalDialog(
@@ -48,9 +50,15 @@ fun SavingGoalDialog(
 
     var isDatePickerShown by remember { mutableStateOf(false) }
     var savingGoalTitle by remember (showDialog){ mutableStateOf(editingSavingGoal?.sgName?:"") }
-    var savingGoalValue by remember (showDialog){ mutableStateOf(editingSavingGoal?.sgGoalAmount?.toString() ?:"") }
+    var savingGoalValue by remember(showDialog) { mutableStateOf(editingSavingGoal?.sgGoalAmount?.let { SavingsGoalViewModel.floatToGermanCurrencyString(it) } ?: "") }
     var savingGoalDueDate by remember (showDialog){ mutableStateOf(editingSavingGoal?.sgDueDate?:"") }
     val context = LocalContext.current
+
+    val isInputValid = remember(savingGoalTitle, savingGoalValue, savingGoalDueDate) {
+        savingGoalTitle.isNotEmpty() && savingGoalViewModel.isValidTitle(savingGoalTitle) &&
+                savingGoalValue.isNotEmpty() && savingGoalViewModel.isValidValue(savingGoalValue) &&
+                savingGoalDueDate.isNotEmpty()  && savingGoalViewModel.isValidDueDate(savingGoalDueDate)
+    }
 
     if (showDialog) {
         AlertDialog(
@@ -65,24 +73,18 @@ fun SavingGoalDialog(
                 )},
             text = {
                 Column {
-                    OutlinedTextField(
+                    CustomOutlinedTextField(
                         value = savingGoalTitle,
-                        modifier=Modifier.padding(bottom=8.dp),
                         onValueChange = { savingGoalTitle = it },
-                        label = { Text(stringResource(id = R.string.addSavingGoalDialog_title)) },
-                        singleLine = true
+                        label = stringResource(id = R.string.addSavingGoalDialog_title),
+                        isError = savingGoalTitle.isNotEmpty() && !savingGoalViewModel.isValidTitle(savingGoalTitle)
                     )
-                    OutlinedTextField(
+                    CustomOutlinedTextField(
                         value = savingGoalValue,
-                        modifier=Modifier.padding(bottom=8.dp),
-                        onValueChange = { newValue ->
-                            // TODO: Move Validation to Assign Button, ViewModel
-                            if (newValue.matches(Regex("^\\d*,?\\d{0,2}$"))) {
-                                savingGoalValue = newValue
-                            }},
-                        label = { Text(stringResource(id = R.string.addSavingGoalDialog_value))},
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                        onValueChange = { savingGoalValue = it },
+                        label = stringResource(id = R.string.addSavingGoalDialog_value),
+                        isError = savingGoalValue.isNotEmpty() && !savingGoalViewModel.isValidValue(savingGoalValue),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal) // Spezifische Keyboard-Optionen für dieses Feld
                     )
                     Row(
                         modifier = Modifier.padding(bottom = 8.dp),
@@ -94,7 +96,8 @@ fun SavingGoalDialog(
                             label = { Text(stringResource(id = R.string.addSavingGoalDialog_duedate)) },
                             readOnly = true,
                             singleLine = true,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            isError = savingGoalDueDate.isNotEmpty() && !savingGoalViewModel.isValidDueDate(savingGoalDueDate)
                         )
                         Box(
                             contentAlignment = Alignment.Center,
@@ -105,7 +108,18 @@ fun SavingGoalDialog(
                             IconButton(
                                 onClick = {
                                     if(!isDatePickerShown){
-                                        val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Zahlungsdatum").build()
+                                        val constraintsBuilder = CalendarConstraints.Builder().apply {
+                                            val today = MaterialDatePicker.todayInUtcMilliseconds()
+                                            setStart(today)
+                                            setValidator(DateValidatorPointForward.now())
+                                        }
+
+                                        val datePicker = MaterialDatePicker.Builder.datePicker()
+                                            .setTitleText("Zieldatum")
+                                            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                                            .setCalendarConstraints(constraintsBuilder.build())
+                                            .build()
+
                                         isDatePickerShown = true
                                         datePicker.show((context as androidx.fragment.app.FragmentActivity).supportFragmentManager, "DATE_PICKER")
 
@@ -135,7 +149,7 @@ fun SavingGoalDialog(
                     onClick = {
                         if (editingSavingGoal != null){
                             editingSavingGoal.sgName = savingGoalTitle
-                            editingSavingGoal.sgGoalAmount = savingGoalValue.toFloat()
+                            editingSavingGoal.sgGoalAmount = savingGoalViewModel.convertGermanCurrencyStringToFloat(savingGoalValue)
                             editingSavingGoal.sgDueDate = savingGoalDueDate
 
                             savingGoalViewModel.editSavingGoal(editingSavingGoal)
@@ -144,7 +158,8 @@ fun SavingGoalDialog(
                             savingGoalViewModel.addSavingsGoal(savingGoalTitle, savingGoalValue, savingGoalDueDate)
                         }
                         onDismiss()
-                    }
+                    },
+                    enabled = isInputValid
                 ){
                     Text(
                         text = if (editingSavingGoal != null)

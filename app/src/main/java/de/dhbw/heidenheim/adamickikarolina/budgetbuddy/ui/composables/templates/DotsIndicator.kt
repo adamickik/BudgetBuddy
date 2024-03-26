@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

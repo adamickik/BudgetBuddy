@@ -1,10 +1,12 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalRepository
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +21,7 @@ class SavingsGoalViewModel @Inject constructor(
     }
 
     fun addSavingsGoal(title: String, value: String, date: String) {
-        val expenseValue = value.toFloatOrNull() ?: return
+        val expenseValue = convertGermanCurrencyStringToFloat(value)
         val newSavingGoal = SavingGoal(title, expenseValue, date)
 
         savingGoalRepository.insert(newSavingGoal)
@@ -43,5 +45,30 @@ class SavingsGoalViewModel @Inject constructor(
 
     fun deleteSavingGoal(savingGoal: SavingGoal) {
         savingGoalRepository.delete(savingGoal)
+    }
+
+    fun isValidTitle(savingGoalTitle: String): Boolean {
+        return savingGoalTitle.matches(Regex("^[a-zA-Z]{2,16}\$"))
+    }
+
+    fun isValidValue(savingGoalValue: String): Boolean {
+        return savingGoalValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})*|(\\d+))(,\\d{2})?\$"))
+    }
+
+    fun isValidDueDate(savingGoalDueDate: String): Boolean {
+        return savingGoalDueDate.matches(Regex("^(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[012])\\.((19|20)\\d\\d)\$"))
+    }
+
+    fun convertGermanCurrencyStringToFloat(currencyString: String): Float {
+        val normalizedString = currencyString
+            .replace(".", "")
+            .replace(",", ".")
+        return normalizedString.toFloat()
+    }
+
+    companion object {
+        fun floatToGermanCurrencyString(it: Float):String {
+            return String.format(Locale.GERMAN, "%.2f", it)
+        }
     }
 }

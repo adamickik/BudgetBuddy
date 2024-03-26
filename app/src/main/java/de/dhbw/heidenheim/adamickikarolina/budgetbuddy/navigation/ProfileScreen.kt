@@ -17,8 +17,8 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoa
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.TextIconButton
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.PaymentDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile.ProfileCard
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingGoalDialog
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings.SavingsGoalCard
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.SavingGoalDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.SavingsGoalCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
 enum class DialogType {

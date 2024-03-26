@@ -41,6 +41,8 @@
     <string name="addPaymentDialog_value">Wert in €</string>
     <string name="addPaymentDialog_date">Zahlungsdatum</string>
     <string name="addPaymentDialog_dateButton">Zahlungsdatum auswählen</string>
+    <string name="addPaymentDialog_isIncome">EINNAHME</string>
+    <string name="addPaymentDialog_isExpense">AUSGABE</string>
 
     <string name="assignmentDialog_name">GELD ZUWEISEN</string>
     <string name="assignmentDialog_addButton">ZUWEISEN</string>
@@ -58,7 +60,7 @@
 
     <string name="savingsGoals_name">SPARZIELE</string>
     <string name="savingsGoalsButton_description">Sparziel hinzufügen</string>
-    <string name="savingsGoal_duedate">Fälligkeitstag:\u0020</string>
+    <string name="savingsGoal_duedate">Zieltag:\u0020</string>
 
     <string name="fixedPayments_name">FIXZAHLUNGEN</string>
     <string name="fixedPaymentsButton_description">Fixzahlung hinzufügen</string>

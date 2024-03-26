@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savings
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

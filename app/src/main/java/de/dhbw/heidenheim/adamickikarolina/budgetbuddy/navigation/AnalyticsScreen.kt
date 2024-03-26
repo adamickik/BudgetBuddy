@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.charts.LineChart
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.charts.PaymentsPieChart
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.DotsIndicator
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DotsIndicator
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
 @OptIn(ExperimentalFoundationApi::class)

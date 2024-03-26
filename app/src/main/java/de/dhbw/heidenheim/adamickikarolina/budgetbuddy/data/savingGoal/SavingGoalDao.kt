@@ -11,7 +11,7 @@ import androidx.room.Update
 @Dao
 interface SavingGoalDao {
 
-    @Query("SELECT * FROM savingGoals")
+    @Query("SELECT * FROM savingGoals ORDER BY sgDueDate DESC")
     fun getAll(): LiveData<List<SavingGoal>>
 
     @Query("SELECT * FROM savingGoals")

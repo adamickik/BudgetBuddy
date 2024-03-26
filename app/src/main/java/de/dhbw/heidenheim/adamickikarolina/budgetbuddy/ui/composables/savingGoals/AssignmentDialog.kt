@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.CustomOutlinedTextField
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,6 +41,10 @@ fun AssignmentDialog(
     var expanded by remember { mutableStateOf(false) }
     var selectedGoal by remember { mutableStateOf(savingGoals.firstOrNull()) }
 
+    val isInputValid = remember(assignmentValue) {
+        assignmentValue.isNotEmpty() && expenseViewModel.isValidAssignmentValue(assignmentValue)
+    }
+
     if (showDialog) {
         AlertDialog(
             modifier = Modifier.fillMaxWidth(),
@@ -53,7 +58,7 @@ fun AssignmentDialog(
                             expanded = !expanded
                         },
                     ) {
-                        TextField(
+                        OutlinedTextField(
                             readOnly = true,
                             value = selectedGoal?.sgName?: "Sparziel",
                             onValueChange = { },
@@ -79,16 +84,11 @@ fun AssignmentDialog(
                             }
                         }
                     }
-                    OutlinedTextField(
+                    CustomOutlinedTextField(
                         value = assignmentValue,
-                        modifier=Modifier.padding(bottom=8.dp),
-                        onValueChange = { newValue ->
-                            // TODO: Move Validation to Assign Button, ViewModel
-                            if (newValue.matches(Regex("^\\d{1,3}(\\.\\d{3})*(,\\d{0,2})?$"))) {
-                                assignmentValue = newValue
-                            }},
-                        label = { Text(stringResource(id = R.string.assignmentDialog_value))},
-                        singleLine = true,
+                        onValueChange = { assignmentValue = it },
+                        label = stringResource(id = R.string.addSavingGoalDialog_value),
+                        isError = assignmentValue.isNotEmpty() && !expenseViewModel.isValidAssignmentValue(assignmentValue),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                     )
                 }
@@ -100,7 +100,8 @@ fun AssignmentDialog(
                             expenseViewModel.assignExpenseToSavingsGoal(assignmentValue.toFloat(), it)
                         }
                         onDismiss()
-                    }
+                    },
+                    enabled = isInputValid
                 ) {
                     Text(stringResource(id = R.string.assignmentDialog_addButton))
                 }
