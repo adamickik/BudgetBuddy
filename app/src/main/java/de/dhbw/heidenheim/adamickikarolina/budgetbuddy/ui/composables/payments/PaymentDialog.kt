@@ -87,7 +87,6 @@ fun PaymentDialog(
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                     )
-                    /* TODO Add Category DropDown*/
                     CategoryDropDown(
                         selectedCategoryId= selectedCategoryId,
                         onCategorySelected = { categoryId ->
@@ -139,15 +138,6 @@ fun PaymentDialog(
                             }
                         }
                     }
-
-                    /* TODO FINISH DATEPICKER COMPOSABLE
-                    DatePickerInput(
-                        labelText = stringResource(id = R.string.addPaymentDialog_date),
-                        selectedDate = paymentDate,
-                        onDateSelected = { newDate ->
-                            paymentDate = newDate
-                        }
-                    )*/
                 }
             },
             confirmButton = {

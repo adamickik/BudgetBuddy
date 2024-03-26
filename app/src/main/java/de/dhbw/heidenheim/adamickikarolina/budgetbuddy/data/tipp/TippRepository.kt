@@ -1,6 +1,5 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp
 
-import androidx.lifecycle.LiveData
 import javax.inject.Inject
 
 class TippRepository @Inject constructor(

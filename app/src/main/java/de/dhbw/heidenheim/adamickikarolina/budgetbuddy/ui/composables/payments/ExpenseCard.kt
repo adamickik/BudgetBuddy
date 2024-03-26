@@ -19,6 +19,7 @@ fun ExpenseCard(
     expense: Expense,
     onCardClick: (Expense) -> Unit
 ) {
+    val clickable = expense.kId != 1
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -30,7 +31,9 @@ fun ExpenseCard(
                 end = 15.dp,
                 bottom = 10.dp
             )
-            .clickable { onCardClick(expense)}
+            .then(
+                if (clickable) Modifier.clickable { onCardClick(expense) } else Modifier
+            )
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
