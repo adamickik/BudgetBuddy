@@ -54,11 +54,11 @@ class ExpenseViewModel @Inject constructor(
     }
 
     fun isValidValue(paymentValue: String): Boolean {
-        return paymentValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})*|(\\d+))(,\\d{2})?\$"))
+        return paymentValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})?|(\\d{1,6}))(,\\d{2})?\$"))
     }
 
     fun isValidAssignmentValue(paymentValue: String): Boolean {
-        return paymentValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})*|(\\d+))(,\\d{2})?\$"))
+        return paymentValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})?|(\\d{1,6}))(,\\d{2})?\$"))
     }
 
     fun isValidDueDate(paymentDate: String): Boolean {

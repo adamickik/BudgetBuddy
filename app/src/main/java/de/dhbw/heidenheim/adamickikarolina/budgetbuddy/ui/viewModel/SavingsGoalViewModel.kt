@@ -43,7 +43,7 @@ class SavingsGoalViewModel @Inject constructor(
     }
 
     fun isValidValue(savingGoalValue: String): Boolean {
-        return savingGoalValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})*|(\\d+))(,\\d{2})?\$"))
+        return savingGoalValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})?|(\\d{1,6}))(,\\d{2})?\$"))
     }
 
     fun isValidDueDate(savingGoalDueDate: String): Boolean {
