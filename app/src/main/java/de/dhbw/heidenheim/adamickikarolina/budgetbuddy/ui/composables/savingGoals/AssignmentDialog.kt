@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.CustomOutlinedTextField
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownEntry
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownMenu
@@ -37,9 +38,20 @@ fun AssignmentDialog(
     val savingGoalEntries = filteredSavingsGoals.map { DropdownEntry(it.sgId!!, it.sgName) }
     var selectedGoalId by remember { mutableStateOf(savingGoalEntries.firstOrNull()?.id) }
 
+    val savingDepotSum by expenseViewModel.getSumOfExpensesByAssignmentID(assignmentId = 1).observeAsState(0f)
+    var selectedGoalSum = 0f
+    var selectedGoalAmount = 0f
+
+    selectedGoalId?.let {
+        val selectedGoalSumInit by expenseViewModel.getSumOfExpensesByAssignmentID(assignmentId = it)
+            .observeAsState(0f)
+        selectedGoalSum = selectedGoalSumInit
+        val selectedGoal by savingsGoalViewModel.getSavingGoalById(selectedGoalId!!).observeAsState()
+        selectedGoalAmount = selectedGoal?.sgGoalAmount ?: 0f
+    }
     var assignmentValue by remember { mutableStateOf("") }
     val isInputValid = remember(assignmentValue) {
-        assignmentValue.isNotEmpty() && expenseViewModel.isValidAssignmentValue(assignmentValue) && selectedGoalId != null
+        assignmentValue.isNotEmpty() && expenseViewModel.isValidAssignmentValue(paymentValue = assignmentValue, savingDepotSum = savingDepotSum, selectedGoalSum = selectedGoalSum, selectedGoalRemainingAmount = selectedGoalAmount) && selectedGoalId != null
     }
 
     if (showDialog) {
@@ -59,7 +71,7 @@ fun AssignmentDialog(
                         value = assignmentValue,
                         onValueChange = { assignmentValue = it },
                         label = stringResource(id = R.string.addSavingGoalDialog_value),
-                        isError = assignmentValue.isNotEmpty() && !expenseViewModel.isValidAssignmentValue(assignmentValue),
+                        isError = assignmentValue.isNotEmpty() && !expenseViewModel.isValidAssignmentValue(paymentValue = assignmentValue, savingDepotSum = savingDepotSum, selectedGoalSum = selectedGoalSum, selectedGoalRemainingAmount = selectedGoalAmount),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                     )
                 }

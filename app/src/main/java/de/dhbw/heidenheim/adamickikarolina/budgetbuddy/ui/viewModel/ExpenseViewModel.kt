@@ -1,5 +1,7 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
@@ -8,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseRepository
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -57,8 +60,10 @@ class ExpenseViewModel @Inject constructor(
         return paymentValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})?|(\\d{1,6}))(,\\d{2})?\$"))
     }
 
-    fun isValidAssignmentValue(paymentValue: String): Boolean {
-        return paymentValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})?|(\\d{1,6}))(,\\d{2})?\$"))
+    fun isValidAssignmentValue(paymentValue: String, savingDepotSum: Float, selectedGoalSum: Float,selectedGoalRemainingAmount:Float): Boolean {
+        val normalizedString = paymentValue.replace(",", ".").filter { it.isDigit() || it == '.' }
+        val newRemainingAmount = selectedGoalSum + normalizedString.toFloat()
+        return savingDepotSum>=normalizedString.toFloat()&&newRemainingAmount<=selectedGoalRemainingAmount&&paymentValue.matches(Regex("^(?!-)\\+?(\\d{1,3}(\\.\\d{3})?|(\\d{1,6}))(,\\d{2})?\$"))
     }
 
     fun isValidDueDate(paymentDate: String): Boolean {
