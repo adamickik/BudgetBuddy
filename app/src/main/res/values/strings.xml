@@ -79,4 +79,9 @@
     <string name="widget_tr">170€</string>
     <string name="widget_bl">50€</string>
     <string name="widget_br">200€</string>
+
+    <string name="initialScreen_username">Name</string>
+    <string name="initialScreen_picDescription">Ausgewähltes Bild</string>
+    <string name="initialScreen_profilePic">Profilbild auswählen</string>
+    <string name="initialScreen_startApp">Budget Buddy starten!</string>
 </resources>

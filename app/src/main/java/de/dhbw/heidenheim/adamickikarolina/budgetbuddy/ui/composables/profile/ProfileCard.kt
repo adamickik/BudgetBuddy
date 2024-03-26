@@ -22,9 +22,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import java.io.File
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
-
-
+import androidx.compose.ui.layout.ContentScale
 
 @Preview
 @Composable
@@ -39,7 +37,6 @@ fun ProfileCard(){
         verticalAlignment = Alignment.CenterVertically
     ){
         Text(
-            // TODO Change with actual name
             text = stringResource(R.string.profile_greeting, username),
             style = MaterialTheme.typography.headlineLarge,
 
@@ -50,22 +47,23 @@ fun ProfileCard(){
                     bottom = 10.dp)
                 .weight(1f),
         )
-        if (profilePicture != "null") { // Änderung: Prüfen Sie auf den String "null"
+        if (profilePicture != "null") {
             Image(
                 painter = rememberAsyncImagePainter(Uri.fromFile(File(context.filesDir, profilePicture))),
                 contentDescription = stringResource(R.string.profileImage_description),
                 modifier = Modifier
-                    .size(100.dp) // Setzt die Größe des Bildes
-                    .clip(CircleShape) // Macht das Bild rund
+                    .size(100.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
             )
         } else {
-            // Zeige ein Standardbild, wenn kein Bild ausgewählt ist
             Image(
                 painter = painterResource(R.mipmap.ic_logo_foreground),
                 contentDescription = stringResource(R.string.profileImage_description),
                 modifier = Modifier
-                    .size(100.dp) // Setzt die Größe des Bildes
-                    .clip(CircleShape) // Macht das Bild rund
+                    .size(100.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
             )
         }
     }
