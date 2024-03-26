@@ -74,8 +74,7 @@ fun InitialBootScreen(onSetupComplete: () -> Unit) {
             Button(
                 onClick = {
                     selectedImageUri?.let { uri ->
-                        val fileName =
-                            "profile_picture.png"
+                        val fileName = "profile_picture.png"
                         saveImageFromUriToInternalStorage(context, uri, fileName)
 
                         val sharedPreferences =

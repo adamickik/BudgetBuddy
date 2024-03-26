@@ -12,7 +12,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.TippDao
 
 
-@Database(entities = [Expense::class, Tipp::class, SavingGoal::class, Category::class ], version = 2)
+@Database(entities = [Expense::class, Tipp::class, SavingGoal::class, Category::class ], version = 1)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun getExpenseDao() : ExpenseDao
     abstract fun getTippDao() : TippDao

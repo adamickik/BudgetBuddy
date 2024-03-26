@@ -60,15 +60,15 @@ fun PaymentDialog(
     var paymentTitle by remember(showDialog) { mutableStateOf(editingExpense?.eName?: "") }
     var paymentValue by remember (showDialog){ mutableStateOf(editingExpense?.eAmount?.let { ExpenseViewModel.floatToGermanCurrencyString(abs(it)) } ?: "") }
     var paymentDate by remember (showDialog){ mutableStateOf(editingExpense?.eDate ?: "") }
-    var selectedCategoryId by remember(showDialog) { mutableIntStateOf(editingExpense?.kId ?: 1) }
+    var selectedCategoryId by remember(showDialog) { mutableStateOf(editingExpense?.kId) }
     var isIncome by remember(showDialog) { mutableStateOf(editingExpense?.eAmount?.let { it >= 0 } ?: true) }
 
     val context = LocalContext.current
 
-    val isInputValid = remember(paymentTitle, paymentValue, paymentDate) {
+    val isInputValid = remember(paymentTitle, paymentValue, paymentDate, selectedCategoryId) {
         paymentTitle.isNotEmpty() && expenseViewModel.isValidTitle(paymentTitle) &&
                 paymentValue.isNotEmpty() && expenseViewModel.isValidValue(paymentValue) &&
-                paymentDate.isNotEmpty()  && expenseViewModel.isValidDueDate(paymentDate)
+                paymentDate.isNotEmpty()  && expenseViewModel.isValidDueDate(paymentDate) && selectedCategoryId != null
     }
 
     if (showDialog) {
@@ -113,8 +113,9 @@ fun PaymentDialog(
                     CategoryDropDown(
                         selectedCategoryId= selectedCategoryId,
                         onCategorySelected = { categoryId ->
-                        selectedCategoryId = categoryId!!
-                    })
+                            selectedCategoryId = categoryId!!
+                        },
+                    )
 
                     Row(
                         modifier = Modifier.padding(bottom = 8.dp),
@@ -190,7 +191,7 @@ fun PaymentDialog(
                             expenseViewModel.editExpense(editingExpense)
                         }
                         else
-                            expenseViewModel.addExpenseAssignment(paymentTitle, amountFloat, paymentDate, pageIndex, selectedCategoryId)
+                            expenseViewModel.addExpenseAssignment(paymentTitle, amountFloat, paymentDate, pageIndex, selectedCategoryId!!)
                         onDismiss()
                     },
                     enabled = isInputValid
