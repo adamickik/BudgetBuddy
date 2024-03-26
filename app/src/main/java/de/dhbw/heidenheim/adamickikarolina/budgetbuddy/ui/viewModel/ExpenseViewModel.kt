@@ -108,4 +108,12 @@ class ExpenseViewModel @Inject constructor(
         )
         expenseRepository.insert(expense)
     }
+
+    fun isSavingGoalFulfilled(savingGoalId: Int, savingGoalAmount: Float): LiveData<Boolean> {
+        val totalExpensesForGoal = getSumOfExpensesByAssignmentID(savingGoalId)
+
+        return totalExpensesForGoal.map { totalExpenses ->
+            totalExpenses >= savingGoalAmount
+        }
+    }
 }

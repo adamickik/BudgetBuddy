@@ -8,6 +8,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -16,21 +17,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.CustomOutlinedTextField
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownEntry
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownMenu
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
 @Composable
 fun AssignmentDialog(
-    savingGoals: List<SavingGoal>,
     showDialog: Boolean,
     onDismiss: () -> Unit
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
+    val savingsGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
 
-    val savingGoalEntries = savingGoals.map { DropdownEntry(it.sgId!!, it.sgName) }
+    val savingsGoals by savingsGoalViewModel.savingsGoals.observeAsState(emptyList())
+    val filteredSavingsGoals = savingsGoals.drop(1)
+
+    val savingGoalEntries = filteredSavingsGoals.map { DropdownEntry(it.sgId!!, it.sgName) }
     var selectedGoalId by remember { mutableStateOf(savingGoalEntries.firstOrNull()?.id) }
 
     var assignmentValue by remember { mutableStateOf("") }

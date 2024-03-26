@@ -15,21 +15,19 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalV
 @Composable
 fun HomeScreen(
 ) {
-    val savingsGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
+    /*val savingsGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
 
     val savingsGoals by savingsGoalViewModel.savingsGoals.observeAsState(emptyList())
-    val filteredSavingsGoals = savingsGoals.drop(1)
+    val filteredSavingsGoals = savingsGoals.drop(1) */
 
     var showAssignmentDialog by remember { mutableStateOf(false) }
 
     Column {
         CardCarousel(
-            savingsGoals = filteredSavingsGoals,
             onAssignButtonClick = { showAssignmentDialog = true })
 
         if (showAssignmentDialog) {
             AssignmentDialog(
-                savingGoals = filteredSavingsGoals,
                 showDialog = showAssignmentDialog,
                 onDismiss = { showAssignmentDialog = false }
             )

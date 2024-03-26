@@ -64,12 +64,18 @@
     <string name="savingsDepot_name">SPARDEPOT</string>
     <string name="savingsGoalsButton_description">Sparziel hinzufügen</string>
     <string name="savingsGoal_duedate">Zieltag:\u0020</string>
+    <string name="savingsGoal_congratsTitle">SPARZIEL ERREICHT</string>
+    <string name="savingsGoal_congrats">Herzlichen Glückwunsch! Du hast dein Sparziel %s erreicht.</string>
+    <string name="savingsGoal_congratsButton">SPARZIEL LÖSCHEN</string>
 
     <string name="fixedPayments_name">FIXZAHLUNGEN</string>
     <string name="fixedPaymentsButton_description">Fixzahlung hinzufügen</string>
 
 
     <string name="categories_name">Kategorie</string>
+
+
+    <string name="confirmDialog_confirm">Bestätigen</string>
 
 
     <string name="title_activity_topbar">Topbar</string>
