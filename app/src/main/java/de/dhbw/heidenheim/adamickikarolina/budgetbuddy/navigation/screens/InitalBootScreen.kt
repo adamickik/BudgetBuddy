@@ -1,5 +1,6 @@
 import android.content.Context
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -78,19 +79,29 @@ fun InitialBootScreen(onSetupComplete: () -> Unit) {
 
             Button(
                 onClick = {
-                    selectedImageUri?.let { uri ->
-                        val fileName = "profile_picture.png"
-                        saveImageFromUriToInternalStorage(context, uri, fileName)
-
+                    if(username.isNotEmpty() && isValidUsername(username)) {
                         val sharedPreferences =
                             context.getSharedPreferences("BudgetBuddyPrefs", Context.MODE_PRIVATE)
+                        selectedImageUri?.let { uri ->
+                            val fileName = "profile_picture.png"
+                            saveImageFromUriToInternalStorage(context, uri, fileName)
+
+                            with(sharedPreferences.edit()) {
+                                putString("profilePicture", fileName)
+                                apply()
+                            }
+
+                        }
                         with(sharedPreferences.edit()) {
                             putString("username", username)
-                            putString("profilePicture", fileName)
                             apply()
                         }
                         onSetupComplete()
+                    } else {
+                        Toast.makeText(context, "Bitte Namen angeben",
+                            Toast.LENGTH_LONG).show();
                     }
+
                 },
                 modifier = Modifier.padding( 16.dp)
             ) {
