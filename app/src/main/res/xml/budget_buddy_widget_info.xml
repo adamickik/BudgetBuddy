@@ -3,7 +3,7 @@
     android:description="@string/app_widget_description"
     android:initialKeyguardLayout="@layout/budget_buddy_widget"
     android:initialLayout="@layout/budget_buddy_widget"
-    android:minWidth="40dp"
+    android:minWidth="100dp"
     android:minHeight="40dp"
     android:previewImage="@drawable/example_appwidget_preview"
     android:previewLayout="@layout/budget_buddy_widget"

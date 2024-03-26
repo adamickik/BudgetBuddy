@@ -84,16 +84,21 @@ internal fun updateAppWidget(
 
             // Update das Widget mit den neuen Informationen
             topLeft = savingGoal.sgName
-            topRight = savingGoal.sgGoalAmount.toInt().toString() + "€"
-            bottomLeft = expense.toInt().toString() + "€"
-            bottomRight = (savingGoal.sgGoalAmount-expense).toInt().toString() + "€"
+            if (expense >= savingGoal.sgGoalAmount) {
+                bottomLeft = "Ziel erreicht"
+                progessValue = 100
+            } else {
+                topRight = savingGoal.sgGoalAmount.toInt().toString() + "€"
+                bottomLeft = expense.toInt().toString() + "€"
+                bottomRight = (savingGoal.sgGoalAmount-expense).toInt().toString() + "€"
 
-            progessValue = (expense/savingGoal.sgGoalAmount*100).toInt()
+                progessValue = (expense/savingGoal.sgGoalAmount*100).toInt()
+            }
         } else {
-            topLeft = "Goal deleted"
+            topLeft = "Ziel gelöscht"
         }
     } else {
-        topLeft = "Goal not found"
+        topLeft = "Ziel nicht gefunden"
     }
 
     views.setTextViewText(R.id.text_top_left, topLeft)

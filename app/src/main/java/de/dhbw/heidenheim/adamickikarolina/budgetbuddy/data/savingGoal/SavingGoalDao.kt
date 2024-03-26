@@ -14,7 +14,7 @@ interface SavingGoalDao {
     @Query("SELECT * FROM savingGoals ORDER BY sgDueDate DESC")
     fun getAll(): LiveData<List<SavingGoal>>
 
-    @Query("SELECT * FROM savingGoals")
+    @Query("SELECT * FROM savingGoals WHERE sgId != 1")
     fun getAllOffline(): List<SavingGoal>
 
     @Query("SELECT * FROM savingGoals WHERE sgId LIKE :savingGoalId LIMIT 1")
