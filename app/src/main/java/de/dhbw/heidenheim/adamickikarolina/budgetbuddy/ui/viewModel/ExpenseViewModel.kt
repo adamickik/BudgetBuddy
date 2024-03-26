@@ -111,7 +111,6 @@ class ExpenseViewModel @Inject constructor(
             expenseRepository.insert(negativeExpense)
         }
 
-        //Expense mit Zuweisung auf neues Sparziel
         val expense = assignment.sgId?.let {
             Expense(
                 eName = assignment.sgName,
