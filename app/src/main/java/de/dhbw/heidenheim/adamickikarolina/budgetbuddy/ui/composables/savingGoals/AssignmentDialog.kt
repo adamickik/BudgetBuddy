@@ -38,40 +38,54 @@ fun AssignmentDialog(
     val savingGoalEntries = filteredSavingsGoals.map { DropdownEntry(it.sgId!!, it.sgName) }
     var selectedGoalId by remember { mutableStateOf(savingGoalEntries.firstOrNull()?.id) }
 
-    val savingDepotSum by expenseViewModel.getSumOfExpensesByAssignmentID(assignmentId = 1).observeAsState(0f)
+    val savingDepotSum by expenseViewModel.getSumOfExpensesByAssignmentID(assignmentId = 1)
+        .observeAsState(0f)
+
+    //TODO: Code hier irgendwie schöner machen
     var selectedGoalSum = 0f
     var selectedGoalAmount = 0f
-
     selectedGoalId?.let {
         val selectedGoalSumInit by expenseViewModel.getSumOfExpensesByAssignmentID(assignmentId = it)
             .observeAsState(0f)
         selectedGoalSum = selectedGoalSumInit
-        val selectedGoal by savingsGoalViewModel.getSavingGoalById(selectedGoalId!!).observeAsState()
+        val selectedGoal by savingsGoalViewModel.getSavingGoalById(selectedGoalId!!)
+            .observeAsState()
         selectedGoalAmount = selectedGoal?.sgGoalAmount ?: 0f
     }
+
     var assignmentValue by remember { mutableStateOf("") }
     val isInputValid = remember(assignmentValue) {
-        assignmentValue.isNotEmpty() && expenseViewModel.isValidAssignmentValue(paymentValue = assignmentValue, savingDepotSum = savingDepotSum, selectedGoalSum = selectedGoalSum, selectedGoalRemainingAmount = selectedGoalAmount) && selectedGoalId != null
+        assignmentValue.isNotEmpty() && expenseViewModel.isValidAssignmentValue(
+            paymentValue = assignmentValue,
+            savingDepotSum = savingDepotSum,
+            selectedGoalSum = selectedGoalSum,
+            selectedGoalRemainingAmount = selectedGoalAmount
+        ) && selectedGoalId != null
     }
 
     if (showDialog) {
         AlertDialog(
             modifier = Modifier.fillMaxWidth(),
             onDismissRequest = { onDismiss() },
-            title = { Text(stringResource(id = R.string.assignmentDialog_name))},
+            title = { Text(stringResource(id = R.string.assignmentDialog_name)) },
             text = {
                 Column {
                     DropdownMenu(
                         entries = savingGoalEntries,
                         selectedEntryId = selectedGoalId,
                         onEntrySelected = { selectedId -> selectedGoalId = selectedId },
-                        defaultDisplayText = stringResource(id= R.string.assignmentDialog_savingGoal)
+                        defaultDisplayText = stringResource(id = R.string.assignmentDialog_savingGoal)
                     )
                     CustomOutlinedTextField(
                         value = assignmentValue,
                         onValueChange = { assignmentValue = it },
                         label = stringResource(id = R.string.addSavingGoalDialog_value),
-                        isError = assignmentValue.isNotEmpty() && !expenseViewModel.isValidAssignmentValue(paymentValue = assignmentValue, savingDepotSum = savingDepotSum, selectedGoalSum = selectedGoalSum, selectedGoalRemainingAmount = selectedGoalAmount),
+                        isError = assignmentValue.isNotEmpty() && !expenseViewModel.isValidAssignmentValue(
+                            paymentValue = assignmentValue,
+                            savingDepotSum = savingDepotSum,
+                            selectedGoalSum = selectedGoalSum,
+                            selectedGoalRemainingAmount = selectedGoalAmount
+                        ),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                     )
                 }
@@ -80,7 +94,10 @@ fun AssignmentDialog(
                 Button(
                     onClick = {
                         selectedGoalId?.let {
-                            expenseViewModel.assignExpenseToSavingsGoal(assignmentValue.toFloat(), it)
+                            expenseViewModel.assignExpenseToSavingsGoal(
+                                assignmentValue.toFloat(),
+                                it
+                            )
                         }
                         onDismiss()
                     },

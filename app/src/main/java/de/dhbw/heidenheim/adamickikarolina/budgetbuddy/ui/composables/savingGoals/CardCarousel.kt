@@ -47,6 +47,7 @@ fun CardCarousel(
     val importantExpenses = expensesByAssignmentId.observeAsState(initial = emptyList()).value
 
     var showFulfilledDialog by remember { mutableStateOf(false) }
+    var showExpiredDialog by remember { mutableStateOf(false) }
 
     DotsIndicator(
         totalDots = savingsGoals.size,
@@ -72,7 +73,7 @@ fun CardCarousel(
                 val remainingAmount = savingsGoal.sgGoalAmount.minus(savingsGoalSum)
 
                 val isFulfilled by expenseViewModel.isSavingGoalFulfilled(savingsGoal.sgId!!, savingsGoal.sgGoalAmount).observeAsState(false)
-
+                val isExpired = expenseViewModel.isSavingGoalExpired(savingsGoal)
                 SavingGoalCard(
                     savingsGoal = savingsGoal,
                     remainingAmount = remainingAmount
@@ -88,6 +89,22 @@ fun CardCarousel(
                             title = stringResource(id=R.string.savingsGoal_congratsTitle),
                             message=stringResource(id=R.string.savingsGoal_congrats, savingsGoal.sgName),
                             confirmButtonText = stringResource(id = R.string.savingsGoal_congratsButton),
+                            onConfirm = {
+                                showFulfilledDialog=false
+                                savingsGoalViewModel.deleteSavingGoal(savingsGoal)
+                            })
+                    }
+                }
+                if(isExpired) {
+                    LaunchedEffect(key1 = isExpired) {
+                        showExpiredDialog = true
+                    }
+
+                    if (showExpiredDialog) {
+                        ConfirmDialog(
+                            title = stringResource(id=R.string.savingsGoal_expiredTitle),
+                            message=stringResource(id=R.string.savingsGoal_expired, savingsGoal.sgName),
+                            confirmButtonText = stringResource(id = R.string.savingsGoal_expiredButton),
                             onConfirm = {
                                 showFulfilledDialog=false
                                 savingsGoalViewModel.deleteSavingGoal(savingsGoal)

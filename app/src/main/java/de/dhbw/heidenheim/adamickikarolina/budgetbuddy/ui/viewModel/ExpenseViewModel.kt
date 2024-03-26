@@ -9,9 +9,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseRepository
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
@@ -119,6 +122,21 @@ class ExpenseViewModel @Inject constructor(
 
         return totalExpensesForGoal.map { totalExpenses ->
             totalExpenses >= savingGoalAmount
+        }
+    }
+    fun isSavingGoalExpired(savingGoal: SavingGoal): Boolean {
+        val dateFormat: String = "yyyy-MM-dd"
+        val expiryDateString = savingGoal.sgDueDate
+        try {
+            val formatter = DateTimeFormatter.ofPattern(dateFormat)
+            val expiryDate = LocalDate.parse(expiryDateString, formatter)
+
+            val currentDate = LocalDate.now()
+
+            return expiryDate.isBefore(currentDate)
+        } catch (e: Exception) {
+            println("Error parsing the expiry date: ${e.message}")
+            return false
         }
     }
 }
