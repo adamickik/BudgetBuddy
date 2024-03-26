@@ -5,7 +5,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoa
 object InitialSavingGoalData {
     val initialSavingGoals = listOf(
         SavingGoal(sgName ="Depot", sgGoalAmount = 1000.00f, sgDueDate ="9999-12-31"),
-        SavingGoal(sgName ="Test", sgGoalAmount = 1000.00f, sgDueDate ="2024-03-25"),
+        //SavingGoal(sgName ="Test", sgGoalAmount = 1000.00f, sgDueDate ="2024-03-25"),
     )
 
 }

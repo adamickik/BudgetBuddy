@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.CustomOutlinedTextField
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownEntry
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownMenu
@@ -93,12 +92,11 @@ fun AssignmentDialog(
             confirmButton = {
                 Button(
                     onClick = {
-                        selectedGoalId?.let {
                             expenseViewModel.assignExpenseToSavingsGoal(
                                 assignmentValue.toFloat(),
-                                it
+                                selectedGoalId!!
                             )
-                        }
+
                         onDismiss()
                     },
                     enabled = isInputValid

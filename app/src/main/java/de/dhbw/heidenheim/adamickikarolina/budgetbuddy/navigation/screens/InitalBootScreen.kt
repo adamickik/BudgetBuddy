@@ -19,7 +19,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
@@ -99,7 +98,7 @@ fun InitialBootScreen(onSetupComplete: () -> Unit) {
                         onSetupComplete()
                     } else {
                         Toast.makeText(context, "Bitte Namen angeben",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_LONG).show()
                     }
 
                 },

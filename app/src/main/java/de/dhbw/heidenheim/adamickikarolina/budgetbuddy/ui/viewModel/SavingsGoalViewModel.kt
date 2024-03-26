@@ -21,7 +21,9 @@ class SavingsGoalViewModel @Inject constructor(
 
         savingGoalRepository.insert(newSavingGoal)
     }
-
+    fun getSavingGoals(): LiveData<List<SavingGoal>> {
+        return savingGoalRepository.getAllSavingGoals()
+    }
     fun getSavingGoalById(savingGoalId: Int): LiveData<SavingGoal> {
         return savingGoalRepository.getSavingGoalById(savingGoalId)
     }

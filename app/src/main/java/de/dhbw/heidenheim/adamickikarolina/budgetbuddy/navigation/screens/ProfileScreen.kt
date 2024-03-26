@@ -11,13 +11,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LiveData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.TextIconButton
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.expenses.ExpenseDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile.ProfileCard
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.SavingGoalDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.SavingGoalCardMinimal
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.SavingGoalDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.TextIconButton
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
 enum class DialogType {
@@ -28,8 +29,8 @@ enum class DialogType {
 fun ProfileScreen(
 ){
     val savingGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
-    val savingGoals by savingGoalViewModel.savingsGoals.observeAsState(emptyList())
-
+    val savingGoalsLiveData: LiveData<List<SavingGoal>> = savingGoalViewModel.getSavingGoals()
+    val savingGoals = savingGoalsLiveData.observeAsState(initial = emptyList()).value
     var currentDialog by remember { mutableStateOf(DialogType.None) }
     var selectedSavingGoal by remember { mutableStateOf<SavingGoal?>(null) }
 

@@ -5,9 +5,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -18,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.switchMap
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.expenses.ExpenseCard
@@ -37,13 +35,15 @@ fun CardCarousel(
     val savingsGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
 
     val savingsGoals by savingsGoalViewModel.savingsGoals.observeAsState(emptyList())
-    val filteredSavingsGoals = savingsGoals.drop(1)
 
     val pagerState = rememberPagerState(pageCount = { savingsGoals.size})
     var showPaymentDialog by remember { mutableStateOf(false) }
     var selectedExpense by remember{ mutableStateOf<Expense?>(null) }
 
-    val expensesByAssignmentId: LiveData<List<Expense>> = expenseViewModel.getExpensesByAssignmentIdSorted(pagerState.currentPage +1)
+    val expensesByAssignmentId: LiveData<List<Expense>> = savingsGoalViewModel.savingsGoals.switchMap { savingsGoals ->
+        expenseViewModel.getExpensesByAssignmentIdSorted(savingsGoals[pagerState.currentPage].sgId!!)
+
+    }
     val importantExpenses = expensesByAssignmentId.observeAsState(initial = emptyList()).value
 
     var showFulfilledDialog by remember { mutableStateOf(false) }
@@ -68,7 +68,7 @@ fun CardCarousel(
             }
 
             else -> {
-                val savingsGoal = filteredSavingsGoals[page-1]
+                val savingsGoal = savingsGoals[page]
                 val savingsGoalSum by expenseViewModel.getSumOfExpensesByAssignmentID(assignmentId = savingsGoal.sgId!!).observeAsState(0f)
                 val remainingAmount = savingsGoal.sgGoalAmount.minus(savingsGoalSum)
 

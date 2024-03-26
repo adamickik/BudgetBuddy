@@ -6,6 +6,10 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import dagger.hilt.android.AndroidEntryPoint
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.category.Category
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
@@ -20,7 +24,6 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewMod
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TipsViewModel
-import androidx.compose.runtime.*
 
 
 @AndroidEntryPoint

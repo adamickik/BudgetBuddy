@@ -42,6 +42,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownMenu
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 import java.util.Date
 import java.util.Locale
 import kotlin.math.abs
@@ -55,6 +56,9 @@ fun ExpenseDialog(
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
     val chartViewModel = hiltViewModel<ChartViewModel>()
+    val savingsGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
+    val savingsGoals by savingsGoalViewModel.savingsGoals.observeAsState()
+    val currentSavingGoalID = savingsGoals?.get(pageIndex-1)?.sgId
 
     val categories by chartViewModel.categories.observeAsState(emptyList())
     val categoryEntries = categories.map { DropdownEntry(id = it.kId!!, name = it.kName) }
@@ -198,7 +202,7 @@ fun ExpenseDialog(
                             expenseViewModel.editExpense(editingExpense)
                         }
                         else
-                            expenseViewModel.addExpenseAssignment(expenseTitle, amountFloat, expenseDate, pageIndex, selectedCategoryId!!)
+                            expenseViewModel.addExpenseAssignment(expenseTitle, amountFloat, expenseDate, currentSavingGoalID!!, selectedCategoryId!!)
                         onDismiss()
                     },
                     enabled = isInputValid
