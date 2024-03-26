@@ -15,12 +15,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.expenses.ExpenseCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.expenses.ExpenseDialog
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.ConfirmDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.ConfirmDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DotsIndicator
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.TextIconButton
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
@@ -40,10 +41,18 @@ fun CardCarousel(
     var showPaymentDialog by remember { mutableStateOf(false) }
     var selectedExpense by remember{ mutableStateOf<Expense?>(null) }
 
+    // TODO refactor code
     val expensesByAssignmentId: LiveData<List<Expense>> = savingsGoalViewModel.savingsGoals.switchMap { savingsGoals ->
-        expenseViewModel.getExpensesByAssignmentIdSorted(savingsGoals[pagerState.currentPage].sgId!!)
+        val validCurrentPage = pagerState.currentPage.coerceIn(0, maxOf(savingsGoals.size - 1, 0))
+        val currentSavingGoalId = savingsGoals.getOrNull(validCurrentPage)?.sgId
 
+        if (currentSavingGoalId != null) {
+            expenseViewModel.getExpensesByAssignmentIdSorted(currentSavingGoalId)
+        } else {
+            MutableLiveData(emptyList<Expense>())
+        }
     }
+
     val importantExpenses = expensesByAssignmentId.observeAsState(initial = emptyList()).value
 
     var showFulfilledDialog by remember { mutableStateOf(false) }
@@ -92,7 +101,9 @@ fun CardCarousel(
                             onConfirm = {
                                 showFulfilledDialog=false
                                 savingsGoalViewModel.deleteSavingGoal(savingsGoal)
-                            })
+                            },
+                            onDismissRequest = {showFulfilledDialog=false})
+
                     }
                 }
                 if(isExpired) {
@@ -107,7 +118,8 @@ fun CardCarousel(
                             confirmButtonText = stringResource(id = R.string.savingsGoal_expiredButton),
                             onConfirm = {
                                 showExpiredDialog=false
-                            })
+                            },
+                            onDismissRequest = {showFulfilledDialog=false})
                     }
                 }
             }
