@@ -7,14 +7,21 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 
-
 @Dao
 interface SavingGoalDao {
+    @Insert
+    fun insert(vararg savingGoal: SavingGoal)
+
+    @Insert
+    fun insert(savingGoal: SavingGoal): Long
+
+    @Insert
+    fun insertAsList(savingGoalList: List<SavingGoal>)
 
     @Query("SELECT * FROM savingGoals ORDER BY sgDueDate DESC")
     fun getAll(): LiveData<List<SavingGoal>>
 
-    @Query("SELECT * FROM savingGoals WHERE sgId != 1")
+    @Query("SELECT * FROM savingGoals")
     fun getAllOffline(): List<SavingGoal>
 
     @Query("SELECT * FROM savingGoals WHERE sgId LIKE :savingGoalId LIMIT 1")
@@ -27,19 +34,11 @@ interface SavingGoalDao {
     fun getByName(savingGoalName: String): LiveData<SavingGoal>
 
     @Query("SELECT COUNT(*) FROM savingGoals")
-    fun getCount(): Int
+    fun getCount(): LiveData<Int>
 
     @Query("SELECT COUNT(*) FROM savingGoals WHERE sgId LIKE :savingGoalId")
     fun getCountById(savingGoalId: Int): Int
 
-    @Insert
-    fun insert(vararg savingGoal: SavingGoal)
-
-    @Insert
-    fun insert(savingGoal: SavingGoal): Long
-
-    @Insert
-    fun insertAsList(savingGoalList: List<SavingGoal>)
     @Update
     fun update(savingGoal: SavingGoal)
 

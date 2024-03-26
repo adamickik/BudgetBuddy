@@ -8,14 +8,14 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.TippDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tip.Tip
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tip.TipDao
 
 
-@Database(entities = [Expense::class, Tipp::class, SavingGoal::class, Category::class ], version = 1)
+@Database(entities = [Expense::class, Tip::class, SavingGoal::class, Category::class ], version = 1)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun getExpenseDao() : ExpenseDao
-    abstract fun getTippDao() : TippDao
+    abstract fun getTipDao() : TipDao
     abstract fun getSavingGoalDao() : SavingGoalDao
 
     abstract fun getCategoryDao(): CategoryDao

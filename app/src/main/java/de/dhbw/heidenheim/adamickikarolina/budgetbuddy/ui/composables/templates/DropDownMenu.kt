@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates
 
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -8,40 +8,33 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
+
+data class DropdownEntry(val id: Int, val name: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CategoryDropDown(
-    selectedCategoryId: Int?,
-    onCategorySelected: (Int?)-> Unit
+fun DropdownMenu(
+    entries: List<DropdownEntry>,
+    selectedEntryId: Int?,
+    onEntrySelected: (Int?) -> Unit,
+    defaultDisplayText: String = "Option"
 ) {
-    val chartViewModel = hiltViewModel<ChartViewModel>()
-
-    val categories by chartViewModel.categories.observeAsState(emptyList())
-    var selectedCategory by remember { mutableStateOf(categories.find { it.kId == selectedCategoryId }) }
-
+    var selectedEntry by remember { mutableStateOf(entries.find { it.id == selectedEntryId }) }
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
-        onExpandedChange = {
-            expanded = !expanded
-        }
+        onExpandedChange = { expanded = !expanded }
     ) {
         OutlinedTextField(
             readOnly = true,
-            value = selectedCategory?.kName ?: "Kategorie",
+            value = selectedEntry?.name ?: defaultDisplayText,
             onValueChange = { },
-            label = {stringResource(id = R.string.categories_name) },
+            label = { Text(defaultDisplayText) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
@@ -49,16 +42,14 @@ fun CategoryDropDown(
         )
         ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = {
-                expanded = false
-            }
+            onDismissRequest = { expanded = false }
         ) {
-            categories.drop(1).forEach { category ->
+            entries.drop(1).forEach { entry ->
                 DropdownMenuItem(
-                    text = { Text(text = category.kName) },
+                    text = { Text(text = entry.name) },
                     onClick = {
-                        selectedCategory = category
-                        onCategorySelected(category.kId)
+                        selectedEntry = entry
+                        onEntrySelected(entry.id)
                         expanded = false
                     }
                 )

@@ -11,6 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.screens.AnalyticsScreen
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.screens.HomeScreen
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.screens.ProfileScreen
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.screens.Screens
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.SavingTipsDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.Topbar
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
@@ -18,6 +22,7 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
 @Composable
 fun BudgetBuddyApp() {
     val navController = rememberNavController()
+
     var showDialog by remember{ mutableStateOf(false) }
 
     BudgetBuddyTheme {

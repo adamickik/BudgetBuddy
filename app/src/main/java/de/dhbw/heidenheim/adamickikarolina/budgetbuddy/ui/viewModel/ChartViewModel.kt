@@ -8,9 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.category.Category
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.category.CategoryRepository
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.CategorySum
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseRepository
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalRepository
 import javax.inject.Inject
 
@@ -20,28 +18,18 @@ class ChartViewModel @Inject constructor(
     private val savingGoalRepository: SavingGoalRepository,
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {
-    private val savingGoals: LiveData<List<SavingGoal>> = savingGoalRepository.getAllSavingGoals()
-    private val expenses: LiveData<List<Expense>> = expenseRepository.getAllExpenses()
-    val categories: LiveData<List<Category>> = categoryRepository.getAllCategories()
+    val categories: LiveData<List<Category>> = categoryRepository.getAll()
+    val sumCategories: LiveData<List<CategorySum>> = expenseRepository.getAllCategoryExpenses().map { list ->
+        list.filterNot { it.categoryId == 1 }
+    }
+    val sumNegative : LiveData<Float> = expenseRepository.getSumNegative()
 
     fun insertAsList(categories: List<Category>) {
         categoryRepository.insertAsList(categories)
     }
 
-    fun getSumNegative(): LiveData<Float> {
-        return expenseRepository.getSumNegative()
-    }
-
-    fun getSumOfExpensesByAssigmentID(assignmentId: Int): LiveData<Float> {
+    fun getSumOfExpensesByAssignmentID(assignmentId: Int): LiveData<Float> {
         return expenseRepository.getSumByAssignmentId(assignmentId)
-    }
-
-    fun getSumOfExpensesAllCategories():LiveData<List<CategorySum>> {
-        val allCategoryExpenses = expenseRepository.getAllCategoryExpenses()
-
-        return allCategoryExpenses.map { list ->
-            list.filterNot { it.categoryId == 1 }
-        }
     }
 
     fun getCategoryNameById(categoryId: Int): LiveData<String> {

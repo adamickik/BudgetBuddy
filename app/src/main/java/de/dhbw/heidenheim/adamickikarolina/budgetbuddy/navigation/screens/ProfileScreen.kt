@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,14 +11,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LiveData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.TextIconButton
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.PaymentDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.TextIconButton
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.expenses.ExpenseDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.profile.ProfileCard
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.SavingGoalDialog
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.SavingsGoalCard
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.SavingGoalCardMinimal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
 
 enum class DialogType {
@@ -29,8 +28,7 @@ enum class DialogType {
 fun ProfileScreen(
 ){
     val savingGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
-    val savingGoalsFromUser: LiveData<List<SavingGoal>> = savingGoalViewModel.getSavingGoals()
-    val savingGoals = savingGoalsFromUser.observeAsState(initial = emptyList()).value
+    val savingGoals by savingGoalViewModel.savingsGoals.observeAsState(emptyList())
 
     var currentDialog by remember { mutableStateOf(DialogType.None) }
     var selectedSavingGoal by remember { mutableStateOf<SavingGoal?>(null) }
@@ -40,12 +38,12 @@ fun ProfileScreen(
         TextIconButton(
             stringResource(R.string.savingsGoals_name),
             stringResource(R.string.savingsGoalsButton_description),
-            onIconClick = {currentDialog = DialogType.SavingGoal}
+            onIconClick = {currentDialog = DialogType.SavingGoal }
         )
 
         LazyColumn {
             items(savingGoals.drop(1)) { savingGoal ->
-                SavingsGoalCard(savingsGoal = savingGoal) {
+                SavingGoalCardMinimal(savingsGoal = savingGoal) {
                     selectedSavingGoal = savingGoal
                     currentDialog = DialogType.SavingGoal
                 }
@@ -54,7 +52,7 @@ fun ProfileScreen(
     }
 
     when(currentDialog){
-        DialogType.Payment -> PaymentDialog(
+        DialogType.Payment -> ExpenseDialog(
             showDialog = true,
             pageIndex = 0,
             onDismiss = { currentDialog = DialogType.None },

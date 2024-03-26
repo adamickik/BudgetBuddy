@@ -10,15 +10,15 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tip.Tip
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TipsViewModel
 
 @Composable
 fun SavingTipsDialog(
     onDismissRequest:() -> Unit,
 ) {
-    val tipsViewModel = hiltViewModel<TippsViewModel>()
-    val tipp by tipsViewModel.randomTipp.observeAsState(Tipp(""))
+    val tipsViewModel = hiltViewModel<TipsViewModel>()
+    val tip by tipsViewModel.randomTip.observeAsState(Tip(""))
 
     LaunchedEffect(Unit) {
         tipsViewModel.fetchRandomTipp()
@@ -27,7 +27,7 @@ fun SavingTipsDialog(
     AlertDialog(
         onDismissRequest = onDismissRequest,
         title = { Text(stringResource(R.string.savingTips_name)) },
-        text = {  Text(tipp?.tTipp ?: stringResource(R.string.savingTips_null))},
+        text = {  Text(tip?.tTipp ?: stringResource(R.string.savingTips_null))},
         confirmButton = {
             Button(onClick = { onDismissRequest() }) {
                 Text(stringResource(R.string.savingTips_button))

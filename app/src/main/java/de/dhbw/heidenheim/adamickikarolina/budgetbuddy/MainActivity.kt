@@ -14,12 +14,12 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialE
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingGoalData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialTippData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.Tipp
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tip.Tip
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.BudgetBuddyApp
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TippsViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TipsViewModel
 import androidx.compose.runtime.*
 
 
@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity() {
     private val expenseViewModel: ExpenseViewModel by viewModels()
     private val savingsGoalViewModel: SavingsGoalViewModel by viewModels()
     private val chartViewModel: ChartViewModel by viewModels()
-    private val tippsViewModel: TippsViewModel by viewModels()
+    private val tippsViewModel: TipsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fillDatabaseInitially(InitialTippData.initialTipps, InitialExpenseData.initialExpenses, InitialSavingGoalData.initialSavingGoals, InitialCategoryData.initialCategories )
+        fillDatabaseInitially(InitialTippData.initialTips, InitialExpenseData.initialExpenses, InitialSavingGoalData.initialSavingGoals, InitialCategoryData.initialCategories )
 
         setContent {
             var setupComplete by remember { mutableStateOf(!isFirstAppLaunch()) }
@@ -48,9 +48,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun fillDatabaseInitially(tipps: List<Tipp>, expenses: List<Expense>, savingGoals: List<SavingGoal>, categories: List<Category>) {
-        if (tippsViewModel.getTippCount()==0) {
-            tippsViewModel.insertAsList(tipps)
+    private fun fillDatabaseInitially(tips: List<Tip>, expenses: List<Expense>, savingGoals: List<SavingGoal>, categories: List<Category>) {
+        if (tippsViewModel.getTipCount()==0) {
+            tippsViewModel.insertAsList(tips)
             savingsGoalViewModel.insertAsListAndGetIds(savingGoals)
             chartViewModel.insertAsList(categories)
             expenseViewModel.insertAsList(expenses)

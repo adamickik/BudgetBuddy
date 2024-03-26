@@ -35,7 +35,7 @@ fun SavingDepotCard(
             )
     ) {
         Text(
-            text = "SPARDEPOT",
+            text = stringResource(R.string.savingsDepot_name),
             modifier = Modifier
                 .padding(
                     start = 10.dp,

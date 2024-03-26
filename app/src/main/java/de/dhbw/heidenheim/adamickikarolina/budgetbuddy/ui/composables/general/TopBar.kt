@@ -56,7 +56,6 @@ fun Topbar(onDialogButtonClick: () -> Unit) {
                 )
             }
         },
-
         // Change color of TopBar, otherwise surface -> same as Cards
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant

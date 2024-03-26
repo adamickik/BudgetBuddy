@@ -10,8 +10,9 @@ import dagger.hilt.components.SingletonComponent
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.category.CategoryDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp.TippDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tip.TipDao
 import javax.inject.Singleton
+
 @InstallIn(SingletonComponent::class)
 @Module
 object DataBaseModule {
@@ -25,8 +26,8 @@ object DataBaseModule {
         ).allowMainThreadQueries().build()
     }
     @Provides
-    fun provideTippsDao(appDatabase: AppDatabase): TippDao {
-        return appDatabase.getTippDao()
+    fun provideTipsDao(appDatabase: AppDatabase): TipDao {
+        return appDatabase.getTipDao()
     }
 
     @Provides

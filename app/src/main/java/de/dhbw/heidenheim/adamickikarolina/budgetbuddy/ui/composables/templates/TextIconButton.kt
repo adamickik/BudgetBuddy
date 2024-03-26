@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,9 +37,9 @@ fun TextIconButton(
             text = buttonText,
             style = MaterialTheme.typography.titleLarge
         )
-
-        Box(Modifier.weight(1f, true))
-
+        Box(
+            Modifier.weight(1f, true)
+        )
         FilledIconButton(
             onClick = onIconClick,
             modifier = Modifier.size(48.dp)

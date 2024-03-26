@@ -6,20 +6,20 @@ import javax.inject.Inject
 class CategoryRepository @Inject constructor(
     private val categoryDao: CategoryDao
 ) {
-    fun getAllCategories(): LiveData<List<Category>> {
-        return categoryDao.getAllCategories()
-    }
-
     fun insert(expense: Category) {
         categoryDao.insert(expense)
     }
 
-    fun getNameByCategoryId(kId: Int): LiveData<String> {
-        return categoryDao.getCategoryNameById(kId)
-    }
-
     fun insertAsList(eList: List<Category>) {
         categoryDao.insertAsList(eList)
+    }
+
+    fun getAll(): LiveData<List<Category>> {
+        return categoryDao.getAll()
+    }
+
+    fun getNameByCategoryId(kId: Int): LiveData<String> {
+        return categoryDao.getNameById(kId)
     }
 
     fun update(category: Category) {
@@ -29,5 +29,4 @@ class CategoryRepository @Inject constructor(
     fun delete(expense: Category) {
         categoryDao.delete(expense)
     }
-
 }

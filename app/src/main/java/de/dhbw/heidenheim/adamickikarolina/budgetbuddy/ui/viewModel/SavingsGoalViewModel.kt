@@ -1,6 +1,5 @@
 package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,13 +13,9 @@ class SavingsGoalViewModel @Inject constructor(
     private val savingGoalRepository: SavingGoalRepository
 ) : ViewModel() {
     val savingsGoals: LiveData<List<SavingGoal>> = savingGoalRepository.getAllSavingGoals()
+    val savingsGoalsCount : LiveData<Int> = savingGoalRepository.getSavingGoalCount()
 
-
-    fun getSavingGoals(): LiveData<List<SavingGoal>> {
-        return savingGoalRepository.getAllSavingGoals()
-    }
-
-    fun addSavingsGoal(title: String, value: String, date: String) {
+    fun insertSavingsGoal(title: String, value: String, date: String) {
         val expenseValue = convertGermanCurrencyStringToFloat(value)
         val newSavingGoal = SavingGoal(title, expenseValue, date)
 
@@ -33,10 +28,6 @@ class SavingsGoalViewModel @Inject constructor(
 
     fun insertAsListAndGetIds(savingGoals: List<SavingGoal>): List<Long> {
         return savingGoalRepository.insertAsListAndGetIds(savingGoals)
-    }
-
-    fun getSavingGoalCount(): Int {
-        return savingGoalRepository.getSavingGoalCount()
     }
 
     fun editSavingGoal(savingGoal: SavingGoal) {

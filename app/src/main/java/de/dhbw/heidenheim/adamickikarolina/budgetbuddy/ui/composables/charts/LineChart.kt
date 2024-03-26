@@ -32,10 +32,11 @@ fun LineChart(
 ) {
     val chartViewModel = hiltViewModel<ChartViewModel>()
 
-    val currentValue by chartViewModel.getSumOfExpensesByAssigmentID(assignmentId = savingGoal.sgId!!).observeAsState(0)
+    val currentValue by chartViewModel.getSumOfExpensesByAssignmentID(assignmentId = savingGoal.sgId!!).observeAsState(0)
     val points by chartViewModel.getCumulativeAmountsByAssignmentId(savingGoal.sgId!!).observeAsState(initial = emptyList())
     val maxValue by chartViewModel.getMaxCumulativeAmountByAssignmentId(savingGoal.sgId!!).observeAsState(initial=0f)
 
+    // Colors needed by Canvas, cannot work with MaterialTheme
     val primaryColor = colorResource(id = R.color.primaryColor)
     val onSurfaceColor = colorResource(id = R.color.onSurface)
     val onSurfaceVariantColor = colorResource(id = R.color.onSurfaceVariant)

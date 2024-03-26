@@ -155,7 +155,7 @@ fun SavingGoalDialog(
                             savingGoalViewModel.editSavingGoal(editingSavingGoal)
                         }
                         else{
-                            savingGoalViewModel.addSavingsGoal(savingGoalTitle, savingGoalValue, savingGoalDueDate)
+                            savingGoalViewModel.insertSavingsGoal(savingGoalTitle, savingGoalValue, savingGoalDueDate)
                         }
                         onDismiss()
                     },

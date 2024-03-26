@@ -15,21 +15,15 @@ interface CategoryDao {
     @Insert
     fun insertAsList(categoryList: List<Category>)
 
+    @Query("SELECT * FROM categories")
+    fun getAll(): LiveData<List<Category>>
+
+    @Query("SELECT kName FROM categories WHERE kId = :kId")
+    fun getNameById(kId: Int): LiveData<String>
+
     @Update
     fun update(category: Category)
 
     @Delete
     fun delete(category: Category)
-
-    @Query("SELECT * FROM categories")
-    fun getAllCategories(): LiveData<List<Category>>
-
-    @Query("SELECT kName FROM categories WHERE kId = :kId")
-    fun getCategoryNameById(kId: Int): LiveData<String>
-
-    /*@Query("SELECT c.name AS categoryName, SUM(e.eAmount) AS totalAmount FROM expenses e JOIN categories c ON e.kId = c.kId GROUP BY e.kId")
-    fun getCategoryExpensesSummary(): LiveData<List<CategoryExpenseSummary>>*/
-
-    @Query("SELECT SUM(eAmount) FROM expenses WHERE kId = :kId")
-    fun getSumByCategoryId(kId: Int): LiveData<Float>
 }

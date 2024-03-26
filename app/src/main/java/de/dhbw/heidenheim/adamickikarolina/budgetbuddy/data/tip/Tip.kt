@@ -1,11 +1,11 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tipp
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tip
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName="tipps")
-data class Tipp(
+data class Tip(
     @ColumnInfo(name="tTipp")
     val tTipp: String,
 ){

@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,11 +17,10 @@ import androidx.lifecycle.LiveData
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.ExpenseCard
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments.PaymentDialog
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.SavingDepotCard
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.SavingsCard
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.expenses.ExpenseCard
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.expenses.ExpenseDialog
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DotsIndicator
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.TextIconButton
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -31,6 +30,7 @@ fun CardCarousel(
     onAssignButtonClick: () -> Unit
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
+
     val pagerState = rememberPagerState(pageCount = { savingsGoals.size +1})
     var showPaymentDialog by remember { mutableStateOf(false) }
     var selectedExpense by remember{ mutableStateOf<Expense?>(null) }
@@ -62,7 +62,7 @@ fun CardCarousel(
                 val savingsGoalSum by expenseViewModel.getSumOfExpensesByAssignmentID(assignmentId = savingsGoal.sgId!!).observeAsState(0f)
                 val remainingAmount = savingsGoal.sgGoalAmount.minus(savingsGoalSum)
 
-                SavingsCard(
+                SavingGoalCard(
                     savingsGoal = savingsGoal,
                     remainingAmount = remainingAmount
                 )
@@ -90,7 +90,7 @@ fun CardCarousel(
     }
 
     if (showPaymentDialog) {
-        PaymentDialog(
+        ExpenseDialog(
             showDialog = showPaymentDialog,
             pageIndex = pagerState.currentPage+1,
             onDismiss = { showPaymentDialog = false },

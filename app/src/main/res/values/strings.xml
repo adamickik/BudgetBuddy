@@ -41,6 +41,7 @@
     <string name="addPaymentDialog_value">Wert in €</string>
     <string name="addPaymentDialog_date">Zahlungsdatum</string>
     <string name="addPaymentDialog_dateButton">Zahlungsdatum auswählen</string>
+    <string name="addPaymentDialog_category">Kategorie</string>
     <string name="addPaymentDialog_isIncome">EINNAHME</string>
     <string name="addPaymentDialog_isExpense">AUSGABE</string>
 
@@ -48,8 +49,9 @@
     <string name="assignmentDialog_addButton">ZUWEISEN</string>
     <string name="assignmentDialog_dismissButton">ABBRECHEN</string>
     <string name="assignmentDialog_value">Wert in €</string>
-
     <string name="assign_button">ZUWEISEN</string>
+    <string name="assignmentDialog_savingGoal">Sparziel</string>
+    <string name="assignmentDialog_assignment">Zuweisung</string>
 
     <string name="savingTips_name">SCHWABENTIPP</string>
     <string name="savingTips_button">OK</string>
@@ -59,6 +61,7 @@
     <string name="profileImage_description">Profilbild</string>
 
     <string name="savingsGoals_name">SPARZIELE</string>
+    <string name="savingsDepot_name">SPARDEPOT</string>
     <string name="savingsGoalsButton_description">Sparziel hinzufügen</string>
     <string name="savingsGoal_duedate">Zieltag:\u0020</string>
 

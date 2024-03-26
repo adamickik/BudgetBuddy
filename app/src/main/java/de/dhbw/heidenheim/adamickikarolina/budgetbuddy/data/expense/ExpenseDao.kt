@@ -9,8 +9,20 @@ import androidx.room.Update
 
 @Dao
 interface ExpenseDao {
+    @Insert
+    fun insert(vararg expense: Expense)
+
+    @Insert
+    fun insertAsList(expenseList: List<Expense>)
+
     @Query("SELECT * FROM expenses")
     fun getAll(): LiveData<List<Expense>>
+
+    @Query("SELECT DISTINCT eAssignment FROM expenses")
+    fun getAllAssignmentIds(): LiveData<List<Int>>
+
+    @Query("SELECT DISTINCT kId as categoryId, -SUM(eAmount) as sum FROM expenses WHERE eAmount<0 GROUP BY kId")
+    fun getAllCategoryExpenses(): LiveData<List<CategorySum>>
 
     @Query("SELECT * FROM expenses WHERE eid LIKE :expenseId LIMIT 1")
     fun getById(expenseId: Int): LiveData<Expense>
@@ -21,25 +33,17 @@ interface ExpenseDao {
     @Query("SELECT * FROM expenses WHERE eAssignment = :assignmentId")
     fun getByAssignmentId(assignmentId: Int): LiveData<List<Expense>>
 
-    @Query("SELECT DISTINCT eAssignment FROM expenses")
-    fun getAllAssignmentIds(): LiveData<List<Int>>
-
-
-    @Query("SELECT DISTINCT kId as categoryId, -SUM(eAmount) as sum FROM expenses WHERE eAmount<0 GROUP BY kId")
-    fun getAllCategoryExpenses(): LiveData<List<CategorySum>>
+    @Query("SELECT * FROM expenses WHERE eAssignment = :assignmentId ORDER BY eDate DESC")
+    fun getByAssignmentIdSorted(assignmentId: Int): LiveData<List<Expense>>
 
     @Query("SELECT SUM(eAmount) FROM expenses WHERE eAssignment = :assignmentId")
     fun getSumByAssignmentId(assignmentId: Int): LiveData<Float>
-
-    @Query("SELECT * FROM expenses WHERE eAssignment = :assignmentId ORDER BY eDate DESC")
-    fun getByAssignmentIdSorted(assignmentId: Int): LiveData<List<Expense>>
 
     @Query("SELECT eAmount FROM expenses WHERE eAssignment = :assignmentId")
     fun getAmountsByAssignmentId(assignmentId: Int): LiveData<List<Float>>
 
     @Query("SELECT eAmount FROM expenses WHERE eAssignment = :categoryId")
     fun getAmountsByCategoryId(categoryId: Int): LiveData<List<Float>>
-
 
     @Query("SELECT sum(eAmount) FROM expenses WHERE eAssignment = :assignmentId")
     fun getSumByAssigmentIdOffline(assignmentId: Int): Float
@@ -52,11 +56,6 @@ interface ExpenseDao {
 
     @Query("SELECT -SUM(eAmount) FROM expenses WHERE kId != 1 and eAmount<0")
     fun getSumNegative(): LiveData<Float>
-
-    @Insert
-    fun insert(vararg expense: Expense)
-    @Insert
-    fun insertAsList(expenseList: List<Expense>)
 
     @Update
     fun update(expense: Expense)

@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.expenses
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row

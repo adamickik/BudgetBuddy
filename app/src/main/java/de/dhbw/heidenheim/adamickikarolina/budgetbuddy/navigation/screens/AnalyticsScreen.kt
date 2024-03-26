@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -21,8 +21,8 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalV
 @Composable
 fun AnalyticsScreen(){
     val savingGoalsViewModel = hiltViewModel<SavingsGoalViewModel>()
-    val savingGoalsListSize = savingGoalsViewModel.getSavingGoalCount()
     val savingGoals by savingGoalsViewModel.savingsGoals.observeAsState(emptyList())
+    val savingGoalsListSize by savingGoalsViewModel.savingsGoalsCount.observeAsState(0)
 
     val pagerState = rememberPagerState(pageCount = { savingGoals.size})
 

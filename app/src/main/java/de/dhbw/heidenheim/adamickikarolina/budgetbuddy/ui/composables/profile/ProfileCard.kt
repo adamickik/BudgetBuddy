@@ -28,9 +28,11 @@ import androidx.compose.ui.layout.ContentScale
 @Composable
 fun ProfileCard(){
     val context = LocalContext.current
+
     val prefs = context.getSharedPreferences("BudgetBuddyPrefs", Context.MODE_PRIVATE)
     val username = prefs.getString("username", null).toString().uppercase()
     val profilePicture = prefs.getString("profilePicture", null).toString()
+
     Row(
         modifier = Modifier.fillMaxWidth()
             .padding(top=20.dp),

@@ -1,4 +1,4 @@
-package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.payments
+package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.expenses
 
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.layout.Box
@@ -21,7 +21,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,38 +37,43 @@ import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.CategoryDropDown
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.CustomOutlinedTextField
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownEntry
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownMenu
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 import java.util.Date
 import java.util.Locale
 import kotlin.math.abs
 
-// TODO Change to Switch
-
-
 @Composable
-fun PaymentDialog(
+fun ExpenseDialog(
     showDialog: Boolean,
     pageIndex: Int,
     onDismiss: () -> Unit,
     editingExpense: Expense? = null
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
+    val chartViewModel = hiltViewModel<ChartViewModel>()
+
+    val categories by chartViewModel.categories.observeAsState(emptyList())
+    val categoryEntries = categories.map { DropdownEntry(id = it.kId!!, name = it.kName) }
+
 
     var isDatePickerShown by remember { mutableStateOf(false) }
-    var paymentTitle by remember(showDialog) { mutableStateOf(editingExpense?.eName?: "") }
-    var paymentValue by remember (showDialog){ mutableStateOf(editingExpense?.eAmount?.let { ExpenseViewModel.floatToGermanCurrencyString(abs(it)) } ?: "") }
-    var paymentDate by remember (showDialog){ mutableStateOf(editingExpense?.eDate ?: "") }
+
+    var expenseTitle by remember(showDialog) { mutableStateOf(editingExpense?.eName?: "") }
+    var expenseValue by remember (showDialog){ mutableStateOf(editingExpense?.eAmount?.let { ExpenseViewModel.floatToGermanCurrencyString(abs(it)) } ?: "") }
+    var expenseDate by remember (showDialog){ mutableStateOf(editingExpense?.eDate ?: "") }
     var selectedCategoryId by remember(showDialog) { mutableStateOf(editingExpense?.kId) }
     var isIncome by remember(showDialog) { mutableStateOf(editingExpense?.eAmount?.let { it >= 0 } ?: true) }
 
     val context = LocalContext.current
 
-    val isInputValid = remember(paymentTitle, paymentValue, paymentDate, selectedCategoryId) {
-        paymentTitle.isNotEmpty() && expenseViewModel.isValidTitle(paymentTitle) &&
-                paymentValue.isNotEmpty() && expenseViewModel.isValidValue(paymentValue) &&
-                paymentDate.isNotEmpty()  && expenseViewModel.isValidDueDate(paymentDate) && selectedCategoryId != null
+    val isInputValid = remember(expenseTitle, expenseValue, expenseDate, selectedCategoryId) {
+        expenseTitle.isNotEmpty() && expenseViewModel.isValidTitle(expenseTitle) &&
+                expenseValue.isNotEmpty() && expenseViewModel.isValidValue(expenseValue) &&
+                expenseDate.isNotEmpty()  && expenseViewModel.isValidDueDate(expenseDate) && selectedCategoryId != null
     }
 
     if (showDialog) {
@@ -98,23 +103,25 @@ fun PaymentDialog(
                         )
                     }
                     CustomOutlinedTextField(
-                        value = paymentTitle,
-                        onValueChange = { paymentTitle = it },
+                        value = expenseTitle,
+                        onValueChange = { expenseTitle = it },
                         label = stringResource(id = R.string.addPaymentDialog_title),
-                        isError = paymentTitle.isNotEmpty() && !expenseViewModel.isValidTitle(paymentTitle)
+                        isError = expenseTitle.isNotEmpty() && !expenseViewModel.isValidTitle(expenseTitle)
                     )
                     CustomOutlinedTextField(
-                        value = paymentValue,
-                        onValueChange = { paymentValue = it },
+                        value = expenseValue,
+                        onValueChange = { expenseValue = it },
                         label = stringResource(id = R.string.addSavingGoalDialog_value),
-                        isError = paymentValue.isNotEmpty() && !expenseViewModel.isValidValue(paymentValue),
+                        isError = expenseValue.isNotEmpty() && !expenseViewModel.isValidValue(expenseValue),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                     )
-                    CategoryDropDown(
-                        selectedCategoryId= selectedCategoryId,
-                        onCategorySelected = { categoryId ->
-                            selectedCategoryId = categoryId!!
+                    DropdownMenu(
+                        entries = categoryEntries,
+                        selectedEntryId = selectedCategoryId,
+                        onEntrySelected = { selectedId ->
+                            selectedCategoryId = selectedId
                         },
+                        defaultDisplayText = stringResource(id = R.string.addPaymentDialog_category)
                     )
 
                     Row(
@@ -122,13 +129,13 @@ fun PaymentDialog(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         OutlinedTextField(
-                            value = paymentDate,
+                            value = expenseDate,
                             onValueChange = { },
                             label = { Text(stringResource(id = R.string.addPaymentDialog_date)) },
                             readOnly = true,
                             singleLine = true,
                             modifier = Modifier.weight(1f),
-                            isError = paymentDate.isNotEmpty() && !expenseViewModel.isValidDueDate(paymentDate)
+                            isError = expenseDate.isNotEmpty() && !expenseViewModel.isValidDueDate(expenseDate)
 
                         )
                         Box(
@@ -156,7 +163,7 @@ fun PaymentDialog(
                                         datePicker.show((context as androidx.fragment.app.FragmentActivity).supportFragmentManager, "DATE_PICKER")
 
                                         datePicker.addOnPositiveButtonClickListener { selection ->
-                                            paymentDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(selection))
+                                            expenseDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(selection))
                                             isDatePickerShown = false
                                         }
 
@@ -180,18 +187,18 @@ fun PaymentDialog(
             confirmButton = {
                 Button(
                     onClick = {
-                        val amountFloat = expenseViewModel.convertGermanCurrencyStringToFloat(paymentValue) * if (isIncome) 1 else -1
+                        val amountFloat = expenseViewModel.convertGermanCurrencyStringToFloat(expenseValue) * if (isIncome) 1 else -1
 
                         if (editingExpense != null){
-                            editingExpense.eName = paymentTitle
+                            editingExpense.eName = expenseTitle
                             editingExpense.eAmount = amountFloat
-                            editingExpense.eDate = paymentDate
+                            editingExpense.eDate = expenseDate
                             editingExpense.kId = selectedCategoryId
 
                             expenseViewModel.editExpense(editingExpense)
                         }
                         else
-                            expenseViewModel.addExpenseAssignment(paymentTitle, amountFloat, paymentDate, pageIndex, selectedCategoryId!!)
+                            expenseViewModel.addExpenseAssignment(expenseTitle, amountFloat, expenseDate, pageIndex, selectedCategoryId!!)
                         onDismiss()
                     },
                     enabled = isInputValid

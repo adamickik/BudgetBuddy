@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseRepository
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -18,23 +17,9 @@ import javax.inject.Inject
 class ExpenseViewModel @Inject constructor(
     private val expenseRepository: ExpenseRepository
 ):ViewModel() {
-    val expenses: LiveData<List<Expense>> = expenseRepository.getAllExpenses()
-
-    fun getAllExpenses() :LiveData<List<Expense>>{
-        return expenseRepository.getAllExpenses()
-    }
-
-    fun addExpense(title: String, value: String, date: String) {
-        val expenseValue = value.toFloatOrNull() ?: return
-        val newExpense = Expense(title, expenseValue, date, 0)
-
-        viewModelScope.launch {
-            expenseRepository.insert(newExpense)
-        }
-    }
+    val expenses: LiveData<List<Expense>> = expenseRepository.getAll()
 
     fun addExpenseAssignment(title: String, value: Float, date: String, assignmentId: Int, categoryId: Int) {
-
         val newExpense = Expense(title, value, date, assignmentId, categoryId)
 
         viewModelScope.launch {
@@ -81,11 +66,17 @@ class ExpenseViewModel @Inject constructor(
     }
 
     fun convertGermanCurrencyStringToFloat(currencyString: String): Float {
+        if (currencyString.isEmpty()) {
+            return 0f
+        }
+
         val normalizedString = currencyString
             .replace(".", "")
             .replace(",", ".")
-        return normalizedString.toFloat()
+
+        return normalizedString.toFloatOrNull() ?: 0f
     }
+
 
     companion object {
         fun floatToGermanCurrencyString(it: Float):String {
@@ -93,35 +84,28 @@ class ExpenseViewModel @Inject constructor(
         }
     }
 
-
-    fun assignExpenseToSavingsGoal(value: Float, assignment: SavingGoal) {
+    fun assignExpenseToSavingsGoal(value: Float, sgId: Int) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val currentDate = dateFormat.format(Date())
-        //Expense mit Abzug aus SparDepot
-        val negativeExpense = assignment.sgId?.let {
-            Expense(
-                eName = assignment.sgName,
-                eAmount = value*(-1),
-                eDate = currentDate,
-                eAssignment = 1,
-                kId=1
-            )
-        }
-        if (negativeExpense != null) {
-            expenseRepository.insert(negativeExpense)
-        }
 
-        val expense = assignment.sgId?.let {
-            Expense(
-                eName = assignment.sgName,
-                eAmount = value,
-                eDate = currentDate,
-                eAssignment = it,
-                kId=1
-            )
-        }
-        if (expense != null) {
-            expenseRepository.insert(expense)
-        }
+        // Expense from SavingDepot
+        val negativeExpense = Expense(
+            eName = "Zuweisung",
+            eAmount = value*(-1),
+            eDate = currentDate,
+            eAssignment = 1,
+            kId=1
+        )
+        expenseRepository.insert(negativeExpense)
+
+        // Expense into SavingGoal
+        val expense = Expense(
+            eName = "Zuweisung",
+            eAmount = value,
+            eDate = currentDate,
+            eAssignment = sgId,
+            kId=1
+        )
+        expenseRepository.insert(expense)
     }
 }

@@ -23,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.CategorySum
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
 
 @Composable
@@ -31,16 +30,15 @@ fun PaymentsPieChart(
 ) {
     val chartViewModel = hiltViewModel<ChartViewModel>()
 
-    val slices by chartViewModel.getSumOfExpensesAllCategories().observeAsState(initial = listOf<CategorySum>())
+    val slices by chartViewModel.sumCategories.observeAsState(initial = listOf())
+    val totalExpenses by chartViewModel.sumNegative.observeAsState(0f)
 
-    val totalExpenses by chartViewModel.getSumNegative().observeAsState(0f)
-
+    // Colors needed by Canvas, cannot work with MaterialTheme
     val colorPie1 = colorResource(id = R.color.col1)
     val colorPie2 = colorResource(id = R.color.col2)
     val colorPie3 = colorResource(id = R.color.col3)
     val colorPie4 = colorResource(id = R.color.col4)
     val colorPie5 = colorResource(id = R.color.col5)
-
     val colors = listOf(colorPie1, colorPie3, colorPie2,colorPie4,colorPie5)
 
     ElevatedCard(

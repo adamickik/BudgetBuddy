@@ -2,17 +2,10 @@ package de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoa
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,14 +14,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.R
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.CustomOutlinedTextField
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownEntry
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.templates.DropdownMenu
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AssignmentDialog(
     savingGoals: List<SavingGoal>,
@@ -37,12 +30,12 @@ fun AssignmentDialog(
 ) {
     val expenseViewModel = hiltViewModel<ExpenseViewModel>()
 
-    var assignmentValue by remember { mutableStateOf("") }
-    var expanded by remember { mutableStateOf(false) }
-    var selectedGoal by remember { mutableStateOf(savingGoals.firstOrNull()) }
+    val savingGoalEntries = savingGoals.map { DropdownEntry(it.sgId!!, it.sgName) }
+    var selectedGoalId by remember { mutableStateOf(savingGoalEntries.firstOrNull()?.id) }
 
+    var assignmentValue by remember { mutableStateOf("") }
     val isInputValid = remember(assignmentValue) {
-        assignmentValue.isNotEmpty() && expenseViewModel.isValidAssignmentValue(assignmentValue)
+        assignmentValue.isNotEmpty() && expenseViewModel.isValidAssignmentValue(assignmentValue) && selectedGoalId != null
     }
 
     if (showDialog) {
@@ -52,38 +45,12 @@ fun AssignmentDialog(
             title = { Text(stringResource(id = R.string.assignmentDialog_name))},
             text = {
                 Column {
-                    ExposedDropdownMenuBox(
-                        expanded = expanded,
-                        onExpandedChange = {
-                            expanded = !expanded
-                        },
-                    ) {
-                        OutlinedTextField(
-                            readOnly = true,
-                            value = selectedGoal?.sgName?: "Sparziel",
-                            onValueChange = { },
-                            trailingIcon = {
-                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
-                            },
-                            modifier = Modifier.menuAnchor()
-                        )
-                        ExposedDropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = {
-                                expanded = false
-                            }
-                        ) {
-                            savingGoals.forEach { savingGoal ->
-                                DropdownMenuItem(
-                                    text = { Text(text = savingGoal.sgName) },
-                                    onClick = {
-                                        selectedGoal = savingGoal
-                                        expanded = false
-                                    }
-                                )
-                            }
-                        }
-                    }
+                    DropdownMenu(
+                        entries = savingGoalEntries,
+                        selectedEntryId = selectedGoalId,
+                        onEntrySelected = { selectedId -> selectedGoalId = selectedId },
+                        defaultDisplayText = stringResource(id= R.string.assignmentDialog_savingGoal)
+                    )
                     CustomOutlinedTextField(
                         value = assignmentValue,
                         onValueChange = { assignmentValue = it },
@@ -96,7 +63,7 @@ fun AssignmentDialog(
             confirmButton = {
                 Button(
                     onClick = {
-                        selectedGoal?.let {
+                        selectedGoalId?.let {
                             expenseViewModel.assignExpenseToSavingsGoal(assignmentValue.toFloat(), it)
                         }
                         onDismiss()
