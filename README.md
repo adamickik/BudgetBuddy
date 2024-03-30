@@ -20,33 +20,17 @@ Um mit Budget Buddy zu starten, folgen Sie diesen einfachen Schritten:
 3. **Sparziele setzen:** Beginnen Sie, Ihre Sparziele zu definieren und passen Sie diese nach Bedarf an.
 4. **Widgets und Diagramme:** Nutzen Sie unsere Widgets und Diagramme, um Ihren Fortschritt zu visualisieren und motiviert zu bleiben.
 
-## Anleitung
+## Aufgabenverteilung
 
-Für eine detaillierte Anleitung zur Nutzung von Budget Buddy, besuchen Sie unsere [Hilfeseite](#) oder sehen Sie sich unsere Tutorial-Videos an.
+Karolina
+Design / UI, Room, Navigation, Verwaltung von Sparzielen, Ein- und Ausgaben, Visualisierungen
+Michael
+Widget, Schwabentipps 
+Marco
+Datenbank, Logik zwischen Sparziele & Ausgaben
+David
+Visualisierung von Sparzielverläufen, Ein- und Ausgaben 
 
-## Beitrag
 
-Budget Buddy ist ein Open-Source-Projekt, und wir ermutigen Entwickler, zum Projekt beizutragen. Wenn Sie einen Bug finden, eine Funktion vorschlagen möchten oder einen Pull Request einreichen möchten, besuchen Sie bitte unser [GitHub-Repository](#).
 
-### Bugs melden oder Feature vorschlagen
 
-Bitte nutzen Sie den [Issue Tracker](#), um Bugs zu melden oder neue Features vorzuschlagen.
-
-### Pull Requests
-
-Wir begrüßen Pull Requests. Bitte folgen Sie unserem [Beitrag-Leitfaden](#), bevor Sie einen Pull Request einreichen.
-
-## Lizenz
-
-Budget Buddy ist unter der MIT Lizenz lizenziert. Siehe die [LIZENZ](LICENSE.md)-Datei für weitere Informationen.
-
-## Kontakt
-
-Für weitere Anfragen kontaktieren Sie uns bitte unter [email@budgetbuddy.com](mailto:email@budgetbuddy.com).
-
-Folgen Sie uns auf Social Media für die neuesten Updates und Features:
-
-- Twitter: [@BudgetBuddy](#)
-- Facebook: [Budget Buddy](#)
-
-Vielen Dank, dass Sie Budget Buddy für Ihre Finanzverwaltung gewählt haben. Wir hoffen, dass unsere App Ihnen dabei hilft, Ihre Sparziele zu erreichen und ein besseres Finanzmanagement zu führen.
