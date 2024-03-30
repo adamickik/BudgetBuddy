@@ -28,12 +28,15 @@ Karolina
 - Jetpack Compose Navigation mit Navgraph
 - Verwaltung von Sparzielen, Ein- und Ausgaben, Zuweisung Kategorien
 - Visualisierungen
+  
 Michael
 - Widget,
-- Schwabentipps 
+- Schwabentipps
+  
 Marco
 - Datenbank,
 - Logik zwischen Sparziele & Ausgaben
+  
 David
 - Visualisierung von Sparzielverläufen, Ein- und Ausgaben 
 
