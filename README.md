@@ -23,13 +23,19 @@ Um mit Budget Buddy zu starten, folgen Sie diesen einfachen Schritten:
 ## Aufgabenverteilung
 
 Karolina
-Design / UI, Room, Navigation, Verwaltung von Sparzielen, Ein- und Ausgaben, Visualisierungen
+- Design / UI (Jetpack Compose + Material3, eigenes Theme)
+- DB mit Room
+- Jetpack Compose Navigation mit Navgraph
+- Verwaltung von Sparzielen, Ein- und Ausgaben, Zuweisung Kategorien
+- Visualisierungen
 Michael
-Widget, Schwabentipps 
+- Widget,
+- Schwabentipps 
 Marco
-Datenbank, Logik zwischen Sparziele & Ausgaben
+- Datenbank,
+- Logik zwischen Sparziele & Ausgaben
 David
-Visualisierung von Sparzielverläufen, Ein- und Ausgaben 
+- Visualisierung von Sparzielverläufen, Ein- und Ausgaben 
 
 
 
