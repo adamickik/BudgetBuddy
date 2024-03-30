@@ -4,21 +4,26 @@ Willkommen bei Budget Buddy, Ihrer intuitiven App zur Verwaltung von Sparzielen!
 
 ## Features
 
-- **Sparziele setzen:** Legen Sie individuelle Sparziele fest und behalten Sie den Überblick über Ihren Fortschritt.
-- **Visuelle Widgets:** Nutzen Sie Widgets auf Ihrem Startbildschirm, um Ihre Sparziele und den aktuellen Stand immer im Blick zu haben.
-- **Detaillierte Diagramme:** Analysieren Sie Ihre Einnahmen und Ausgaben mit detaillierten Diagrammen, um bessere finanzielle Entscheidungen treffen zu können.
-- **Benutzerfreundliches Dashboard:** Ein intuitives Dashboard, das Ihnen einen schnellen Überblick über Ihre Finanzen bietet.
-- **Personalisierung:** Passen Sie die App an Ihre Bedürfnisse an. Wählen Sie aus verschiedenen Themen und Layouts.
-- **Sicherheit:** Ihre finanziellen Daten bleiben sicher und privat, mit fortschrittlichen Sicherheitsfunktionen zum Schutz Ihrer Informationen.
+- **Verwaltung von Sparzielen** 
+- **Verwaltung von Ein- und Ausgaben** 
+- **Zuweisung vom Spardepot zu Sparzielen** 
+- **Visuelle Darstellung des Sparziel-Verlaufs** 
+- **Visuelle Darstellung der Ausgaben** 
+- **Home-Widget mit Sparziel-Übersicht** 
+- **Legendäre Schwaben-Spartipps** 
 
 ## Starten
 
 Um mit Budget Buddy zu starten, folgen Sie diesen einfachen Schritten:
 
-1. **Installation:** Laden Sie die App aus dem App Store oder Google Play herunter.
-2. **Konto erstellen:** Eröffnen Sie Ihr Budget Buddy-Konto, um Ihre Daten zu sichern und auf verschiedenen Geräten zugreifen zu können.
-3. **Sparziele setzen:** Beginnen Sie, Ihre Sparziele zu definieren und passen Sie diese nach Bedarf an.
-4. **Widgets und Diagramme:** Nutzen Sie unsere Widgets und Diagramme, um Ihren Fortschritt zu visualisieren und motiviert zu bleiben.
+1. **Installation:** Installieren Sie die APK aus dem Git-Repo.
+2. **Benutzer festlegen:** Starten Sie die App und geben Sie ihren Namen und (optional) ein Profilbild an, um mit BudgetBuddy zu starten.
+3. **Sparziele setzen:** In der Profil-Ansicht (Navigationsleiste rechts) können neue Sparziele (bis zu 999.999 €) angelegt werden, indem auf den "+"-Button gedrückt wird. Bestehende Sparziele können mit Klick auf das Sparziel bearbeitet oder gelöscht werden. 
+4. **Ausgaben anlegen:** In der Home-Ansicht (Navigationsleiste links) können zum Spardepot oder zu den Sparzielen neue Zahlungen (bis zu 999.999 €) angelegt werden, indem auf den "+"-Button gedrückt wird. Bestehende Zahlungen können mit Klick auf die Zahlung bearbeitet oder gelöscht werden. 
+5. **Zuweisungen anlegen:** In der Home-Ansicht (Navigationsleiste links) können in der Spardepot-Karte mit Klick auf den "ZUWEISEN"-Button aus dem Spardepot Geldbeträge (bis zu 999.999 €) an die entsprechenden Sparziele zugewiesen werden. 
+6. **Diagramme:** In der Diagramm-Ansicht (Navigationsleiste mitte) können die Sparziele anhand von Liniendiagrammen getrackt werden, ein Kuchendiagramm zeigt die Verteilung der Ausgaben an. 
+7. **Schwabentipps:** Mit einem Klick auf das App-Logo (Topbar links) können Schwabentipps eingeholt werden. 
+8. **Widget:** Ein Widget kann angelegt werden, um die Sparziele auch im Homescreen des Handys im Auge zu behalten.
 
 ## Aufgabenverteilung
 
