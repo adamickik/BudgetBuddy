@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">BudgetBuddy</string>
 
-
     <string name="topBar_name">BUDGET BUDDY</string>
     <string name="topBar_description">Spartipps anzeigen</string>
 
@@ -15,41 +14,40 @@
 
     <string name="savings_account">DEIN SPARDEPOT</string>
     <string name="savings_currency">\u0020€</string>
-
     <string name="savingCard_remaining">Übrig bleiben:\u0020</string>
 
     <string name="payments_name">ZAHLUNGEN</string>
-    <string name="paymentsButton_description">Zahlung hinzufügen</string>
+    <string name="payments_button_description">Zahlung hinzufügen</string>
 
-    <string name="addSavingGoalDialog_name">SPARZIEL HINZUFÜGEN</string>
-    <string name="addSavingGoalDialog_addButton">HINZUFÜGEN</string>
-    <string name="addSavingGoalDialog_editName">SPARZIEL ÄNDERN</string>
-    <string name="addSavingGoalDialog_editButton">ÄNDERN</string>
-    <string name="addSavingGoalDialog_dismissButton">ABBRECHEN</string>
-    <string name="addSavingGoalDialog_title">Titel</string>
-    <string name="addSavingGoalDialog_value">Wert in €</string>
-    <string name="addSavingGoalDialog_duedate">Fälligkeitsdatum</string>
-    <string name="addSavingGoalDialog_dueDateButton">Datum auswählen</string>
+    <string name="savingGoalDialog_name">SPARZIEL HINZUFÜGEN</string>
+    <string name="savingGoalDialog_button_add">HINZUFÜGEN</string>
+    <string name="savingGoalDialog_edit_name">SPARZIEL ÄNDERN</string>
+    <string name="savingGoalDialog_button_edit">ÄNDERN</string>
+    <string name="savingGoalDialog_button_dismiss">ABBRECHEN</string>
+    <string name="savingGoalDialog_title">Titel</string>
+    <string name="savingGoalDialog_value">Wert in €</string>
+    <string name="savingGoalDialog_dueDate">Fälligkeitsdatum</string>
+    <string name="savingGoalDialog_button_dueDate">Datum auswählen</string>
 
-    <string name="addPaymentDialog_name">ZAHLUNG HINZUFÜGEN</string>
-    <string name="addPaymentDialog_editName">ZAHLUNG ÄNDERN</string>
-    <string name="addPaymentDialog_editButton">ÄNDERN</string>
-    <string name="addPaymentDialog_deleteButton">LÖSCHEN</string>
-    <string name="addPaymentDialog_addButton">HINZUFÜGEN</string>
-    <string name="addPaymentDialog_dismissButton">ABBRECHEN</string>
-    <string name="addPaymentDialog_title">Titel</string>
-    <string name="addPaymentDialog_value">Wert in €</string>
-    <string name="addPaymentDialog_date">Zahlungsdatum</string>
-    <string name="addPaymentDialog_dateButton">Zahlungsdatum auswählen</string>
-    <string name="addPaymentDialog_category">Kategorie</string>
-    <string name="addPaymentDialog_isIncome">EINNAHME</string>
-    <string name="addPaymentDialog_isExpense">AUSGABE</string>
+    <string name="expenseDialog_name">ZAHLUNG HINZUFÜGEN</string>
+    <string name="expenseDialog_edit_name">ZAHLUNG ÄNDERN</string>
+    <string name="expenseDialog_button_edit">ÄNDERN</string>
+    <string name="expenseDialog_button_delete">LÖSCHEN</string>
+    <string name="expenseDialog_button_add">HINZUFÜGEN</string>
+    <string name="expenseDialog_button_dismiss">ABBRECHEN</string>
+    <string name="expenseDialog_title">Titel</string>
+    <string name="expenseDialog_value">Wert in €</string>
+    <string name="expenseDialog_date">Zahlungsdatum</string>
+    <string name="expenseDialog_button_date">Zahlungsdatum auswählen</string>
+    <string name="expenseDialog_category">Kategorie</string>
+    <string name="expenseDialog_isIncome">EINNAHME</string>
+    <string name="expenseDialog_isExpense">AUSGABE</string>
 
     <string name="assignmentDialog_name">GELD ZUWEISEN</string>
-    <string name="assignmentDialog_addButton">ZUWEISEN</string>
-    <string name="assignmentDialog_dismissButton">ABBRECHEN</string>
+    <string name="assignmentDialog_button_add">ZUWEISEN</string>
+    <string name="assignmentDialog_button_dismiss">ABBRECHEN</string>
     <string name="assignmentDialog_value">Wert in €</string>
-    <string name="assign_button">ZUWEISEN</string>
+    <string name="assignmentDialog_button_assign">ZUWEISEN</string>
     <string name="assignmentDialog_savingGoal">Sparziel</string>
     <string name="assignmentDialog_assignment">Zuweisung</string>
 
@@ -71,15 +69,8 @@
     <string name="savingsGoal_expired">Schade! Dein Sparziel %s ist abgelaufen. Bitte verlängere oder lösche dein Sparziel</string>
     <string name="savingsGoal_expiredButton">OK</string>
 
-    <string name="fixedPayments_name">FIXZAHLUNGEN</string>
-    <string name="fixedPaymentsButton_description">Fixzahlung hinzufügen</string>
-
-
     <string name="categories_name">Kategorie</string>
-
-
     <string name="confirmDialog_confirm">Bestätigen</string>
-
 
     <string name="title_activity_topbar">Topbar</string>
     <string name="appwidget_text">0</string>

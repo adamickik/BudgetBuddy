@@ -11,27 +11,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import dagger.hilt.android.AndroidEntryPoint
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.category.Category
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.Expense
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialCategoryData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialExpenseData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialSavingGoalData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.initialData.InitialTippData
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoal
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.tip.Tip
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.category.Category
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.expense.Expense
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.initialData.InitialCategoryData
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.initialData.InitialExpenseData
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.initialData.InitialSavingGoalData
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.initialData.InitialTippData
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.savingGoal.SavingGoal
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.tip.Tip
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.BudgetBuddyApp
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ChartViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.ExpenseViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.SavingsGoalViewModel
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.viewModel.TipsViewModel
-
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.viewModel.AnalyticsViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.viewModel.ExpenseViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.viewModel.SavingTipsViewModel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.viewModel.SavingsGoalViewModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val expenseViewModel: ExpenseViewModel by viewModels()
     private val savingsGoalViewModel: SavingsGoalViewModel by viewModels()
-    private val chartViewModel: ChartViewModel by viewModels()
-    private val tippsViewModel: TipsViewModel by viewModels()
+    private val analyticsViewModel: AnalyticsViewModel by viewModels()
+    private val tippsViewModel: SavingTipsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         if (tippsViewModel.getTipCount()==0) {
             tippsViewModel.insertAsList(tips)
             savingsGoalViewModel.insertAsListAndGetIds(savingGoals)
-            chartViewModel.insertAsList(categories)
+            analyticsViewModel.insertAsList(categories)
             expenseViewModel.insertAsList(expenses)
         }
     }

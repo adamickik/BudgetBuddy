@@ -7,9 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import androidx.room.Room
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.AppDatabase
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.AppDatabase
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.expense.ExpenseDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.savingGoal.SavingGoalDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,13 +24,13 @@ class BudgetBuddyWidget : AppWidgetProvider() {
         val scope = CoroutineScope(Dispatchers.IO)
 
         scope.launch {
-            // Initialisiere die Datenbank und das DAO
+            // Initialise Database and dao
             val db = Room.databaseBuilder(context, AppDatabase::class.java, "budgetbuddyDB").build()
             val savingGoalDao = db.getSavingGoalDao()
             val expenseDao = db.getExpenseDao()
 
 
-            // There may be multiple widgets active, so update all of them
+            // Update all widgets
             for (appWidgetId in appWidgetIds) {
                 updateAppWidget(context, appWidgetManager, appWidgetId, savingGoalDao, expenseDao)
             }
@@ -46,14 +46,6 @@ class BudgetBuddyWidget : AppWidgetProvider() {
             val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
             onUpdate(context, appWidgetManager, appWidgetIds)
         }
-    }
-
-    override fun onEnabled(context: Context) {
-        // Enter relevant functionality for when the first widget is created
-    }
-
-    override fun onDisabled(context: Context) {
-        // Enter relevant functionality for when the last widget is disabled
     }
 }
 
@@ -77,12 +69,12 @@ internal fun updateAppWidget(
 
     val views = RemoteViews(context.packageName, R.layout.budget_buddy_widget)
     if(savingGoalId != null) {
-        val count = savingGoalDao.getCountById(savingGoalId.toInt());
+        val count = savingGoalDao.getCountById(savingGoalId.toInt())
         if(count!= 0) {
             val savingGoal = savingGoalDao.getByIdOffline(savingGoalId.toInt())
             val expense = expenseDao.getSumByAssigmentIdOffline(savingGoalId.toInt())
 
-            // Update das Widget mit den neuen Informationen
+            // Update Widget with new information
             topLeft = savingGoal.sgName
             if (expense >= savingGoal.sgGoalAmount) {
                 bottomLeft = "Ziel erreicht"

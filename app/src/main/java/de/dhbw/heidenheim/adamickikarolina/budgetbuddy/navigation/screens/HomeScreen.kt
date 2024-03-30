@@ -6,17 +6,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.AssignmentDialog
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.savingGoals.CardCarousel
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.view.composables.savingGoals.AssignmentDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.view.composables.savingGoals.CardCarousel
 
 @Composable
 fun HomeScreen(
 ) {
-    /*val savingsGoalViewModel = hiltViewModel<SavingsGoalViewModel>()
-
-    val savingsGoals by savingsGoalViewModel.savingsGoals.observeAsState(emptyList())
-    val filteredSavingsGoals = savingsGoals.drop(1) */
-
     var showAssignmentDialog by remember { mutableStateOf(false) }
 
     Column {

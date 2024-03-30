@@ -9,9 +9,9 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.AppDatabase
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.expense.ExpenseDao
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.data.savingGoal.SavingGoalDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.AppDatabase
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.expense.ExpenseDao
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.model.savingGoal.SavingGoalDao
 
 class WidgetConfigureActivity : AppCompatActivity() {
 
@@ -32,10 +32,10 @@ class WidgetConfigureActivity : AppCompatActivity() {
         savingGoalDao = db.getSavingGoalDao()
         expenseDao = db.getExpenseDao()
 
-        // Finde die ListView im Layout
+        // Find ListView in Layout
         listView = findViewById(R.id.lvSavingGoals)
 
-        // Intent, der die Activity gestartet hat, auslesen
+        // Read intent that started activity
         val intent = intent
         val extras = intent.extras
         if (extras != null) {
@@ -43,7 +43,7 @@ class WidgetConfigureActivity : AppCompatActivity() {
                 AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
         }
 
-        // Wenn die Activity ohne gültige Widget ID gestartet wurde, beende sie
+        // Stop activity if started without valid widget id
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish()
         }
@@ -57,14 +57,14 @@ class WidgetConfigureActivity : AppCompatActivity() {
         listView.setOnItemClickListener { _, _, position, _ ->
             val selectedGoal = savingGoalsList[position]
 
-            // Saving Goal ID oder ein anderer eindeutiger Identifier sollte hier gespeichert werden
+            // Save SavingGoalID
             val prefs = getSharedPreferences("widgetPrefs", Context.MODE_PRIVATE)
             prefs.edit().putString("WIDGET_$appWidgetId", selectedGoal.sgId.toString()).apply()
 
             val appWidgetManager = AppWidgetManager.getInstance(this@WidgetConfigureActivity)
             updateAppWidget(this@WidgetConfigureActivity, appWidgetManager, appWidgetId, savingGoalDao, expenseDao)
 
-            // Ergebnis zurücksenden und Activity beenden
+            // Reply result and stop activity
             val resultValue = Intent().apply {
                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             }

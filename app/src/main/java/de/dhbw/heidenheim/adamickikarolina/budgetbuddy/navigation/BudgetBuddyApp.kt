@@ -15,23 +15,23 @@ import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.screens.Analyt
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.screens.HomeScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.screens.ProfileScreen
 import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.navigation.screens.Screens
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.SavingTipsDialog
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.composables.general.Topbar
-import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.ui.theme.BudgetBuddyTheme
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.view.composables.general.SavingTipsDialog
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.view.composables.general.Topbar
+import de.dhbw.heidenheim.adamickikarolina.budgetbuddy.view.theme.BudgetBuddyTheme
 
 @Composable
 fun BudgetBuddyApp() {
     val navController = rememberNavController()
 
-    var showDialog by remember{ mutableStateOf(false) }
+    var showTipDialog by remember{ mutableStateOf(false) }
 
     BudgetBuddyTheme {
-        if (showDialog) {
-            SavingTipsDialog(onDismissRequest = { showDialog = false })
+        if (showTipDialog) {
+            SavingTipsDialog(onDismissRequest = { showTipDialog = false })
         }
 
         Scaffold(
-            topBar = { Topbar(onDialogButtonClick = {showDialog=true}) },
+            topBar = { Topbar(onDialogButtonClick = {showTipDialog=true}) },
             bottomBar = { BottomNavBar(navController = navController) }
         ) {paddingValues ->
             NavHost(
